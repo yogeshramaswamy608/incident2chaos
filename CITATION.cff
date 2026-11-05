@@ -8,6 +8,11 @@ authors:
     affiliation: Independent Researcher
     orcid: "https://orcid.org/0009-0006-4261-5785"
 version: 0.1.0
+doi: 10.5281/zenodo.23973728
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23973729
+    description: "Release 0.1.0"
 license: Apache-2.0
 references:
   - type: data
