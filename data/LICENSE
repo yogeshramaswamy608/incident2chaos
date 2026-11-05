@@ -1,0 +1,12 @@
+The data files of incident2chaos are licensed under the Creative Commons Attribution 4.0
+International license (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/legalcode
+
+This covers src/incident2chaos/data/corpus.csv, src/incident2chaos/data/blind_sample.csv,
+src/incident2chaos/data/fault_classes.json, src/incident2chaos/data/triggers.json,
+data/codebook.md and data/site_terms.md.
+
+Attribution: Yogesh Ramaswamy, incident2chaos corpus and codebook for paper 1, 2026.
+
+The reports themselves belong to their publishers and are not included. The corpus holds
+only each report's link, its title and date as the publisher's index lists them, and
+labels and short evidence notes written by the author.

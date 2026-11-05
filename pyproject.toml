@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "incident2chaos"
+version = "0.1.0"
+description = "Chaos Mesh and LitmusChaos experiments derived from real cloud incident reports"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+requires-python = ">=3.9"
+authors = [{ name = "Yogesh Ramaswamy" }]
+keywords = ["chaos engineering", "fault injection", "incident analysis", "postmortems", "Chaos Mesh", "LitmusChaos"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Topic :: System :: Distributed Computing",
+    "Topic :: Software Development :: Testing",
+]
+dependencies = ["PyYAML>=6"]
+
+[project.optional-dependencies]
+test = ["pytest>=7", "jsonschema>=4"]
+
+[project.scripts]
+incident2chaos = "incident2chaos.cli:main"
+
+[project.urls]
+Repository = "https://github.com/yogeshramaswamy608/incident2chaos"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"incident2chaos.data" = ["*.csv", "*.json"]
+"incident2chaos.templates.litmus" = ["*.yaml"]

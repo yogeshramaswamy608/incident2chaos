@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use incident2chaos or its corpus, please cite the software and paper 1."
+title: "incident2chaos: chaos experiments derived from real cloud incident reports"
+type: software
+authors:
+  - family-names: Ramaswamy
+    given-names: Yogesh
+    affiliation: Independent Researcher
+    orcid: "https://orcid.org/0009-0006-4261-5785"
+version: 0.1.0
+license: Apache-2.0
+repository-code: "https://github.com/yogeshramaswamy608/incident2chaos"
+keywords:
+  - chaos engineering
+  - fault injection
+  - incident analysis
+  - postmortems
+  - Chaos Mesh
+  - LitmusChaos
+abstract: >-
+  A command line tool that turns a post-incident report, coded under a published
+  codebook of 13 trigger codes and 20 fault classes, into Chaos Mesh or LitmusChaos
+  experiments marked as direct injections, approximations or not injectable, with the
+  coded corpus of 497 public cloud post-incident reports and a coverage command that
+  reruns the measurement of paper 1.

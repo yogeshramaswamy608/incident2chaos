@@ -1,0 +1,163 @@
+[
+ {
+  "code": "F1",
+  "name": "Process or pod crash",
+  "injectability": {
+   "default": "A"
+  },
+  "codebook_line": "F1 Process or pod crash. A. Chaos Mesh PodChaos pod-kill, container-kill; Litmus pod-delete, container-kill, spring-boot-app-kill."
+ },
+ {
+  "code": "F2",
+  "name": "Node, VM or instance loss",
+  "injectability": {
+   "default": "A"
+  },
+  "codebook_line": "F2 Node, VM or instance loss. A. Chaos Mesh AWSChaos ec2-stop and ec2-restart, GCPChaos node-stop and node-reset, AzureChaos vm-stop and vm-restart, PodChaos pod-failure; Litmus node-drain, node-restart, node-poweroff, kubelet-service-kill, docker-service-kill, ec2-stop-by-id, gcp-vm-instance-stop, azure-instance-stop, vm-poweroff."
+ },
+ {
+  "code": "F3",
+  "name": "Zone or data-center loss",
+  "injectability": {
+   "AWS PES": "A",
+   "default": "P"
+  },
+  "codebook_line": "F3 Zone or data-center loss, only when the report says a whole zone or data center was lost; part of a facility is F2. A on AWS only (Litmus aws-az-chaos); P elsewhere (several node stops at once)."
+ },
+ {
+  "code": "F4",
+  "name": "Region-wide or control-plane loss",
+  "injectability": {
+   "default": "N"
+  },
+  "codebook_line": "F4 Region-wide or provider control-plane loss. N."
+ },
+ {
+  "code": "F5",
+  "name": "Network latency",
+  "injectability": {
+   "default": "A"
+  },
+  "codebook_line": "F5 Network latency. A. Chaos Mesh NetworkChaos delay, HTTPChaos delay, BlockChaos delay; Litmus pod-network-latency, pod-http-latency."
+ },
+ {
+  "code": "F6",
+  "name": "Packet loss, corruption or duplication",
+  "injectability": {
+   "default": "A"
+  },
+  "codebook_line": "F6 Packet loss, corruption or duplication. A. Chaos Mesh NetworkChaos loss, corrupt, duplicate; Litmus pod-network-loss, pod-network-corruption, pod-network-duplication."
+ },
+ {
+  "code": "F7",
+  "name": "Network partition or link loss",
+  "injectability": {
+   "default": "A"
+  },
+  "codebook_line": "F7 Network partition or link loss between components. A. Chaos Mesh NetworkChaos partition; Litmus pod-network-partition, pod-http-reset-peer."
+ },
+ {
+  "code": "F8",
+  "name": "Network capacity saturation",
+  "injectability": {
+   "default": "A"
+  },
+  "codebook_line": "F8 Network capacity saturation. A. Chaos Mesh NetworkChaos bandwidth; Litmus pod-network-rate-limit."
+ },
+ {
+  "code": "F9",
+  "name": "DNS resolution failure",
+  "injectability": {
+   "default": "A"
+  },
+  "codebook_line": "F9 DNS resolution failure. A. Chaos Mesh DNSChaos error, random; Litmus pod-dns-error, pod-dns-spoof."
+ },
+ {
+  "code": "F10",
+  "name": "CPU exhaustion",
+  "injectability": {
+   "default": "A"
+  },
+  "codebook_line": "F10 CPU exhaustion. A. Chaos Mesh StressChaos cpu; Litmus pod-cpu-hog, node-cpu-hog."
+ },
+ {
+  "code": "F11",
+  "name": "Memory exhaustion",
+  "injectability": {
+   "default": "A"
+  },
+  "codebook_line": "F11 Memory exhaustion or leak. A. Chaos Mesh StressChaos memory; Litmus pod-memory-hog, node-memory-hog."
+ },
+ {
+  "code": "F12",
+  "name": "Storage fault",
+  "injectability": {
+   "default": "A"
+  },
+  "codebook_line": "F12 Storage fault: disk full, I/O errors or latency, volume loss. A. Chaos Mesh IOChaos latency and fault, AWSChaos detach-volume, GCPChaos disk-loss, AzureChaos disk-detach; Litmus disk-fill, pod-io-stress, node-io-stress, ebs-loss-by-id, gcp-vm-disk-loss, azure-disk-loss."
+ },
+ {
+  "code": "F13",
+  "name": "Clock or time fault",
+  "injectability": {
+   "default": "A"
+  },
+  "codebook_line": "F13 Clock or time fault. A in Chaos Mesh only (TimeChaos); none in the Litmus catalog."
+ },
+ {
+  "code": "F14",
+  "name": "Error responses or exceptions",
+  "injectability": {
+   "default": "A"
+  },
+  "codebook_line": "F14 Error responses or exceptions from a service. A. Chaos Mesh HTTPChaos abort, replace, patch, JVMChaos exception; Litmus pod-http-status-code, pod-http-modify-body, spring-boot-exceptions."
+ },
+ {
+  "code": "F15",
+  "name": "Bad configuration state",
+  "injectability": {
+   "default": "P"
+  },
+  "codebook_line": "F15 Bad configuration state spread to running systems. P. Closest: Chaos Mesh IOChaos mistake or attrOverride on a config file, HTTPChaos replace on a config service's answer."
+ },
+ {
+  "code": "F16",
+  "name": "Internal dependency unavailable",
+  "injectability": {
+   "default": "A"
+  },
+  "codebook_line": "F16 A dependency inside the provider becomes unavailable, as the report states. A third party's outage is the trigger T10; the provider's own service that failed with it is F16. A. Partition or abort the calls to it (F7 or F14 faults aimed at the dependency)."
+ },
+ {
+  "code": "F17",
+  "name": "Credential, certificate or authentication failure",
+  "injectability": {
+   "default": "P"
+  },
+  "codebook_line": "F17 Credential, certificate or authentication failure. P. Closest: Chaos Mesh TimeChaos moved past the expiry date."
+ },
+ {
+  "code": "F18",
+  "name": "Software resource limit",
+  "injectability": {
+   "default": "P"
+  },
+  "codebook_line": "F18 Software resource limit hit: connection pool, thread pool, file handles, quota or rate limit inside a service. P. Closest: Litmus k6-loadgen load against the limit."
+ },
+ {
+  "code": "F19",
+  "name": "Data corruption or inconsistent state",
+  "injectability": {
+   "default": "P"
+  },
+  "codebook_line": "F19 Data corruption or inconsistent state. P. Closest: Chaos Mesh IOChaos mistake."
+ },
+ {
+  "code": "F20",
+  "name": "Overload or retry storm",
+  "injectability": {
+   "default": "P"
+  },
+  "codebook_line": "F20 Overload or retry storm: queues back up or clients retry, from demand or from a failure, whether or not the system recovered alone. P. Closest: Litmus k6-loadgen with a dependency fault (F14 or F16)."
+ }
+]

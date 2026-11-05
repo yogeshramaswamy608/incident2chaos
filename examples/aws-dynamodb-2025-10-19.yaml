@@ -1,0 +1,14 @@
+# A coded report: the labels follow codebook version 2 (data/codebook.md).
+# Corpus row 1 of the paper 1 corpus.
+id: aws-101925
+title: Summary of the Amazon DynamoDB Service Disruption in the Northern Virginia (US-EAST-1) Region
+url: https://aws.amazon.com/message/101925/
+source: AWS PES
+trigger: T6
+faults:
+- F9
+- F19
+- F16
+- F20
+- F18
+primary_fault: F9

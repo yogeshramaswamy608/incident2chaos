@@ -1,0 +1,16 @@
+incident2chaos
+Copyright 2026 Yogesh Ramaswamy
+
+This product includes the ChaosEngine templates (engine.yaml) of the LitmusChaos
+chaos-charts repository, https://github.com/litmuschaos/chaos-charts, commit b2662c23,
+in src/incident2chaos/templates/litmus/, licensed under the Apache License 2.0.
+Copyright The LitmusChaos Authors.
+
+The tests include resource schemas from Chaos Mesh, https://github.com/chaos-mesh/chaos-mesh,
+commit e636338c (config/crd/bases), and from the LitmusChaos chaos-operator,
+https://github.com/litmuschaos/chaos-operator, commit 01a76ca (deploy/chaos_crds.yaml),
+both licensed under the Apache License 2.0. Copyright The Chaos Mesh Authors and
+The LitmusChaos Authors.
+
+The data files (src/incident2chaos/data/*.csv and *.json, data/codebook.md) are licensed
+under the Creative Commons Attribution 4.0 International license, see data/LICENSE.
