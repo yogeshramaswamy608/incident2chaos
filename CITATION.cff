@@ -10,7 +10,7 @@ authors:
 version: 0.1.0
 license: Apache-2.0
 references:
-  - type: dataset
+  - type: data
     title: "Coded corpus of 497 public cloud post-incident reports and codebook for chaos experiment coverage"
     authors:
       - family-names: Ramaswamy
