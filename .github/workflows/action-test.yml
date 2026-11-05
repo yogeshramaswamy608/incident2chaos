@@ -16,4 +16,5 @@ jobs:
         with:
           reports: tools/e2e/badge_reports
           badge: badge-out/chaos-coverage.svg
-      - run: grep -q "chaos coverage: 50%" badge-out/chaos-coverage.svg
+      - run: |
+          grep -q "chaos coverage: 50%" badge-out/chaos-coverage.svg
