@@ -2,10 +2,10 @@ The data files of incident2chaos are licensed under the Creative Commons Attribu
 International license (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/legalcode
 
 This covers src/incident2chaos/data/corpus.csv, src/incident2chaos/data/blind_sample.csv,
-src/incident2chaos/data/fault_classes.json, src/incident2chaos/data/triggers.json,
+src/incident2chaos/data/pilot_check.csv, src/incident2chaos/data/fault_classes.json, src/incident2chaos/data/triggers.json,
 data/codebook.md and data/site_terms.md.
 
-Attribution: Yogesh Ramaswamy, incident2chaos corpus and codebook for paper 1, 2026.
+Attribution: Yogesh Ramaswamy (2026), corpus and codebook of “Do Chaos Experiments Match Real Cloud Incidents? Mapping 497 Public Postmortems to Fault-Injection Coverage”.
 
 The reports themselves belong to their publishers and are not included. The corpus holds
 only each report's link, its title and date as the publisher's index lists them, and

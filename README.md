@@ -4,7 +4,7 @@ Chaos experiments derived from real cloud incidents.
 
 A post-incident report, coded under a published codebook, goes in. A ready-to-run Chaos Mesh or LitmusChaos experiment for the failure it describes comes out, marked as a direct injection, an approximation, or not injectable.
 
-The tool comes with the coded corpus of paper 1: 497 public post-incident reports from AWS, Microsoft Azure, Google Cloud, Cloudflare and GitHub, 2011 to 2026, each coded for its trigger and its fault classes. Its `coverage` command reruns the paper's measurement: of the 484 in-scope reports that state their primary fault, 274 (56.6 percent, Wilson 95 percent interval 52.2 to 61.0 percent) have a primary fault that Chaos Mesh or LitmusChaos can inject directly.
+The tool comes with the coded corpus of the study “Do Chaos Experiments Match Real Cloud Incidents? Mapping 497 Public Postmortems to Fault-Injection Coverage”: 497 public post-incident reports from AWS, Microsoft Azure, Google Cloud, Cloudflare and GitHub, 2011 to 2026, each coded for its trigger and its fault classes. Its `coverage` command reruns the study's measurement: of the 484 in-scope reports that state their primary fault, 274 (56.6 percent, Wilson 95 percent interval 52.2 to 61.0 percent) have a primary fault that Chaos Mesh or LitmusChaos can inject directly.
 
 ## Worked example, under five minutes
 
@@ -27,6 +27,8 @@ incident2chaos generate --report aws-dynamodb-2025-10-19.yaml --all-faults \
 ```
 
 The file holds three Chaos Mesh experiments: a DNSChaos that fails the lookups of the DynamoDB endpoint for the `app=checkout` pods (F9, direct), an IOChaos that corrupts data reads (F19, approximation), and a NetworkChaos partition from the `app=orders-db` pods (F16, direct). For F20 and F18 it says that Chaos Mesh has no fault for the class and points to `--tool litmus`, which writes a k6 load generator, joined for F20 by an HTTP error fault on the dependency.
+
+The end-to-end test (workflow `end-to-end`) builds a Kubernetes cluster with kind, installs Chaos Mesh, and applies every Chaos Mesh experiment the tool writes: all 17 reached the injected state. Every LitmusChaos experiment it writes is accepted by the Kubernetes API server with the LitmusChaos resource definitions installed; running them needs the LitmusChaos operator.
 
 Every experiment carries the report's link, the fault class and the injectability as annotations, so a team can trace each experiment to the incident behind it.
 
@@ -72,10 +74,11 @@ Code only what the report states. The codes, their definitions and the coding ru
 | `src/incident2chaos/` | The command line tool (Apache 2.0) |
 | `src/incident2chaos/data/corpus.csv` | The coded corpus: link, title, date and labels for each of 497 reports (CC BY 4.0) |
 | `src/incident2chaos/data/blind_sample.csv` | The 45-report blind agreement sample, both codings (CC BY 4.0) |
+| `src/incident2chaos/data/pilot_check.csv` | The 50-report pilot: the proposed labels, the author's verdict and the final labels (CC BY 4.0) |
 | `data/codebook.md` | Codebook version 2: 13 trigger codes, 20 fault classes, the mapping to Chaos Mesh and LitmusChaos, the coding rules (CC BY 4.0) |
 | `data/site_terms.md` | The site terms of each provider, read before collection |
 | `data/README.md` | The columns of the data files |
-| `tests/` | Tests that rerun every figure of paper 1 and validate every experiment against the Chaos Mesh and LitmusChaos resource schemas |
+| `tests/` | Tests that rerun the figures of the paper's Tables 1 to 3 and its agreement figures, and validate every experiment against the Chaos Mesh and LitmusChaos resource schemas |
 
 No report text is redistributed. The corpus holds each report's link, its title and date as the provider's index lists them, and our labels with short evidence notes in our own words.
 
@@ -90,13 +93,13 @@ A fault added to either tool after these commits may change a class from approxi
 
 Cite the paper and the software. The `CITATION.cff` file gives the software citation, and GitHub shows it under "Cite this repository".
 
-> Ramaswamy Y (2026) Do Chaos Experiments Match Real Cloud Incidents? Mapping Public Postmortems to Fault-Injection Coverage.
+> Ramaswamy Y (2026) Do Chaos Experiments Match Real Cloud Incidents? Mapping 497 Public Postmortems to Fault-Injection Coverage.
 
 The Zenodo DOIs of the software and the dataset are added here on the day each is published.
 
 ## How this was made
 
-The author designed the study and the codebook, checked every pilot label, coded the blind agreement sample, and checked every figure against the scripts that produce it. A large language model from Anthropic (Claude Opus 5.5) drafted the code, the tests and this documentation under the author's direction and proposed the first-pass labels of 447 reports under the frozen codebook. The model is not an author.
+The author designed the study and the codebook, checked every pilot label, coded the blind agreement sample, and checked every figure against the scripts that produce it. A large language model from Anthropic (Claude Opus 5.5) drafted the code, the tests and this documentation under the author's direction and proposed the first-pass labels of the 447 reports outside the pilot under the frozen codebook; those labels were not revised afterwards. The model is not an author.
 
 ## License
 

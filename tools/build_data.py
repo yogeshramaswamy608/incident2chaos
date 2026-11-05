@@ -1,12 +1,13 @@
 """Build the released data files from the author's working files.
 
 Usage:
-    python tools/build_data.py CODED_CSV INDEX_CSV CODEBOOK_MD BLIND_HUMAN_CSV MANUSCRIPT_DOCX OUT_DIR
+    python tools/build_data.py CODED_CSV INDEX_CSV CODEBOOK_MD BLIND_HUMAN_CSV MANUSCRIPT_DOCX PILOT_CSV OUT_DIR
 
 Inputs are the author's working files for paper 1 (not in this repository).
 Outputs, written to OUT_DIR:
     corpus.csv          one row per report: link, metadata, labels, paraphrased evidence
     blind_sample.csv    the 45-report blind agreement sample, both codings
+    pilot_check.csv     the 50-report pilot: proposed labels, the author's verdict, final labels
     fault_classes.json  the 20 fault classes and their injectability, parsed from the codebook
     triggers.json       the 13 trigger codes, parsed from the codebook
 No report text is copied; titles, dates and links come from the providers' index pages.
@@ -55,7 +56,10 @@ def build_corpus(coded_csv, index_csv, out_dir):
             "corpus_no": row["corpus_no"],
             "source": row["source"],
             "report_id": row["report_id"] or ix["report_id"],
-            "title": row["title"],
+            # A few index titles are status sentences from the report page; those over 150 characters
+            # are replaced by the source, identifier and date, so no report text is redistributed.
+            "title": row["title"] if len(row["title"]) <= 150 else
+            f'{row["source"]} {row["report_id"] or ix["report_id"]}, {row["incident_date"]}',
             "incident_date": row["incident_date"],
             "url": row["url"],
             "retrieved_utc": ix["retrieved_utc"],
@@ -104,6 +108,22 @@ def build_blind(corpus, human_csv, out_dir):
     return rows
 
 
+def build_pilot(pilot_csv, out_dir):
+    """Write the 50-report pilot check: the proposed labels, the author's verdict and the final labels."""
+    rows = []
+    for row in csv.DictReader(open(pilot_csv, encoding="utf-8")):
+        rows.append({"corpus_no": "P" + row["pilot_no"], "source": row["source"], "url": row["url"],
+                     "proposed_trigger": row["proposed_trigger"], "proposed_fault": row["proposed_fault"],
+                     "verdict": row["verdict"], "final_trigger": row["final_trigger"],
+                     "final_fault": row["final_fault"], "final_injectability": row["final_injectability"]})
+    assert len(rows) == 50
+    with open(Path(out_dir) / "pilot_check.csv", "w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
+        writer.writeheader()
+        writer.writerows(rows)
+    return rows
+
+
 def parse_codebook(codebook_md, names, out_dir):
     """Parse sections 2 and 3 of the codebook into triggers.json and fault_classes.json."""
     text = open(codebook_md, encoding="utf-8").read()
@@ -135,12 +155,13 @@ def parse_codebook(codebook_md, names, out_dir):
 
 
 def main(argv):
-    coded_csv, index_csv, codebook_md, human_csv, manuscript_docx, out_dir = argv[1:7]
+    coded_csv, index_csv, codebook_md, human_csv, manuscript_docx, pilot_csv, out_dir = argv[1:8]
     Path(out_dir).mkdir(parents=True, exist_ok=True)
     corpus = build_corpus(coded_csv, index_csv, out_dir)
     blind = build_blind(corpus, human_csv, out_dir)
+    pilot = build_pilot(pilot_csv, out_dir)
     triggers, faults = parse_codebook(codebook_md, short_names(manuscript_docx), out_dir)
-    print(f"corpus {len(corpus)}, blind {len(blind)}, triggers {len(triggers)}, faults {len(faults)}")
+    print(f"corpus {len(corpus)}, pilot {len(pilot)}, blind {len(blind)}, triggers {len(triggers)}, faults {len(faults)}")
 
 
 if __name__ == "__main__":

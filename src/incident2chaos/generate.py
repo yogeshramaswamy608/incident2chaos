@@ -17,7 +17,7 @@ ANNOTATION = "incident2chaos.io"
 
 @dataclass
 class Report:
-    """A post-incident report coded under the paper 1 codebook."""
+    """A post-incident report coded under the codebook."""
 
     id: str
     title: str
@@ -56,7 +56,7 @@ def load_report(path):
 
 
 def corpus_rows(path=None):
-    """Read the coded corpus released with paper 1 (or another file with the same columns)."""
+    """Read the coded corpus released with the study (or another file with the same columns)."""
     if path:
         handle = open(path, encoding="utf-8", newline="")
     else:

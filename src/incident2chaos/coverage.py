@@ -1,6 +1,6 @@
 """Coverage: the share of real incidents whose primary failure a chaos tool can inject.
 
-This is the measurement of paper 1, rerun from the coded corpus. Each report's
+This is the measurement of the study, rerun from the coded corpus. Each report's
 injectability is derived here from its primary fault class and its provider,
 and checked against the value stored in the corpus.
 """

@@ -1,7 +1,7 @@
 {
   "title": "incident2chaos: chaos experiments derived from real cloud incident reports",
   "upload_type": "software",
-  "description": "<p>A command line tool that turns a post-incident report, coded under a published codebook of 13 trigger codes and 20 fault classes, into Chaos Mesh or LitmusChaos experiments marked as direct injections, approximations or not injectable. It ships with the coded corpus of 497 public cloud post-incident reports (AWS, Microsoft Azure, Google Cloud, Cloudflare, GitHub, 2011 to 2026) and a coverage command that reruns the measurement of paper 1. No report text is redistributed.</p>",
+  "description": "<p>A command line tool that turns a post-incident report, coded under a published codebook of 13 trigger codes and 20 fault classes, into Chaos Mesh or LitmusChaos experiments marked as direct injections, approximations or not injectable. It ships with the coded corpus of 497 public cloud post-incident reports (AWS, Microsoft Azure, Google Cloud, Cloudflare, GitHub, 2011 to 2026) and a coverage command that reruns the measurement of the study “Do Chaos Experiments Match Real Cloud Incidents? Mapping 497 Public Postmortems to Fault-Injection Coverage”. No report text is redistributed.</p>",
   "creators": [
     {
       "name": "Ramaswamy, Yogesh",
@@ -11,5 +11,13 @@
   ],
   "license": "Apache-2.0",
   "access_right": "open",
-  "keywords": ["chaos engineering", "fault injection", "incident analysis", "postmortems", "cloud reliability", "Chaos Mesh", "LitmusChaos"]
+  "keywords": [
+    "chaos engineering",
+    "fault injection",
+    "incident analysis",
+    "postmortems",
+    "cloud reliability",
+    "Chaos Mesh",
+    "LitmusChaos"
+  ]
 }

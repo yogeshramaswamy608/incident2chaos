@@ -92,7 +92,7 @@ def main(argv=None):
     p.add_argument("--out", help="write to this file instead of standard output")
     p.set_defaults(func=cmd_generate)
 
-    p = sub.add_parser("coverage", help="rerun the paper 1 coverage measurement on the corpus")
+    p = sub.add_parser("coverage", help="rerun the study's coverage measurement on the corpus")
     p.add_argument("--corpus", help="another corpus file with the same columns")
     p.add_argument("--by", choices=["source", "year", "trigger"])
     p.add_argument("--json", action="store_true")

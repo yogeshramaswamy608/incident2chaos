@@ -1,4 +1,4 @@
-"""The paper 1 codebook: trigger codes, fault classes and their injectability.
+"""The study's codebook: trigger codes, fault classes and their injectability.
 
 The data files are parsed from codebook version 2 by tools/build_data.py.
 Injectability: A = a built-in fault of Chaos Mesh or LitmusChaos injects the

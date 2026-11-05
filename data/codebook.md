@@ -1,5 +1,4 @@
-Codebook for paper 1, version 2, Wed Nov 4, 2026. Replaces version 1 of Tue Nov 3, 2026.
-Working title: Do Chaos Experiments Match Real Cloud Incidents? Mapping Public Postmortems to Fault-Injection Coverage
+Codebook, version 2, Wed Nov 4, 2026, for the study “Do Chaos Experiments Match Real Cloud Incidents? Mapping 497 Public Postmortems to Fault-Injection Coverage”. Replaces version 1 of Tue Nov 3, 2026.
 Status: frozen for the full corpus. Built from the author's check of the 50-report pilot (40 AGREE, 10 CHANGE). Changed only by a disagreement found in the blind check, logged in section 7.
 
 1. Unit and rules
@@ -53,11 +52,11 @@ F99 Not stated.
 
 4. What the pilot measures
 For each report: the primary trigger, every fault class with its injectability, and the best injectability among them (the report is covered if its primary fault class is A).
-Paper 1's headline figure is the share of reports whose primary fault class is A, with a 95 percent confidence interval, by provider and by year. Its second figure is the share of triggers no tool can start, since chaos tools inject faults, not triggers.
+The study's headline figure is the share of reports whose primary fault class is A, with a 95 percent confidence interval, overall, by provider and by trigger. Its second figure is the share of triggers no tool can start, since chaos tools inject faults, not triggers.
 
 5. How a label is checked
 The pilot: the author reads each of the 50 reports and marks each proposed label AGREE or CHANGE with the right code. Each CHANGE is one line in the change log at the end of this file, with the rule it adds.
-The full corpus: every other report was coded with version 2; the author coded a random sample of 45 reports blind to those labels, and Cohen's kappa between the two codings is the agreement figure paper 1 reports (blind_sample.csv).
+The full corpus: every other report was coded with version 2; the author coded a random sample of 45 reports blind to those labels, and Cohen's kappa between the two codings is the agreement figure the study reports (blind_sample.csv).
 
 6. Rules added in version 2 (from the author's pilot check, Tue Nov 3, 2026; pilot rows in brackets)
 V1 A named change or planned operation is the primary trigger over a latent defect it exposed; T6 is primary only when no change is named (8, 14).

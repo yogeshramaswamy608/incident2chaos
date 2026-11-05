@@ -1,4 +1,6 @@
-# The paper 1 corpus
+# The corpus
+
+The data of the study “Do Chaos Experiments Match Real Cloud Incidents? Mapping 497 Public Postmortems to Fault-Injection Coverage”.
 
 497 public post-incident reports published by five cloud providers on their own sites, coded under codebook version 2 (`codebook.md`). License: CC BY 4.0 (`LICENSE`).
 
@@ -10,7 +12,7 @@
 | Cloudflare blog posts tagged post-mortem (`Cloudflare blog post-mortem`) | 42 | blog.cloudflare.com |
 | GitHub monthly availability reports, one row per incident heading (`GitHub availability report`) | 184 | github.blog |
 
-Incident dates run from Apr 21, 2011 to Oct 19, 2026. The indexes were read on Nov 4, 2026 (UTC). Each provider's site terms, read before collection, are in `site_terms.md`. No report text is redistributed: each row holds the report's link, its title and date as the provider's index lists them, our labels, and evidence notes of under 25 words in our own words.
+Incident dates run from Apr 21, 2011 to Oct 19, 2026. The pages were fetched on Nov 3 and 4, 2026 (UTC); `retrieved_utc` records when each source's pages were last saved. Each provider's site terms, read before collection, are in `site_terms.md`. No report text is redistributed: each row holds the report's link, its title and date as the provider's index lists them, our labels, and evidence notes of under 25 words in our own words.
 
 ## corpus.csv
 
@@ -19,7 +21,7 @@ Incident dates run from Apr 21, 2011 to Oct 19, 2026. The indexes were read on N
 | `corpus_no` | Row number: 1 to 447 for the reports coded after the pilot, P1 to P50 for the pilot |
 | `source` | The provider's report series, as in the table above |
 | `report_id` | The provider's identifier; for GitHub, the report's slug, the incident date and, when needed, its time or a counter |
-| `title` | The title on the provider's index |
+| `title` | The title on the provider's index; the 13 titles longer than 150 characters, which on those pages are status sentences, are replaced by the source, identifier and date |
 | `incident_date` | The incident's start date, YYYY-MM-DD |
 | `url` | The report's link; GitHub incidents share the link of their monthly report |
 | `retrieved_utc` | When the index was read |
@@ -31,11 +33,15 @@ Incident dates run from Apr 21, 2011 to Oct 19, 2026. The indexes were read on N
 | `confidence` | The coder's confidence, high, medium or low (empty for the pilot rows) |
 | `evidence_trigger`, `evidence_fault` | The report section and a paraphrase in our own words |
 | `codebook_gap` | A case the codebook did not settle, and how it was coded |
-| `coded_by` | `pilot, checked by the author` or `first pass (model), codebook v2` |
+| `coded_by` | `pilot, checked by the author`, or `first pass (model), codebook v2` for the 447 reports outside the pilot, whose labels a language model proposed under the frozen codebook and which were not revised afterwards |
 
 ## blind_sample.csv
 
-The 45 reports the author coded blind to the first-pass labels (random seed 2026110402, drawn from the 402 reports outside the pilot and an earlier sample), with both codings. On the 44 that both codings put in scope: primary trigger 33 agree (Cohen's kappa 0.72), primary fault 39 (kappa 0.875), injectability of the primary fault 42 (kappa 0.913). The tests rerun these figures.
+The 45 reports the author coded blind to the first-pass labels (random seed 2026110402, drawn from the 402 reports outside the pilot and outside an earlier sample of 45, set aside because its codes had been produced with the help of a software tool rather than by the author alone), with both codings. corpus.csv keeps the first-pass labels for these 45. On the 44 that both codings put in scope: primary trigger 33 agree (Cohen's kappa 0.72), primary fault 39 (kappa 0.875), injectability of the primary fault 42 (kappa 0.913). The tests rerun these figures.
+
+## pilot_check.csv
+
+The 50 pilot reports (random seed 20261103): the labels proposed under codebook version 1, the author's verdict (AGREE 40, CHANGE 10) and the final labels. The primary trigger and the primary fault were each kept for 45 of the 50 (Cohen's kappa 0.88 and 0.89). The tests rerun these figures.
 
 ## fault_classes.json and triggers.json
 

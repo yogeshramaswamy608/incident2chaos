@@ -49,6 +49,7 @@ def test_corpus_rows_are_unique_and_carry_no_report_text():
         for column in ("evidence_trigger", "evidence_fault"):
             assert len(row[column].split()) < 25, (row["corpus_no"], column)
             assert '"' not in row[column] and "“" not in row[column]
+        assert len(row["title"]) <= 150, row["corpus_no"]
         if row["in_scope"] == "no":
             assert row["fault_primary"] == "" and row["trigger_primary"] == ""
 
@@ -128,6 +129,20 @@ def test_blind_sample_reproduces_the_agreement_figures():
     assert sum(a == b for a, b in trig) == 33 and round(_kappa(trig), 2) == 0.72
     assert sum(a == b for a, b in fault) == 39 and round(_kappa(fault), 3) == 0.875
     assert sum(a == b for a, b in inj) == 42 and round(_kappa(inj), 3) == 0.913
+
+
+def test_pilot_check_reproduces_the_pilot_figures():
+    text = resources.files("incident2chaos.data").joinpath("pilot_check.csv").read_text(encoding="utf-8")
+    rows = list(csv.DictReader(text.splitlines()))
+    assert len(rows) == 50 and Counter(r["verdict"] for r in rows) == {"AGREE": 40, "CHANGE": 10}
+    trig = [(r["proposed_trigger"], r["final_trigger"]) for r in rows]
+    fault = [(r["proposed_fault"], r["final_fault"]) for r in rows]
+    assert sum(a == b for a, b in trig) == 45 and round(_kappa(trig), 2) == 0.88
+    assert sum(a == b for a, b in fault) == 45 and round(_kappa(fault), 2) == 0.89
+    by_no = {r["corpus_no"]: r for r in corpus_rows()}
+    for r in rows:
+        assert by_no[r["corpus_no"]]["fault_primary"] == r["final_fault"]
+        assert by_no[r["corpus_no"]]["trigger_primary"] == r["final_trigger"]
 
 
 # The experiments

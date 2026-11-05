@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use incident2chaos or its corpus, please cite the software and paper 1."
+message: "If you use incident2chaos or its corpus, please cite the software and the paper it was built for."
 title: "incident2chaos: chaos experiments derived from real cloud incident reports"
 type: software
 authors:
@@ -22,4 +22,4 @@ abstract: >-
   codebook of 13 trigger codes and 20 fault classes, into Chaos Mesh or LitmusChaos
   experiments marked as direct injections, approximations or not injectable, with the
   coded corpus of 497 public cloud post-incident reports and a coverage command that
-  reruns the measurement of paper 1.
+  reruns the measurement of the study “Do Chaos Experiments Match Real Cloud Incidents? Mapping 497 Public Postmortems to Fault-Injection Coverage”.
