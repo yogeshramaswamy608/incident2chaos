@@ -1,0 +1,49 @@
+name: end-to-end
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  cluster:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - name: Create a Kubernetes cluster (kind)
+        uses: helm/kind-action@v1
+        with:
+          cluster_name: e2e
+      - name: Label the node with a zone, for the F3 experiment
+        run: kubectl label node --all topology.kubernetes.io/zone=us-east-1a --overwrite
+      - name: Install Chaos Mesh
+        run: |
+          helm repo add chaos-mesh https://charts.chaos-mesh.org
+          helm repo update
+          helm install chaos-mesh chaos-mesh/chaos-mesh -n chaos-mesh --create-namespace \
+            --set chaosDaemon.runtime=containerd \
+            --set chaosDaemon.socketPath=/run/containerd/containerd.sock \
+            --set dnsServer.create=true --wait --timeout 10m
+          helm list -n chaos-mesh
+      - name: Install the LitmusChaos resource definitions
+        run: kubectl apply -f https://raw.githubusercontent.com/litmuschaos/chaos-operator/master/deploy/chaos_crds.yaml
+      - name: Deploy the test services
+        run: |
+          kubectl apply -f tools/e2e/app.yaml
+          kubectl -n shop rollout status deploy/my-service --timeout=180s
+          kubectl -n shop rollout status deploy/orders-db --timeout=180s
+      - name: Run every experiment
+        run: python tools/e2e/run.py tools/e2e/all_faults.yaml
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-result
+          path: e2e-result.txt

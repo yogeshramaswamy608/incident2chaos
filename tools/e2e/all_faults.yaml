@@ -1,0 +1,8 @@
+# A test report that lists every fault class, so one run generates every experiment.
+id: e2e-all-faults
+title: End-to-end test, every fault class
+url: https://github.com/yogeshramaswamy608/incident2chaos
+source: AWS PES
+trigger: T99
+faults: [F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20]
+primary_fault: F1
