@@ -1,0 +1,19 @@
+name: badge action
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  badge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./
+        with:
+          reports: tools/e2e/badge_reports
+          badge: badge-out/chaos-coverage.svg
+      - run: grep -q "chaos coverage: 50%" badge-out/chaos-coverage.svg

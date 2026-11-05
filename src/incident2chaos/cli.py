@@ -7,6 +7,7 @@ from pathlib import Path
 
 from . import __version__
 from .codebook import CHAOS_MESH_COMMIT, CODEBOOK_VERSION, LITMUS_CHARTS_COMMIT, fault_classes, triggers
+from .badge import badge_svg, reports_coverage
 from .coverage import format_table, measure
 from .generate import TOOLS, corpus_rows, experiments, load_report, render, report_from_corpus
 from .recipes import Target
@@ -62,6 +63,20 @@ def cmd_coverage(args):
     return 1 if mismatches else 0
 
 
+def cmd_badge(args):
+    result = reports_coverage(args.reports)
+    if result["reports"] == 0:
+        print(f"no coded reports (.yaml, .yml, .json) under {args.reports}", file=sys.stderr)
+        return 2
+    Path(args.out).parent.mkdir(parents=True, exist_ok=True)
+    Path(args.out).write_text(badge_svg(result["A_share"]), encoding="utf-8")
+    print(f"{result['A']} of {result['stated']} coded reports have a directly injectable primary fault "
+          f"({100 * result['A_share']:.1f}%); badge written to {args.out}")
+    if args.min_share is not None and result["A_share"] < args.min_share:
+        return 1
+    return 0
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(prog="incident2chaos",
                                      description="Chaos experiments derived from real cloud incident reports.")
@@ -97,6 +112,12 @@ def main(argv=None):
     p.add_argument("--by", choices=["source", "year", "trigger"])
     p.add_argument("--json", action="store_true")
     p.set_defaults(func=cmd_coverage)
+
+    p = sub.add_parser("badge", help="coverage of your own coded postmortems, written as an SVG badge")
+    p.add_argument("--reports", required=True, help="folder of coded reports, YAML or JSON")
+    p.add_argument("--out", default="chaos-coverage.svg", help="where to write the badge")
+    p.add_argument("--min-share", type=float, help="fail when the directly injectable share is below this (0 to 1)")
+    p.set_defaults(func=cmd_badge)
 
     args = parser.parse_args(argv)
     try:

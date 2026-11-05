@@ -1,0 +1,5 @@
+id: example-config-push
+title: Example, a bad configuration pushed to every region
+trigger: T2
+faults: [F15, F14, F20]
+primary_fault: F15

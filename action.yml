@@ -1,0 +1,31 @@
+name: incident2chaos coverage badge
+description: Measures how many of your coded postmortems a chaos tool can reproduce, and writes an SVG badge.
+inputs:
+  reports:
+    description: Folder of postmortems coded under the incident2chaos codebook (YAML or JSON)
+    required: true
+  badge:
+    description: Path of the SVG badge to write
+    default: .github/badges/chaos-coverage.svg
+  min-share:
+    description: Fail the step when the directly injectable share is below this value (0 to 1)
+    default: ""
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+    - shell: bash
+      run: pip install --quiet "${{ github.action_path }}"
+    - shell: bash
+      env:
+        I2C_REPORTS: ${{ inputs.reports }}
+        I2C_BADGE: ${{ inputs.badge }}
+        I2C_MIN: ${{ inputs.min-share }}
+      run: |
+        if [ -n "$I2C_MIN" ]; then
+          incident2chaos badge --reports "$I2C_REPORTS" --out "$I2C_BADGE" --min-share "$I2C_MIN"
+        else
+          incident2chaos badge --reports "$I2C_REPORTS" --out "$I2C_BADGE"
+        fi

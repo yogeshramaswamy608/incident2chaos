@@ -276,3 +276,14 @@ def test_unknown_field_check_catches_a_typo():
     manifest = chaos_mesh("F9", "i2c-test", FULL_TARGET).manifests[0]
     manifest["spec"]["pattern"] = manifest["spec"].pop("patterns")
     assert _unknown_fields(manifest, CM["DNSChaos"]) == [".spec.pattern"]
+
+
+def test_badge_over_a_folder_of_reports(tmp_path, capsys):
+    out = tmp_path / "badge.svg"
+    folder = str(ROOT / "tools" / "e2e" / "badge_reports")
+    assert cli.main(["badge", "--reports", folder, "--out", str(out)]) == 0
+    svg = out.read_text()
+    assert svg.startswith("<svg") and "chaos coverage: 50%" in svg
+    assert "1 of 2 coded reports" in capsys.readouterr().out
+    assert cli.main(["badge", "--reports", folder, "--out", str(out), "--min-share", "0.9"]) == 1
+    assert cli.main(["badge", "--reports", str(tmp_path / "empty"), "--out", str(out)]) == 2

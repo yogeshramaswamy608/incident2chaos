@@ -51,6 +51,19 @@ incident2chaos coverage --by year --json
 
 Each report's injectability is derived from its primary fault class and its provider under the codebook's mapping, and checked against the value stored in the corpus. Give `--corpus FILE` to measure another corpus coded with the same columns.
 
+## A coverage badge for your own postmortems
+
+Code your team's postmortems as YAML files like the example above, in one folder, and add this step to a GitHub Actions workflow:
+
+```yaml
+- uses: yogeshramaswamy608/incident2chaos@v0.1.0
+  with:
+    reports: postmortems/coded
+    badge: .github/badges/chaos-coverage.svg
+```
+
+The step writes a badge with the share of your incidents whose primary failure Chaos Mesh or LitmusChaos can inject directly. Give `min-share: 0.5` to fail the step below 50 percent. The same works locally: `incident2chaos badge --reports postmortems/coded --out chaos-coverage.svg`.
+
 ## Coding a new report
 
 Write a YAML file like the example:
