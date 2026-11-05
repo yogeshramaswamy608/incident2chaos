@@ -1,0 +1,11 @@
+The files of this record are licensed under the Creative Commons Attribution 4.0
+International license (CC BY 4.0): https://creativecommons.org/licenses/by/4.0/legalcode
+
+This covers corpus.csv, blind_sample.csv, pilot_check.csv, fault_classes.json,
+triggers.json, codebook.md, site_terms.md and README.md.
+
+Attribution: Yogesh Ramaswamy (2026), corpus and codebook of “Do Chaos Experiments Match Real Cloud Incidents? Mapping 497 Public Postmortems to Fault-Injection Coverage”.
+
+The reports themselves belong to their publishers and are not included. The corpus holds
+only each report's link, its title and date as the publisher's index lists them, and
+labels and short evidence notes in the author's own words.

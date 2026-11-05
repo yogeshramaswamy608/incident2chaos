@@ -78,6 +78,7 @@ Code only what the report states. The codes, their definitions and the coding ru
 | `data/codebook.md` | Codebook version 2: 13 trigger codes, 20 fault classes, the mapping to Chaos Mesh and LitmusChaos, the coding rules (CC BY 4.0) |
 | `data/site_terms.md` | The site terms of each provider, read before collection |
 | `data/README.md` | The columns of the data files |
+| `dataset/` | The files of the Zenodo dataset record, as uploaded there |
 | `tests/` | Tests that rerun the figures of the paper's Tables 1 to 3 and its agreement figures, and validate every experiment against the Chaos Mesh and LitmusChaos resource schemas |
 
 No report text is redistributed. The corpus holds each report's link, its title and date as the provider's index lists them, and our labels with short evidence notes in our own words.
@@ -95,7 +96,7 @@ Cite the paper and the software. The `CITATION.cff` file gives the software cita
 
 > Ramaswamy Y (2026) Do Chaos Experiments Match Real Cloud Incidents? Mapping 497 Public Postmortems to Fault-Injection Coverage.
 
-The Zenodo DOIs of the software and the dataset are added here on the day each is published.
+The dataset on Zenodo: https://doi.org/10.5281/zenodo.23973151 (corpus, codebook, pilot and blind samples, CC BY 4.0). The software's Zenodo DOI is added here when release 0.1.0 is archived.
 
 ## How this was made
 

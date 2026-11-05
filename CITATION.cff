@@ -9,6 +9,13 @@ authors:
     orcid: "https://orcid.org/0009-0006-4261-5785"
 version: 0.1.0
 license: Apache-2.0
+references:
+  - type: dataset
+    title: "Coded corpus of 497 public cloud post-incident reports and codebook for chaos experiment coverage"
+    authors:
+      - family-names: Ramaswamy
+        given-names: Yogesh
+    doi: 10.5281/zenodo.23973151
 repository-code: "https://github.com/yogeshramaswamy608/incident2chaos"
 keywords:
   - chaos engineering

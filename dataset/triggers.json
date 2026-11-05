@@ -1,0 +1,72 @@
+[
+ {
+  "code": "T1",
+  "name": "Code or binary change",
+  "definition": "a software deployment, rollout or release."
+ },
+ {
+  "code": "T2",
+  "name": "Configuration change",
+  "definition": "a change to configuration data, a feature flag, a policy or a rule, by a person or a pipeline."
+ },
+ {
+  "code": "T3",
+  "name": "Planned operation",
+  "definition": "maintenance, migration, capacity addition or removal, decommissioning, scaling work done on purpose."
+ },
+ {
+  "code": "T4",
+  "name": "Automation acting wrongly",
+  "definition": "an automated system (scaler, remediation, DNS or routing automation) took an action nobody intended."
+ },
+ {
+  "code": "T5",
+  "name": "Demand surge",
+  "definition": "organic traffic growth, a spike, or a retry storm that starts the incident."
+ },
+ {
+  "code": "T6",
+  "name": "Latent defect activated",
+  "definition": "a bug present for some time that fires on a date, time, data size, limit or rare condition."
+ },
+ {
+  "code": "T7",
+  "name": "Hardware failure",
+  "definition": "server, disk, switch, router or other device failure."
+ },
+ {
+  "code": "T8",
+  "name": "Facility event",
+  "definition": "power loss, cooling or thermal event, fire, flood, weather."
+ },
+ {
+  "code": "T9",
+  "name": "External network event",
+  "definition": "fiber cut, route leak or outage at a carrier or internet exchange outside the provider."
+ },
+ {
+  "code": "T10",
+  "name": "Upstream dependency failure outside the provider",
+  "definition": "a third party the provider relies on."
+ },
+ {
+  "code": "T11",
+  "name": "Expiry or exhaustion",
+  "definition": "a certificate, credential or key expired, or a fixed resource ran out (address space, disk, quota) without a demand surge."
+ },
+ {
+  "code": "T12",
+  "name": "Attack",
+  "definition": "a denial-of-service attack or other malicious action."
+ },
+ {
+  "code": "T13",
+  "name": "Operator error",
+  "definition": "a person ran the wrong command, on the wrong target, or with wrong input, outside a planned change."
+ },
+ {
+  "code": "T99",
+  "name": "Not stated",
+  "definition": ""
+ }
+]
