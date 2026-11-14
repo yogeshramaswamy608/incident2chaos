@@ -93,6 +93,7 @@ Code only what the report states. The codes, their definitions and the coding ru
 | `data/README.md` | The columns of the data files |
 | `dataset/` | The files of the Zenodo dataset record, as uploaded there |
 | `tests/` | Tests that rerun the figures of the paper's Tables 1 to 3 and its agreement figures, and validate every experiment against the Chaos Mesh and LitmusChaos resource schemas |
+| `teaching/incident-to-chaos-lab/` | A two-hour lab for courses in cloud computing, distributed systems and software engineering: the student handout, the instructor guide with its answer key, and the script that checks every command (CC BY 4.0) |
 
 No report text is redistributed. The corpus holds each report's link, its title and date as the provider's index lists them, and our labels with short evidence notes in our own words.
 

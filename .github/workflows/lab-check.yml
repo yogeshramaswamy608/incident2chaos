@@ -1,0 +1,36 @@
+name: lab-check
+
+# Runs every command of the teaching lab (teaching/incident-to-chaos-lab/README.md) as a student would,
+# Part 4 included, and checks the results with run_lab.py.
+on:
+  workflow_dispatch:
+  push:
+    paths: ["teaching/**", ".github/workflows/lab-check.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install kind (kubectl and Helm come with the runner)
+        run: |
+          curl -sSLo kind https://kind.sigs.k8s.io/dl/v0.29.0/kind-linux-amd64
+          chmod +x kind && sudo mv kind /usr/local/bin/kind
+          kind version && kubectl version --client && helm version --short
+      - name: Run the lab, Parts 0 to 4
+        run: python3 teaching/incident-to-chaos-lab/run_lab.py --parts 0,1,2,3,4 --keep lab-work
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lab-work
+          path: |
+            lab-work/*.yaml
+            lab-work/coded/*.yaml
+            lab-work/coverage.svg
