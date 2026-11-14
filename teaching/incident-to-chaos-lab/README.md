@@ -15,7 +15,7 @@ You read three public post-incident reports, code each one under a published cod
 
 You need Python 3.9 or newer and an internet connection. On Windows, run the lab in WSL (Windows Subsystem for Linux).
 
-Part 4 also needs Docker, kind 0.29 or newer, kubectl and Helm 3, and about 4 GB of free memory. Start the cluster before the lab, on the same network you will use: these commands take 10 to 15 minutes, most of it downloading images.
+Part 4 also needs Docker, kind 0.29 or newer, kubectl and Helm 3, and about 4 GB of free memory. Start the cluster before the lab, on the same network you will use: these commands take 10 to 15 minutes, most of it downloading images. The last line waits until the service runs exactly one pod, so the experiment and your checks act on the same pod.
 
 <!-- part: 4 -->
 ```bash
@@ -27,6 +27,7 @@ kubectl apply -f https://raw.githubusercontent.com/yogeshramaswamy608/incident2c
 kubectl -n shop rollout status deploy/my-service --timeout=180s
 kubectl -n shop scale deploy/my-service --replicas=1
 kubectl -n shop rollout status deploy/my-service --timeout=180s
+until [ "$(kubectl -n shop get pods -l app=my-service --no-headers | wc -l)" -eq 1 ]; do sleep 2; done
 ```
 
 This starts a Kubernetes cluster inside Docker, installs Chaos Mesh, and deploys two small test services in a namespace `shop`: the service `app=my-service`, scaled to one pod, and its dependency `app=orders-db`.
