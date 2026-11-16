@@ -7,18 +7,18 @@ P5,AWS PES,https://aws.amazon.com/message/11201/,T3,F18,AGREE,T3,F18,P
 P6,AWS PES,https://aws.amazon.com/message/17908/,T6,F6,AGREE,T6,F6,A
 P7,AWS PES,https://aws.amazon.com/message/12721/,T3,F8,AGREE,T3,F8,A
 P8,AWS PES,https://aws.amazon.com/message/061323/,T6,F14,CHANGE,T3,F14,A
-P9,Microsoft Azure PIR,https://azure.status.microsoft/en-us/status/history/#incident-history-collapse-PLT7-RTZ,T1,F15,CHANGE,T99,F15,P
-P10,Microsoft Azure PIR,https://azure.status.microsoft/en-us/status/history/#incident-history-collapse-ZN7Y-5DG,T99,F10,AGREE,T99,F10,A
-P11,Microsoft Azure PIR,https://azure.status.microsoft/en-us/status/history/#incident-history-collapse-9TDP-N8G,T7,F6,AGREE,T7,F6,A
-P12,Microsoft Azure PIR,https://azure.status.microsoft/en-us/status/history/#incident-history-collapse-TTCR-NTZ,T3,F20,CHANGE,T5,F20,P
-P13,Microsoft Azure PIR,https://azure.status.microsoft/en-us/status/history/#incident-history-collapse-Y__5-9C0,T99,F20,AGREE,T99,F20,P
-P14,Microsoft Azure PIR,https://aka.ms/AzPIR/YTYN-5T8,T3,F14,AGREE,T3,F14,A
-P15,Microsoft Azure PIR,https://aka.ms/AzPIR/VLB8-1Z0,T2,F8,AGREE,T2,F8,A
-P16,Microsoft Azure PIR,https://aka.ms/AzPIR/FTVR-L9Z,T3,F17,AGREE,T3,F17,P
-P17,Microsoft Azure PIR,https://aka.ms/AzPIR/HSKF-FB0,T2,F17,AGREE,T2,F17,P
-P18,Microsoft Azure PIR,https://aka.ms/AzPIR/CNF4-N_0,T8,F3,CHANGE,T8,F2,A
-P19,Microsoft Azure PIR,https://aka.ms/AzPIR/QKNQ-PB8,T3,F15,AGREE,T3,F15,P
-P20,Microsoft Azure PIR,https://aka.ms/AzPIR/8GCS-858,T2,F15,AGREE,T2,F15,P
+P9,Microsoft Azure PIR,https://azure.status.microsoft/en-us/status/history/?trackingId=PLT7-RTZ,T1,F15,CHANGE,T99,F15,P
+P10,Microsoft Azure PIR,https://azure.status.microsoft/en-us/status/history/?trackingId=ZN7Y-5DG,T99,F10,AGREE,T99,F10,A
+P11,Microsoft Azure PIR,https://azure.status.microsoft/en-us/status/history/?trackingId=9TDP-N8G,T7,F6,AGREE,T7,F6,A
+P12,Microsoft Azure PIR,https://azure.status.microsoft/en-us/status/history/?trackingId=TTCR-NTZ,T3,F20,CHANGE,T5,F20,P
+P13,Microsoft Azure PIR,https://azure.status.microsoft/en-us/status/history/?trackingId=Y__5-9C0,T99,F20,AGREE,T99,F20,P
+P14,Microsoft Azure PIR,https://azure.status.microsoft/en-us/status/history/?trackingId=YTYN-5T8,T3,F14,AGREE,T3,F14,A
+P15,Microsoft Azure PIR,https://azure.status.microsoft/en-us/status/history/?trackingId=VLB8-1Z0,T2,F8,AGREE,T2,F8,A
+P16,Microsoft Azure PIR,https://azure.status.microsoft/en-us/status/history/?trackingId=FTVR-L9Z,T3,F17,AGREE,T3,F17,P
+P17,Microsoft Azure PIR,https://azure.status.microsoft/en-us/status/history/?trackingId=HSKF-FB0,T2,F17,AGREE,T2,F17,P
+P18,Microsoft Azure PIR,https://azure.status.microsoft/en-us/status/history/?trackingId=CNF4-N_0,T8,F3,CHANGE,T8,F2,A
+P19,Microsoft Azure PIR,https://azure.status.microsoft/en-us/status/history/?trackingId=QKNQ-PB8,T3,F15,AGREE,T3,F15,P
+P20,Microsoft Azure PIR,https://azure.status.microsoft/en-us/status/history/?trackingId=8GCS-858,T2,F15,AGREE,T2,F15,P
 P21,Google Cloud incident report,https://status.cloud.google.com/incidents/LdVmYRCym6X8E7ELZCtp,T2,F16,AGREE,T2,F16,A
 P22,Google Cloud incident report,https://status.cloud.google.com/incidents/AY59eBBxFZnaZgUSYQUf,T99,F20,AGREE,T99,F20,P
 P23,Google Cloud incident report,https://status.cloud.google.com/incidents/FwyeeZDrGMZCEXvRLEpr,T5,F14,AGREE,T5,F14,A

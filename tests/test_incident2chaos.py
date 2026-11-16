@@ -133,17 +133,34 @@ def test_blind_sample_reproduces_the_agreement_figures():
 
 
 def test_packaged_data_files_are_the_files_of_the_zenodo_record():
-    # MD5 of the five data files of Zenodo dataset versions 1.0.0 and 1.0.1, which are the same files.
+    # MD5 of the five data files of Zenodo dataset version 1.0.2. The three tables differ from versions 1.0.0
+    # and 1.0.1 in the links of the 81 Azure reports alone; the two code files are the files of all three versions.
     expected = {
-        "corpus.csv": "161593d515a918814fbfaf5542a142ff",
-        "blind_sample.csv": "70cdc3b2b17ba329fe87d3f4f262def4",
-        "pilot_check.csv": "78a01fd7ee7f645dd4ad64fcbd4496bf",
+        "corpus.csv": "0ebdcdf732a272063ae2342aa4595fa4",
+        "blind_sample.csv": "12ea1c9e2a7cdd8bc070cc9d59e779f3",
+        "pilot_check.csv": "0dde58a20d03908bfd3cc9ad607a9780",
         "fault_classes.json": "51e5a33431ab96c4ece2aa85b784e47c",
         "triggers.json": "41422043c5a3ed96e7ef1c8167fbe54c",
     }
     for name, md5 in expected.items():
         data = resources.files("incident2chaos.data").joinpath(name).read_bytes()
         assert hashlib.md5(data).hexdigest() == md5, name
+
+
+def test_azure_links_hold_the_review_address_by_tracking_id():
+    # The address form of dataset version 1.0.2; tools/check_links.py opens the links themselves.
+    base = "https://azure.status.microsoft/en-us/status/history/?trackingId="
+    by_no = {r["corpus_no"]: r for r in corpus_rows()}
+    azure = [r for r in by_no.values() if r["source"] == "Microsoft Azure PIR"]
+    assert len(azure) == 81
+    for row in azure:
+        assert row["url"] == base + row["report_id"], row["corpus_no"]
+    for name, count in (("blind_sample.csv", 45), ("pilot_check.csv", 50)):
+        text = resources.files("incident2chaos.data").joinpath(name).read_text(encoding="utf-8")
+        rows = list(csv.DictReader(text.splitlines()))
+        assert len(rows) == count
+        for row in rows:
+            assert row["url"] == by_no[row["corpus_no"]]["url"], (name, row["corpus_no"])
 
 
 def test_pilot_check_reproduces_the_pilot_figures():
