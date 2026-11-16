@@ -27,7 +27,7 @@ KEY = {
 
 # Text each part must print, in the answer key of INSTRUCTOR.md.
 EXPECT = {
-    0: ["incident2chaos 0.1.1", "F4   N", "F20  P"],
+    0: ["incident2chaos 0.1.2", "F4   N", "F20  P"],
     1: ["# trigger: T1\n\n# F9 DNS resolution failure: injectability A (direct)",
         "# trigger: T10\n\n# F16 Internal dependency unavailable: injectability A (direct)",
         "# trigger: T1\n\n# F20 Overload or retry storm: injectability P (approximation only)"],

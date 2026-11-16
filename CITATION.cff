@@ -11,6 +11,9 @@ version: 0.1.2
 doi: 10.5281/zenodo.23973728
 identifiers:
   - type: doi
+    value: 10.5281/zenodo.24289017
+    description: "Release 0.1.2"
+  - type: doi
     value: 10.5281/zenodo.24276565
     description: "Release 0.1.1"
   - type: doi

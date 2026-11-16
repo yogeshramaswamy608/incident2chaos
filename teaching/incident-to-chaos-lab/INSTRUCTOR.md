@@ -22,10 +22,10 @@ For a 90-minute session, drop Part 4 and give question 5.1 as homework.
 
 ## Setup notes
 
-1. The tool installs with pip from the tagged release `v0.1.1` on GitHub and needs only PyYAML. It writes experiment files and never contacts a cluster; Parts 0 to 3 need no Kubernetes.
-2. On lab machines without internet access, download the release once (`pip download git+https://github.com/yogeshramaswamy608/incident2chaos@v0.1.1 -d wheels`) and install from the folder with `pip install --no-index --find-links wheels incident2chaos`.
+1. The tool installs with pip from the tagged release `v0.1.2` on GitHub and needs only PyYAML. It writes experiment files and never contacts a cluster; Parts 0 to 3 need no Kubernetes.
+2. On lab machines without internet access, download the release once (`pip download git+https://github.com/yogeshramaswamy608/incident2chaos@v0.1.2 -d wheels`) and install from the folder with `pip install --no-index --find-links wheels incident2chaos`.
 3. Part 4 runs a kind cluster inside Docker on each laptop and needs about 4 GB of free memory. The Chaos Mesh install takes up to 10 minutes; start it at the beginning of Part 3 if time is short.
-4. The script `run_lab.py` in this folder runs every command of the handout and checks its results: `python3 run_lab.py` runs Parts 0 to 3, and `python3 run_lab.py --parts 0,1,2,3,4` adds Part 4 on a machine with Docker, kind, kubectl and Helm. Parts 0 to 3 were run that way against release 0.1.1; the repository's workflow `lab-check` runs all five parts on a GitHub runner on every change to this folder.
+4. The script `run_lab.py` in this folder runs every command of the handout and checks its results: `python3 run_lab.py` runs Parts 0 to 3, and `python3 run_lab.py --parts 0,1,2,3,4` adds Part 4 on a machine with Docker, kind, kubectl and Helm. Parts 0 to 3 were run that way against release 0.1.2; the repository's workflow `lab-check` runs all five parts on a GitHub runner on every change to this folder.
 5. The answer key below sits in a public repository, so students can read it. If that matters for marking, mark the reasoning of questions 1.1, 2.2, 2.3 and 5.1, which the key does not settle word for word.
 
 ## Answer key
@@ -76,8 +76,8 @@ Part 1, 3 points: codes with a rule and a report sentence for each. Part 2, 3 po
 
 ## Sources and license
 
-The tool, the codebook and the corpus: incident2chaos release 0.1.1, https://github.com/yogeshramaswamy608/incident2chaos (code Apache 2.0, data and codebook CC BY 4.0). Dataset: https://doi.org/10.5281/zenodo.24274876. Software: https://doi.org/10.5281/zenodo.24276565. The three reports belong to Cloudflare; the lab links to them and quotes none of their text.
+The tool, the codebook and the corpus: incident2chaos release 0.1.2, https://github.com/yogeshramaswamy608/incident2chaos (code Apache 2.0, data and codebook CC BY 4.0). Dataset: https://doi.org/10.5281/zenodo.24287066. Software: https://doi.org/10.5281/zenodo.24289017. The three reports belong to Cloudflare; the lab links to them and quotes none of their text.
 
 The handout and this guide are licensed CC BY 4.0: adapt them for your course and keep the attribution. If you use the lab in a course, a short note in the repository's issues helps keep it working with new releases of Chaos Mesh and LitmusChaos.
 
-Written under the direction of Yogesh Ramaswamy, author of incident2chaos, by a large language model from Anthropic (Claude Opus 5.5). Parts 0 to 3 were run against release 0.1.1 and checked by the script run_lab.py; the workflow lab-check runs all five parts, Part 4 included, on a GitHub runner.
+Written under the direction of Yogesh Ramaswamy, author of incident2chaos, by a large language model from Anthropic (Claude Opus 5.5). Parts 0 to 3 were run against release 0.1.2 and checked by the script run_lab.py; the workflow lab-check runs all five parts, Part 4 included, on a GitHub runner.
