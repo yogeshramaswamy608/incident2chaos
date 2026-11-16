@@ -11,7 +11,7 @@ The tool comes with the coded corpus of the study “Do Chaos Experiments Match 
 You need Python 3.9 or later. The package is on PyPI: https://pypi.org/project/incident2chaos/
 
 ```bash
-pip install incident2chaos==0.1.0
+pip install incident2chaos==0.1.1
 incident2chaos faults
 ```
 
@@ -20,7 +20,7 @@ incident2chaos faults
 Take the AWS DynamoDB disruption of Oct 19, 2025 in US-EAST-1. Its report is coded in `examples/aws-dynamodb-2025-10-19.yaml`: trigger T6 (a latent defect activated), primary fault F9 (DNS resolution failure), then F19, F16, F20 and F18.
 
 ```bash
-curl -sLO https://raw.githubusercontent.com/yogeshramaswamy608/incident2chaos/v0.1.0/examples/aws-dynamodb-2025-10-19.yaml
+curl -sLO https://raw.githubusercontent.com/yogeshramaswamy608/incident2chaos/v0.1.1/examples/aws-dynamodb-2025-10-19.yaml
 incident2chaos generate --report aws-dynamodb-2025-10-19.yaml --all-faults \
   --namespace shop --label app=checkout --dependency-label app=orders-db \
   --host dynamodb.us-east-1.amazonaws.com --out dynamodb-experiments.yaml
@@ -42,10 +42,10 @@ incident2chaos generate --corpus-id 1 --tool litmus
 
 ## As a kubectl plugin
 
-On Linux and macOS, with Python 3.9 or later on the PATH as `python3`, the tool also runs as a kubectl plugin. The GitHub release v0.1.0 carries it as the archive `kubectl-incident2chaos.tar.gz`, which holds the plugin file `kubectl-incident2chaos` (the tool and the pure Python part of PyYAML) and its license files:
+On Linux and macOS, with Python 3.9 or later on the PATH as `python3`, the tool also runs as a kubectl plugin. The GitHub release v0.1.1 carries it as the archive `kubectl-incident2chaos.tar.gz`, which holds the plugin file `kubectl-incident2chaos` (the tool and the pure Python part of PyYAML) and its license files:
 
 ```bash
-curl -fsSLO https://github.com/yogeshramaswamy608/incident2chaos/releases/download/v0.1.0/kubectl-incident2chaos.tar.gz
+curl -fsSLO https://github.com/yogeshramaswamy608/incident2chaos/releases/download/v0.1.1/kubectl-incident2chaos.tar.gz
 tar -xzf kubectl-incident2chaos.tar.gz kubectl-incident2chaos
 sudo mv kubectl-incident2chaos /usr/local/bin/
 kubectl incident2chaos faults
@@ -69,7 +69,7 @@ Each report's injectability is derived from its primary fault class and its prov
 Code your team's postmortems as YAML files like the example above, in one folder, and add this step to a GitHub Actions workflow:
 
 ```yaml
-- uses: yogeshramaswamy608/incident2chaos@v0.1.0
+- uses: yogeshramaswamy608/incident2chaos@v0.1.1
   with:
     reports: postmortems/coded
     badge: .github/badges/chaos-coverage.svg
@@ -102,20 +102,20 @@ Code only what the report states. The codes, their definitions and the coding ru
 | `src/incident2chaos/data/blind_sample.csv` | The 45-report blind agreement sample, both codings (CC BY 4.0) |
 | `src/incident2chaos/data/pilot_check.csv` | The 50-report pilot: the proposed labels, the author's verdict and the final labels (CC BY 4.0) |
 | `data/codebook.md` | Codebook version 2: 13 trigger codes, 20 fault classes, the mapping to Chaos Mesh and LitmusChaos, the coding rules (CC BY 4.0) |
-| `data/site_terms.md` | The site terms of each provider, read before collection |
+| `data/site_terms.md` | The site terms of each provider, with the date they were read |
 | `data/README.md` | The columns of the data files |
-| `dataset/` | The files of the Zenodo dataset record, as uploaded there |
+| `dataset/` | The files of the Zenodo dataset record, version 1.0.1, as uploaded there |
 | `deploy/krew/incident2chaos.yaml` | The Krew manifest of the kubectl plugin |
 | `tools/krew/build_plugin.py` | Builds the kubectl plugin file from the release wheel; the release workflow runs it and publishes the package to PyPI |
 | `tests/` | Tests that rerun the figures of the paper's Tables 1 to 3 and its agreement figures, and validate every experiment against the Chaos Mesh and LitmusChaos resource schemas |
 | `teaching/incident-to-chaos-lab/` | A two-hour lab for courses in cloud computing, distributed systems and software engineering: the student handout, the instructor guide with its answer key, and the script that checks every command (CC BY 4.0) |
 
-No report text is redistributed. The corpus holds each report's link, its title and date as the provider's index lists them, and our labels with short evidence notes in our own words.
+No report text is redistributed. The corpus holds each report's link, its title and date as the provider's index lists them, labels, and short notes that paraphrase the report. A language model proposed every label and wrote the notes of the 447 first-pass rows. The author checked the proposed labels of the 50 pilot rows, agreed with 40 and changed 10, and wrote the one note each of those rows holds.
 
 ## Versions the mapping was read from
 
 - Chaos Mesh, commit e636338c (Nov 3, 2026), the API types under `api/v1alpha1`
-- LitmusChaos chaos-charts, commit b2662c23 (Apr 16, 2026), 53 fault folders (the released codebook says 60, a count that includes 7 icon folders)
+- LitmusChaos chaos-charts, commit b2662c23 (Apr 16, 2026), 53 fault folders (the codebook as first released, in dataset version 1.0.0 and tool release 0.1.0, said 60, a count that included 7 icon folders)
 
 A fault added to either tool after these commits may change a class from approximation to direct.
 
@@ -125,11 +125,11 @@ Cite the paper and the software. The `CITATION.cff` file gives the software cita
 
 > Ramaswamy Y (2026) Do Chaos Experiments Match Real Cloud Incidents? Mapping 497 Public Postmortems to Fault-Injection Coverage.
 
-The dataset on Zenodo: https://doi.org/10.5281/zenodo.23973151 (corpus, codebook, pilot and blind samples, CC BY 4.0). It is mirrored on Hugging Face at https://huggingface.co/datasets/yogeshramaswamy608/incident2chaos-corpus, and the Zenodo DOI stays the version of record. The software on Zenodo: https://doi.org/10.5281/zenodo.23973728 (all versions; release 0.1.0 is https://doi.org/10.5281/zenodo.23973729).
+The dataset on Zenodo: https://doi.org/10.5281/zenodo.23973150 (all versions; corpus, codebook, pilot and blind samples, CC BY 4.0). Version 1.0.1 (https://doi.org/10.5281/zenodo.24274876) corrects the documentation of version 1.0.0 (https://doi.org/10.5281/zenodo.23973151), the version the paper cites; the data files are the same in both. It is mirrored on Hugging Face at https://huggingface.co/datasets/yogeshramaswamy608/incident2chaos-corpus, and the Zenodo record stays the version of record. The software on Zenodo: https://doi.org/10.5281/zenodo.23973728 (all versions; release 0.1.0 is https://doi.org/10.5281/zenodo.23973729).
 
 ## How this was made
 
-The author designed the study and the codebook, checked every pilot label, coded the blind agreement sample, and checked every figure against the scripts that produce it. A large language model from Anthropic (Claude Opus 5.5) drafted the code, the tests and this documentation under the author's direction and proposed the first-pass labels of the 447 reports outside the pilot under the frozen codebook; those labels were not revised afterwards. The model is not an author.
+The author designed the study and the codebook, checked every pilot label, coded the blind agreement sample, and checked every figure against the scripts that produce it. Large language models from Anthropic drafted the code, the tests and this documentation under the author's direction: Claude Opus 5.5, and Claude Fable 5.2 for the corrections of release 0.1.1. Claude Opus 5.5 proposed the labels of all 497 reports: those of the 50 pilot reports, which the author then checked, keeping 40 and changing 10, and those of the 447 reports outside the pilot, proposed under the frozen codebook and not revised afterwards. It also wrote the short notes of those 447 rows. The models are not authors.
 
 ## License
 

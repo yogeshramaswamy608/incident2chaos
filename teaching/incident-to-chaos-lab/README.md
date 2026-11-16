@@ -189,7 +189,7 @@ The codebook, the corpus and the tool: incident2chaos release 0.1.0, https://git
 
 The study: Ramaswamy Y (2026) Do Chaos Experiments Match Real Cloud Incidents? Mapping 497 Public Postmortems to Fault-Injection Coverage. Manuscript under review.
 
-How the corpus was coded: the author checked the labels of a 50-report pilot and coded a sample of 45 reports blind; a large language model proposed the labels of the other 447 reports under the frozen codebook, and those labels were not revised afterwards (the corpus file's column `coded_by` says which is which).
+How the corpus was coded: a large language model proposed the labels of all 497 reports. The author checked the proposed labels of the 50-report pilot, agreed with 40 and changed 10, and coded a sample of 45 reports blind. The labels of the other 447 reports, proposed under the frozen codebook, were not revised afterwards (the corpus file's column `coded_by` says which is which).
 
 This lab is licensed CC BY 4.0. The timing, the setup notes and the answer key are in `INSTRUCTOR.md` beside this file; it sits in a public repository, so students can read it too.
 

@@ -1,4 +1,5 @@
 import csv
+import hashlib
 import json
 import re
 from collections import Counter
@@ -127,8 +128,22 @@ def test_blind_sample_reproduces_the_agreement_figures():
     inj = [(injectability(a, by_no[r["corpus_no"]]["source"]), injectability(b, by_no[r["corpus_no"]]["source"]))
            for r, (a, b) in zip(both, fault)]
     assert sum(a == b for a, b in trig) == 33 and round(_kappa(trig), 2) == 0.72
-    assert sum(a == b for a, b in fault) == 39 and round(_kappa(fault), 3) == 0.875
+    assert sum(a == b for a, b in fault) == 39 and round(_kappa(fault), 4) == 0.8746 and round(_kappa(fault), 2) == 0.87
     assert sum(a == b for a, b in inj) == 42 and round(_kappa(inj), 3) == 0.913
+
+
+def test_packaged_data_files_are_the_files_of_the_zenodo_record():
+    # MD5 of the five data files of Zenodo dataset versions 1.0.0 and 1.0.1, which are the same files.
+    expected = {
+        "corpus.csv": "161593d515a918814fbfaf5542a142ff",
+        "blind_sample.csv": "70cdc3b2b17ba329fe87d3f4f262def4",
+        "pilot_check.csv": "78a01fd7ee7f645dd4ad64fcbd4496bf",
+        "fault_classes.json": "51e5a33431ab96c4ece2aa85b784e47c",
+        "triggers.json": "41422043c5a3ed96e7ef1c8167fbe54c",
+    }
+    for name, md5 in expected.items():
+        data = resources.files("incident2chaos.data").joinpath(name).read_bytes()
+        assert hashlib.md5(data).hexdigest() == md5, name
 
 
 def test_pilot_check_reproduces_the_pilot_figures():

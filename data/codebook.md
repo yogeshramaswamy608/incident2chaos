@@ -2,11 +2,11 @@ Codebook, version 2, Wed Nov 4, 2026, for the study “Do Chaos Experiments Matc
 Status: frozen for the full corpus. Built from the author's check of the 50-report pilot (40 AGREE, 10 CHANGE). Changed only by a disagreement found in the blind check, logged in section 7.
 
 1. Unit and rules
-One row per public post-incident report from a cloud provider's own site (first-party). The report's link and our labels are kept; none of its text is redistributed.
+One row per public post-incident report from a cloud provider's own site (first-party). The report's link and its labels are kept; none of its text is redistributed.
 Code only what the report states. A label the report does not support is T99 or F99, never a guess.
 Trigger: the first event or change the report names as the start of the incident. One primary trigger; one secondary trigger only when the report names two starting events.
 Fault classes: every technical failure the report says a component experienced, as a chaos tool would have to inject it. Multi-label; one marked primary (the failure that caused most of the customer impact).
-Evidence: for each label, the report section and a paraphrase of under 25 words, in our own words.
+Evidence: for each label, the report section and a paraphrase of under 25 words, never a quotation.
 
 2. Trigger codes (T)
 T1 Code or binary change: a software deployment, rollout or release.
@@ -26,7 +26,7 @@ T99 Not stated.
 
 3. Fault classes (F) and what Chaos Mesh and LitmusChaos can inject
 Injectability: A = a built-in fault of either tool injects it directly; P = only an approximation; N = neither tool can inject it.
-Catalogs read Tue Nov 3, 2026 from source: Chaos Mesh commit e636338c (Nov 3, 2026), api/v1alpha1; LitmusChaos chaos-charts commit b2662c23 (Apr 16, 2026), faults/ (60 fault folders).
+Catalogs read Tue Nov 3, 2026 from source: Chaos Mesh commit e636338c (Nov 3, 2026), api/v1alpha1; LitmusChaos chaos-charts commit b2662c23 (Apr 16, 2026), faults/ (53 fault folders).
 
 F1 Process or pod crash. A. Chaos Mesh PodChaos pod-kill, container-kill; Litmus pod-delete, container-kill, spring-boot-app-kill.
 F2 Node, VM or instance loss. A. Chaos Mesh AWSChaos ec2-stop and ec2-restart, GCPChaos node-stop and node-reset, AzureChaos vm-stop and vm-restart, PodChaos pod-failure; Litmus node-drain, node-restart, node-poweroff, kubelet-service-kill, docker-service-kill, ec2-stop-by-id, gcp-vm-instance-stop, azure-instance-stop, vm-poweroff.
@@ -70,4 +70,5 @@ V8 F20 covers any overload from demand or retries (3, 48).
 Not adopted: a new fault class for software logic defects and one for network device failure; the pilot coded them as F14, F6 or F7 without loss (11, 47).
 
 7. Change log
-Wed Nov 4, 2026: the author's blind coding of 45 reports (blind_sample.csv) agreed with the first pass on injectability 42 of 44 (kappa 0.913), primary fault 39 of 44 (kappa 0.875) and trigger 33 of 44 (kappa 0.72); no rule added; version 2 stays frozen.
+Wed Nov 4, 2026: the author's blind coding of 45 reports (blind_sample.csv) agreed with the first pass on injectability 42 of 44 (kappa 0.913), primary fault 39 of 44 (kappa 0.87) and trigger 33 of 44 (kappa 0.72); no rule added; version 2 stays frozen.
+Mon Nov 16, 2026, erratum: section 3 counted 60 fault folders; the seven group folders under faults/ at that commit hold 60 folders, 7 of them icon folders, so the count is 53. Section 1 called the labels ours and said the evidence paraphrase was in our own words; a language model proposed the labels, which the author checked for the 50 pilot reports, and wrote the paraphrases of the 447 first-pass rows, so section 1 now says its labels and a paraphrase, never a quotation. The line above, as first released, printed the primary fault kappa to three decimals as 0.875; the value is 307/351 = 0.8746, now printed to two decimals as 0.87. No code or label changed, and no rule changed in what it requires; version 2 stays frozen.

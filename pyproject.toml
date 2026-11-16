@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "incident2chaos"
-version = "0.1.0"
+version = "0.1.1"
 description = "Chaos Mesh and LitmusChaos experiments derived from real cloud incident reports"
 readme = "README.md"
-license = "Apache-2.0"
-license-files = ["LICENSE", "NOTICE"]
+license = "Apache-2.0 AND CC-BY-4.0"
+license-files = ["LICENSE", "NOTICE", "data/LICENSE"]
 requires-python = ">=3.9"
 authors = [{ name = "Yogesh Ramaswamy" }]
 keywords = ["chaos engineering", "fault injection", "incident analysis", "postmortems", "Chaos Mesh", "LitmusChaos"]
