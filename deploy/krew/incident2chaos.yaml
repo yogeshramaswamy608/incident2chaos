@@ -3,7 +3,7 @@ kind: Plugin
 metadata:
   name: incident2chaos
 spec:
-  version: v0.1.1
+  version: v0.1.2
   homepage: https://github.com/yogeshramaswamy608/incident2chaos
   shortDescription: Chaos experiments from real cloud incident reports
   description: |
@@ -26,6 +26,6 @@ spec:
         values:
         - darwin
         - linux
-    uri: https://github.com/yogeshramaswamy608/incident2chaos/releases/download/v0.1.1/kubectl-incident2chaos.tar.gz
-    sha256: c10dca26e7c11dde3b1c42db613b3443f017637ec9587b9325c9e238e48336ef
+    uri: https://github.com/yogeshramaswamy608/incident2chaos/releases/download/v0.1.2/kubectl-incident2chaos.tar.gz
+    sha256: 89db62e35348281e24ae36f873df802b5c62de0694f71c1f559ad036634551a1
     bin: kubectl-incident2chaos
