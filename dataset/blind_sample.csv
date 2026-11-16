@@ -1,16 +1,16 @@
 corpus_no,source,report_id,url,first_pass_in_scope,first_pass_trigger,first_pass_fault,author_trigger,author_fault
-12,Microsoft Azure PIR,7QL5-Z50,https://aka.ms/AzPIR/7QL5-Z50,yes,T1,F1,T1,F18
-14,Microsoft Azure PIR,LYXT-C1Z,https://aka.ms/AzPIR/LYXT-C1Z,yes,T1,F20,T99,F20
-32,Microsoft Azure PIR,1LG8-1X0,https://aka.ms/AzPIR/1LG8-1X0,yes,T6,F16,T5,F16
-36,Microsoft Azure PIR,1VT1-LX0,https://azure.status.microsoft/en-us/status/history/#incident-history-collapse-1VT1-LX0,no,,,T1,F2
-43,Microsoft Azure PIR,2LZ0-3DG,https://aka.ms/AzPIR/2LZ0-3DG,yes,T8,F2,T7,F2
-44,Microsoft Azure PIR,VVTQ-J98,https://aka.ms/AzPIR/VVTQ-J98,yes,T8,F2,T8,F2
-47,Microsoft Azure PIR,QNPD-NC8,https://aka.ms/AzPIR/QNPD-NC8,yes,T12,F20,T12,F20
-50,Microsoft Azure PIR,VN11-JD8,https://aka.ms/AzPIR/VN11-JD8,yes,T8,F3,T8,F3
-56,Microsoft Azure PIR,JKWW-JP8,https://azure.status.microsoft/en-us/status/history/#incident-history-collapse-JKWW-JP8,yes,T2,F10,T2,F10
-61,Microsoft Azure PIR,YLBJ-790,https://aka.ms/AzPIR/YLBJ-790,yes,T5,F20,T5,F20
-70,Microsoft Azure PIR,ZS1T-LCG,https://azure.status.microsoft/en-us/status/history/#incident-history-collapse-ZS1T-LCG,yes,T99,F7,T99,F7
-71,Microsoft Azure PIR,SMWW-BDZ,https://azure.status.microsoft/en-us/status/history/#incident-history-collapse-SMWW-BDZ,yes,T3,F16,T3,F14
+12,Microsoft Azure PIR,7QL5-Z50,https://azure.status.microsoft/en-us/status/history/?trackingId=7QL5-Z50,yes,T1,F1,T1,F18
+14,Microsoft Azure PIR,LYXT-C1Z,https://azure.status.microsoft/en-us/status/history/?trackingId=LYXT-C1Z,yes,T1,F20,T99,F20
+32,Microsoft Azure PIR,1LG8-1X0,https://azure.status.microsoft/en-us/status/history/?trackingId=1LG8-1X0,yes,T6,F16,T5,F16
+36,Microsoft Azure PIR,1VT1-LX0,https://azure.status.microsoft/en-us/status/history/?trackingId=1VT1-LX0,no,,,T1,F2
+43,Microsoft Azure PIR,2LZ0-3DG,https://azure.status.microsoft/en-us/status/history/?trackingId=2LZ0-3DG,yes,T8,F2,T7,F2
+44,Microsoft Azure PIR,VVTQ-J98,https://azure.status.microsoft/en-us/status/history/?trackingId=VVTQ-J98,yes,T8,F2,T8,F2
+47,Microsoft Azure PIR,QNPD-NC8,https://azure.status.microsoft/en-us/status/history/?trackingId=QNPD-NC8,yes,T12,F20,T12,F20
+50,Microsoft Azure PIR,VN11-JD8,https://azure.status.microsoft/en-us/status/history/?trackingId=VN11-JD8,yes,T8,F3,T8,F3
+56,Microsoft Azure PIR,JKWW-JP8,https://azure.status.microsoft/en-us/status/history/?trackingId=JKWW-JP8,yes,T2,F10,T2,F10
+61,Microsoft Azure PIR,YLBJ-790,https://azure.status.microsoft/en-us/status/history/?trackingId=YLBJ-790,yes,T5,F20,T5,F20
+70,Microsoft Azure PIR,ZS1T-LCG,https://azure.status.microsoft/en-us/status/history/?trackingId=ZS1T-LCG,yes,T99,F7,T99,F7
+71,Microsoft Azure PIR,SMWW-BDZ,https://azure.status.microsoft/en-us/status/history/?trackingId=SMWW-BDZ,yes,T3,F16,T3,F14
 110,Google Cloud incident report,QEXJUo5kYdf9YVXPiCCF,https://status.cloud.google.com/incidents/QEXJUo5kYdf9YVXPiCCF,yes,T99,F6,T99,F6
 131,Google Cloud incident report,chBKHSir2hAG2qZ2XTWK,https://status.cloud.google.com/incidents/chBKHSir2hAG2qZ2XTWK,yes,T99,F14,T99,F14
 132,Google Cloud incident report,NcBsiFKsKXLSpHWU2VXK,https://status.cloud.google.com/incidents/NcBsiFKsKXLSpHWU2VXK,yes,T1,F14,T99,F14

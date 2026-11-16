@@ -72,7 +72,7 @@ Of the 484 public post-incident reports that state their primary failure, 274 (5
 ## How to reproduce
 
 ```bash
-pip install git+https://github.com/yogeshramaswamy608/incident2chaos@v0.1.0
+pip install git+https://github.com/yogeshramaswamy608/incident2chaos@v0.1.2
 incident2chaos coverage --by source
 ```
 

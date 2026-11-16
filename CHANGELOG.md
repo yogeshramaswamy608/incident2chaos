@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.2, Nov 16, 2026
+
+A correction release. The tool's code is unchanged, and no label, code or figure changed.
+
+- The links of the 81 Microsoft Azure reports are corrected. In releases 0.1.0 and 0.1.1, 54 of them held `https://aka.ms/AzPIR/ID`, which opens Microsoft's feedback survey for the review, and 27 held an address that opens Azure's status history without the review. All 81 now hold `https://azure.status.microsoft/en-us/status/history/?trackingId=ID`, where ID is the review's tracking id. Only those `url` cells changed, in `corpus.csv` (81 rows), `blind_sample.csv` (12 rows) and `pilot_check.csv` (12 rows), so an experiment that `generate --corpus-id` writes for an Azure report now carries the new link.
+- The new `tools/check_links.py` opened every link of the corpus on Nov 16, 2026 (UTC). The links of the 416 rows of the other four providers opened their reports. Of the 81 new Azure links, 80 opened their review. The address of row P9 (PLT7-RTZ) returned Azure's status history with no review, and `dataset/README.md` says what was seen.
+- `dataset/` holds the files of Zenodo dataset version 1.0.2, which carries the same correction.
+- The coverage report tells the reader to install this release in place of 0.1.0.
+
 ## 0.1.1, Nov 16, 2026
 
 A correction release. The tool and the five data files are unchanged; the labels, the codes and the figures are the same.

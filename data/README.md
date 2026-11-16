@@ -7,7 +7,7 @@ The data of the study “Do Chaos Experiments Match Real Cloud Incidents? Mappin
 | Source | Reports | Report links on |
 |---|---|---|
 | AWS Post-Event Summaries (`AWS PES`) | 18 | aws.amazon.com |
-| Microsoft Azure Post Incident Reviews (`Microsoft Azure PIR`) | 81 | aka.ms (54), azure.status.microsoft (27) |
+| Microsoft Azure Post Incident Reviews (`Microsoft Azure PIR`) | 81 | azure.status.microsoft |
 | Google Cloud incident reports (`Google Cloud incident report`) | 172 | status.cloud.google.com |
 | Cloudflare blog posts tagged post-mortem (`Cloudflare blog post-mortem`) | 42 | blog.cloudflare.com |
 | GitHub monthly availability reports, one row per incident heading (`GitHub availability report`) | 184 | github.blog |
@@ -23,7 +23,7 @@ Incident dates run from Apr 21, 2011 to Oct 19, 2026. `retrieved_utc` records wh
 | `report_id` | The provider's identifier; for GitHub, the report's slug, the incident date and, when needed, its time or a counter |
 | `title` | The title on the provider's index; the 13 titles longer than 150 characters, which on those pages are status sentences, are replaced by the source, identifier and date |
 | `incident_date` | The incident's start date, YYYY-MM-DD |
-| `url` | The report's link; GitHub incidents share the link of their monthly report |
+| `url` | The report's link; GitHub incidents share the link of their monthly report, and an Azure link is the address of Azure's status history for the one review the row names |
 | `retrieved_utc` | When the index was read |
 | `in_scope` | `no` for the 6 reports that the first pass found to describe no failure of the provider's own service; their labels are empty. The author's blind coding put one of the 6, row 36, in scope (`blind_sample.csv`) |
 | `trigger_primary`, `trigger_secondary` | Trigger codes T1 to T13, T99 when the report does not state it (no pilot row holds a secondary trigger) |
