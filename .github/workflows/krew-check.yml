@@ -42,17 +42,23 @@ jobs:
         include:
           # Each sha256 is the one published beside the file: the .sha256 file of the Krew
           # release, and kubectl.sha256 on dl.k8s.io.
+          # Go builds the validator: 1.22 on Linux, as krew-index's CI does. macOS 26 refuses
+          # to start a program that has no LC_UUID load command, which Go writes from 1.24
+          # on, so the macOS jobs build with Go 1.25.
           - os: ubuntu-24.04
+            go: "1.22"
             krew: krew-linux_amd64
             krew-sha256: bacc06800bda14ec063cd0b6f377a961fdf4661c00366bf9834723cd28bfabc7
             kubectl: linux/amd64
             kubectl-sha256: c04487523e7aa7d1493f7808174c899db93d7a9cf57531420cd76b9bd415f8f4
           - os: macos-latest
+            go: "1.25"
             krew: krew-darwin_arm64
             krew-sha256: 5e33636a73392cf88021a85162ac4d4c86d4c0b57677e64094bcbcca637068e6
             kubectl: darwin/arm64
             kubectl-sha256: 55701af0d51815ee335f240e48acf0959c3c23017ed3fa816e880c4a92bae581
           - os: macos-26-intel
+            go: "1.25"
             krew: krew-darwin_amd64
             krew-sha256: 7ff3dde825734e74f4975c8e922b4419639e5fbff738786ab085cf06a0d1ccc0
             kubectl: darwin/amd64
@@ -72,10 +78,9 @@ jobs:
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.13"
-      # The Go version krew-index's CI builds the validator with.
       - uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
         with:
-          go-version: "1.22"
+          go-version: ${{ matrix.go }}
           cache: false
       - name: Install kubectl
         run: |
