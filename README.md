@@ -125,7 +125,7 @@ Cite the paper and the software. The `CITATION.cff` file gives the software cita
 
 > Ramaswamy Y (2026) Do Chaos Experiments Match Real Cloud Incidents? Mapping 497 Public Postmortems to Fault-Injection Coverage.
 
-The dataset on Zenodo: https://doi.org/10.5281/zenodo.23973150 (all versions; corpus, codebook, pilot and blind samples, CC BY 4.0). Version 1.0.1 (https://doi.org/10.5281/zenodo.24274876) corrects the documentation of version 1.0.0 (https://doi.org/10.5281/zenodo.23973151), the version the paper cites; the data files are the same in both. It is mirrored on Hugging Face at https://huggingface.co/datasets/yogeshramaswamy608/incident2chaos-corpus, and the Zenodo record stays the version of record. The software on Zenodo: https://doi.org/10.5281/zenodo.23973728 (all versions; release 0.1.0 is https://doi.org/10.5281/zenodo.23973729).
+The dataset on Zenodo: https://doi.org/10.5281/zenodo.23973150 (all versions; corpus, codebook, pilot and blind samples, CC BY 4.0). Version 1.0.1 (https://doi.org/10.5281/zenodo.24274876) corrects the documentation of version 1.0.0 (https://doi.org/10.5281/zenodo.23973151), the version the paper cites; the data files are the same in both. It is mirrored on Hugging Face at https://huggingface.co/datasets/yogeshramaswamy608/incident2chaos-corpus, and the Zenodo record stays the version of record. The software on Zenodo: https://doi.org/10.5281/zenodo.23973728 (all versions; release 0.1.1 is https://doi.org/10.5281/zenodo.24276565, release 0.1.0 is https://doi.org/10.5281/zenodo.23973729).
 
 ## How this was made
 

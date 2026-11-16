@@ -11,6 +11,9 @@ version: 0.1.1
 doi: 10.5281/zenodo.23973728
 identifiers:
   - type: doi
+    value: 10.5281/zenodo.24276565
+    description: "Release 0.1.1"
+  - type: doi
     value: 10.5281/zenodo.23973729
     description: "Release 0.1.0"
 license: Apache-2.0

@@ -23,7 +23,7 @@ kind create cluster --name lab
 helm repo add chaos-mesh https://charts.chaos-mesh.org
 helm repo update
 helm install chaos-mesh chaos-mesh/chaos-mesh -n chaos-mesh --create-namespace --set chaosDaemon.runtime=containerd --set chaosDaemon.socketPath=/run/containerd/containerd.sock --set dnsServer.create=true --wait --timeout 10m
-kubectl apply -f https://raw.githubusercontent.com/yogeshramaswamy608/incident2chaos/v0.1.0/tools/e2e/app.yaml
+kubectl apply -f https://raw.githubusercontent.com/yogeshramaswamy608/incident2chaos/v0.1.1/tools/e2e/app.yaml
 kubectl -n shop rollout status deploy/my-service --timeout=180s
 kubectl -n shop scale deploy/my-service --replicas=1
 kubectl -n shop rollout status deploy/my-service --timeout=180s
@@ -52,7 +52,7 @@ Write your answers in one text file, `answers.txt`, with the question numbers.
 ```bash
 python3 -m venv lab
 . lab/bin/activate
-pip install git+https://github.com/yogeshramaswamy608/incident2chaos@v0.1.0
+pip install git+https://github.com/yogeshramaswamy608/incident2chaos@v0.1.1
 incident2chaos --version
 incident2chaos faults
 ```
@@ -63,7 +63,7 @@ incident2chaos faults
 
 ## Part 1. Code three real incidents (35 minutes)
 
-Open the codebook: https://github.com/yogeshramaswamy608/incident2chaos/blob/v0.1.0/data/codebook.md
+Open the codebook: https://github.com/yogeshramaswamy608/incident2chaos/blob/v0.1.1/data/codebook.md
 
 Read sections 1, 2, 3 and 6 (about 10 minutes). Three rules matter most:
 
@@ -185,7 +185,7 @@ If your R1 file does not have F9 as its primary fault, your `r1-dns.yaml` holds 
 
 ## Sources
 
-The codebook, the corpus and the tool: incident2chaos release 0.1.0, https://github.com/yogeshramaswamy608/incident2chaos (code Apache 2.0, data and codebook CC BY 4.0). Dataset: https://doi.org/10.5281/zenodo.23973151. Software: https://doi.org/10.5281/zenodo.23973729.
+The codebook, the corpus and the tool: incident2chaos release 0.1.1, https://github.com/yogeshramaswamy608/incident2chaos (code Apache 2.0, data and codebook CC BY 4.0). Dataset: https://doi.org/10.5281/zenodo.24274876. Software: https://doi.org/10.5281/zenodo.24276565.
 
 The study: Ramaswamy Y (2026) Do Chaos Experiments Match Real Cloud Incidents? Mapping 497 Public Postmortems to Fault-Injection Coverage. Manuscript under review.
 
@@ -193,4 +193,4 @@ How the corpus was coded: a large language model proposed the labels of all 497 
 
 This lab is licensed CC BY 4.0. The timing, the setup notes and the answer key are in `INSTRUCTOR.md` beside this file; it sits in a public repository, so students can read it too.
 
-Written under the direction of Yogesh Ramaswamy, author of incident2chaos, by a large language model from Anthropic (Claude Opus 5.5). Parts 0 to 3 were run against release 0.1.0 and checked by the script run_lab.py; the workflow lab-check runs all five parts, Part 4 included, on a GitHub runner.
+Written under the direction of Yogesh Ramaswamy, author of incident2chaos, by a large language model from Anthropic (Claude Opus 5.5). Parts 0 to 3 were run against release 0.1.1 and checked by the script run_lab.py; the workflow lab-check runs all five parts, Part 4 included, on a GitHub runner.
