@@ -1,0 +1,125 @@
+name: krew-check
+
+# Checks the Krew manifest of the kubectl plugin (deploy/krew/incident2chaos.yaml) on Linux
+# and on macOS, the two systems the manifest names:
+#   1. validate-krew-manifest, the validator that the CI of kubernetes-sigs/krew-index runs
+#      on a pull request, built from the same Krew version (its .github/workflows/ci.yml);
+#   2. an install from the manifest alone, which downloads the plugin archive from the
+#      release the manifest names and checks its sha256 (Krew's "Testing plugin installation
+#      locally" page);
+#   3. the installed plugin, started through kubectl, with the five commands of the release
+#      workflow's plugin test; then the uninstall.
+# It never contacts a cluster: the plugin only writes files.
+# When GitHub finds no macOS runner it cancels that job after about 15 minutes and the run
+# shows as failed; "Re-run failed jobs" then runs the macOS job alone.
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths: ["deploy/krew/**", ".github/workflows/krew-check.yml"]
+  push:
+    branches: [main]
+    paths: ["deploy/krew/**", ".github/workflows/krew-check.yml"]
+
+permissions:
+  contents: read
+
+env:
+  MANIFEST: deploy/krew/incident2chaos.yaml
+  # The Krew version that krew-index's CI pins, and the sha256 of that release's krew.yaml.
+  KREW_VERSION: v0.4.5
+  KREW_YAML_SHA256: 9732a1ec3094685df47881269fb302d352850c4bbeb0bc640af9e60f8e1bfe87
+  # kubectl is not on GitHub's macOS image, so both jobs take the same release from dl.k8s.io.
+  KUBECTL_VERSION: v1.37.2
+
+jobs:
+  krew:
+    name: krew (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Each sha256 is the one published beside the file: the .sha256 file of the Krew
+          # release, and kubectl.sha256 on dl.k8s.io.
+          - os: ubuntu-24.04
+            krew: krew-linux_amd64
+            krew-sha256: bacc06800bda14ec063cd0b6f377a961fdf4661c00366bf9834723cd28bfabc7
+            kubectl: linux/amd64
+            kubectl-sha256: c04487523e7aa7d1493f7808174c899db93d7a9cf57531420cd76b9bd415f8f4
+          - os: macos-latest
+            krew: krew-darwin_arm64
+            krew-sha256: 5e33636a73392cf88021a85162ac4d4c86d4c0b57677e64094bcbcca637068e6
+            kubectl: darwin/arm64
+            kubectl-sha256: 55701af0d51815ee335f240e48acf0959c3c23017ed3fa816e880c4a92bae581
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    env:
+      KREW: ${{ matrix.krew }}
+      KREW_SHA256: ${{ matrix.krew-sha256 }}
+      KUBECTL: ${{ matrix.kubectl }}
+      KUBECTL_SHA256: ${{ matrix.kubectl-sha256 }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # The plugin needs Python 3.9 or later on the PATH as python3.
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+      # The Go version krew-index's CI builds the validator with.
+      - uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
+        with:
+          go-version: "1.22"
+          cache: false
+      - name: Install kubectl
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME/bin"
+          cd "$(mktemp -d)"
+          curl -fsSLO "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/${KUBECTL}/kubectl"
+          echo "${KUBECTL_SHA256}  kubectl" | shasum -a 256 --check
+          install -m 0755 kubectl "$HOME/bin/kubectl"
+          echo "$HOME/bin" >> "$GITHUB_PATH"
+          echo "$HOME/.krew/bin" >> "$GITHUB_PATH"
+      - name: Install Krew from its release, as krew-index's CI does
+        run: |
+          set -euo pipefail
+          cd "$(mktemp -d)"
+          curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/download/${KREW_VERSION}/krew.yaml"
+          curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/download/${KREW_VERSION}/${KREW}.tar.gz"
+          echo "${KREW_YAML_SHA256}  krew.yaml" | shasum -a 256 --check
+          echo "${KREW_SHA256}  ${KREW}.tar.gz" | shasum -a 256 --check
+          tar -xzf "${KREW}.tar.gz"
+          "./${KREW}" install --manifest=krew.yaml --archive="${KREW}.tar.gz"
+      - name: Show the versions in use
+        run: |
+          set -euo pipefail
+          kubectl version --client
+          kubectl krew version
+          python3 --version
+      - name: Build validate-krew-manifest
+        run: GOBIN="$HOME/bin" go install "sigs.k8s.io/krew/cmd/validate-krew-manifest@${KREW_VERSION}"
+      - name: Validate the manifest
+        run: validate-krew-manifest -manifest "$MANIFEST"
+      - name: Install the plugin from the manifest
+        run: |
+          set -euo pipefail
+          kubectl krew install --manifest="$MANIFEST"
+          kubectl krew list
+      - name: Run the installed plugin through kubectl
+        run: |
+          set -euo pipefail
+          version="$(sed -n 's/^  version: v//p' "$MANIFEST")"
+          if [ -z "$version" ]; then echo "no version in the manifest"; exit 1; fi
+          usage="$(kubectl incident2chaos --help)"
+          echo "${usage%%$'\n'*}"
+          case "$usage" in "usage: kubectl incident2chaos"*) ;; *) echo "unexpected usage line"; exit 1 ;; esac
+          kubectl incident2chaos --version | grep "incident2chaos ${version}"
+          kubectl incident2chaos faults > /dev/null
+          kubectl incident2chaos coverage
+          kubectl incident2chaos generate --corpus-id 1 --tool litmus > /dev/null
+      - name: Uninstall the plugin
+        run: |
+          set -euo pipefail
+          kubectl krew uninstall incident2chaos
+          if kubectl incident2chaos --help > /dev/null 2>&1; then echo "the plugin is still installed"; exit 1; fi
