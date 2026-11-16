@@ -101,9 +101,12 @@ jobs:
         run: GOBIN="$HOME/bin" go install "sigs.k8s.io/krew/cmd/validate-krew-manifest@${KREW_VERSION}"
       - name: Validate the manifest
         run: validate-krew-manifest -manifest "$MANIFEST"
+      # Krew is installed above without its plugin index, as krew-index's CI installs it.
+      # "kubectl krew list" and "kubectl krew uninstall" need the index a user's Krew has.
       - name: Install the plugin from the manifest
         run: |
           set -euo pipefail
+          kubectl krew update
           kubectl krew install --manifest="$MANIFEST"
           kubectl krew list
       - name: Run the installed plugin through kubectl
