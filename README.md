@@ -115,7 +115,7 @@ No report text is redistributed. The corpus holds each report's link, its title 
 ## Versions the mapping was read from
 
 - Chaos Mesh, commit e636338c (Nov 3, 2026), the API types under `api/v1alpha1`
-- LitmusChaos chaos-charts, commit b2662c23 (Apr 16, 2026), 60 fault folders
+- LitmusChaos chaos-charts, commit b2662c23 (Apr 16, 2026), 53 fault folders (the released codebook says 60, a count that includes 7 icon folders)
 
 A fault added to either tool after these commits may change a class from approximation to direct.
 
