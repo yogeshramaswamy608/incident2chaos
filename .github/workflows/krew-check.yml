@@ -1,7 +1,7 @@
 name: krew-check
 
 # Checks the Krew manifest of the kubectl plugin (deploy/krew/incident2chaos.yaml) on Linux
-# and on macOS, the two systems the manifest names:
+# and on macOS (Apple silicon and Intel), the two systems the manifest names:
 #   1. validate-krew-manifest, the validator that the CI of kubernetes-sigs/krew-index runs
 #      on a pull request, built from the same Krew version (its .github/workflows/ci.yml);
 #   2. an install from the manifest alone, which downloads the plugin archive from the
@@ -11,7 +11,8 @@ name: krew-check
 #      workflow's plugin test; then the uninstall.
 # It never contacts a cluster: the plugin only writes files.
 # When GitHub finds no macOS runner it cancels that job after about 15 minutes and the run
-# shows as failed; "Re-run failed jobs" then runs the macOS job alone.
+# shows as failed; "Re-run failed jobs" then runs that job alone. On Nov 16, 2026 GitHub's
+# arm64 macOS runners were short all day, so the Intel image gives a second macOS job.
 
 on:
   workflow_dispatch:
@@ -51,6 +52,11 @@ jobs:
             krew-sha256: 5e33636a73392cf88021a85162ac4d4c86d4c0b57677e64094bcbcca637068e6
             kubectl: darwin/arm64
             kubectl-sha256: 55701af0d51815ee335f240e48acf0959c3c23017ed3fa816e880c4a92bae581
+          - os: macos-26-intel
+            krew: krew-darwin_amd64
+            krew-sha256: 7ff3dde825734e74f4975c8e922b4419639e5fbff738786ab085cf06a0d1ccc0
+            kubectl: darwin/amd64
+            kubectl-sha256: 88379aff5c8111de6be0a394adffba2819e44cde269f3ab23cef76de1a48eaa8
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
     env:
