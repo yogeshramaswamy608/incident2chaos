@@ -12,10 +12,6 @@ on:
       tag:
         description: "Existing release tag to publish, for example v0.1.0"
         required: true
-  # One time only: publishes the existing tag v0.1.0 from this branch before the merge.
-  # The next commit removes this trigger and the fallback tag below.
-  push:
-    branches: [distribution]
 
 permissions:
   contents: read
@@ -25,7 +21,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  TAG: ${{ github.event.release.tag_name || inputs.tag || 'v0.1.0' }}
+  TAG: ${{ github.event.release.tag_name || inputs.tag }}
 
 jobs:
   build:

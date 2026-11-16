@@ -27,5 +27,5 @@ spec:
         - darwin
         - linux
     uri: https://github.com/yogeshramaswamy608/incident2chaos/releases/download/v0.1.0/kubectl-incident2chaos.tar.gz
-    sha256: 72673fe52d60827c3761cce2633da5f35074f9a11401ea2a5e0824ccaec6a418
+    sha256: b6e83cf44c24c16904a504005e82d27dbed6ca4f46c01cdd3894b2ef26aa932d
     bin: kubectl-incident2chaos
