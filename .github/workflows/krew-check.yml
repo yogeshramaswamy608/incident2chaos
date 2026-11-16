@@ -1,7 +1,7 @@
 name: krew-check
 
 # Checks the Krew manifest of the kubectl plugin (deploy/krew/incident2chaos.yaml) on Linux
-# and on macOS (Apple silicon and Intel), the two systems the manifest names:
+# and on macOS, the two systems the manifest names:
 #   1. validate-krew-manifest, the validator that the CI of kubernetes-sigs/krew-index runs
 #      on a pull request, built from the same Krew version (its .github/workflows/ci.yml);
 #   2. an install from the manifest alone, which downloads the plugin archive from the
@@ -10,9 +10,10 @@ name: krew-check
 #   3. the installed plugin, started through kubectl, with the five commands of the release
 #      workflow's plugin test; then the uninstall.
 # It never contacts a cluster: the plugin only writes files.
-# When GitHub finds no macOS runner it cancels that job after about 15 minutes and the run
-# shows as failed; "Re-run failed jobs" then runs that job alone. On Nov 16, 2026 GitHub's
-# arm64 macOS runners were short all day, so the Intel image gives a second macOS job.
+# The macOS job runs on GitHub's Intel image. On Nov 16, 2026 GitHub's arm64 macOS runners
+# were short all day: a job that finds no runner is cancelled after about 15 minutes and
+# marks the whole run as failed. The plugin is one Python file and the manifest names no
+# architecture, so the Intel image tests the same archive.
 
 on:
   workflow_dispatch:
@@ -44,19 +45,13 @@ jobs:
           # release, and kubectl.sha256 on dl.k8s.io.
           # Go builds the validator: 1.22 on Linux, as krew-index's CI does. macOS 26 refuses
           # to start a program that has no LC_UUID load command, which Go writes from 1.24
-          # on, so the macOS jobs build with Go 1.25.
+          # on, so the macOS job builds with Go 1.25.
           - os: ubuntu-24.04
             go: "1.22"
             krew: krew-linux_amd64
             krew-sha256: bacc06800bda14ec063cd0b6f377a961fdf4661c00366bf9834723cd28bfabc7
             kubectl: linux/amd64
             kubectl-sha256: c04487523e7aa7d1493f7808174c899db93d7a9cf57531420cd76b9bd415f8f4
-          - os: macos-latest
-            go: "1.25"
-            krew: krew-darwin_arm64
-            krew-sha256: 5e33636a73392cf88021a85162ac4d4c86d4c0b57677e64094bcbcca637068e6
-            kubectl: darwin/arm64
-            kubectl-sha256: 55701af0d51815ee335f240e48acf0959c3c23017ed3fa816e880c4a92bae581
           - os: macos-26-intel
             go: "1.25"
             krew: krew-darwin_amd64
