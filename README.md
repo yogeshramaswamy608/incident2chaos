@@ -8,10 +8,10 @@ The tool comes with the coded corpus of the study “Do Chaos Experiments Match 
 
 ## Worked example, under five minutes
 
-You need Python 3.9 or later.
+You need Python 3.9 or later. The package is on PyPI: https://pypi.org/project/incident2chaos/
 
 ```bash
-pip install git+https://github.com/yogeshramaswamy608/incident2chaos@v0.1.0
+pip install incident2chaos==0.1.0
 incident2chaos faults
 ```
 
@@ -39,6 +39,19 @@ A report from the released corpus can be used directly by its number:
 ```bash
 incident2chaos generate --corpus-id 1 --tool litmus
 ```
+
+## As a kubectl plugin
+
+On Linux and macOS, with Python 3.9 or later on the PATH as `python3`, the tool also runs as a kubectl plugin. The GitHub release v0.1.0 carries it as the archive `kubectl-incident2chaos.tar.gz`, which holds the plugin file `kubectl-incident2chaos` (the tool and the pure Python part of PyYAML) and its license files:
+
+```bash
+curl -fsSLO https://github.com/yogeshramaswamy608/incident2chaos/releases/download/v0.1.0/kubectl-incident2chaos.tar.gz
+tar -xzf kubectl-incident2chaos.tar.gz kubectl-incident2chaos
+sudo mv kubectl-incident2chaos /usr/local/bin/
+kubectl incident2chaos faults
+```
+
+The Krew manifest for the plugin is `deploy/krew/incident2chaos.yaml`.
 
 ## Coverage
 
@@ -92,6 +105,8 @@ Code only what the report states. The codes, their definitions and the coding ru
 | `data/site_terms.md` | The site terms of each provider, read before collection |
 | `data/README.md` | The columns of the data files |
 | `dataset/` | The files of the Zenodo dataset record, as uploaded there |
+| `deploy/krew/incident2chaos.yaml` | The Krew manifest of the kubectl plugin |
+| `tools/krew/build_plugin.py` | Builds the kubectl plugin file from the release wheel; the release workflow runs it and publishes the package to PyPI |
 | `tests/` | Tests that rerun the figures of the paper's Tables 1 to 3 and its agreement figures, and validate every experiment against the Chaos Mesh and LitmusChaos resource schemas |
 | `teaching/incident-to-chaos-lab/` | A two-hour lab for courses in cloud computing, distributed systems and software engineering: the student handout, the instructor guide with its answer key, and the script that checks every command (CC BY 4.0) |
 
@@ -110,7 +125,7 @@ Cite the paper and the software. The `CITATION.cff` file gives the software cita
 
 > Ramaswamy Y (2026) Do Chaos Experiments Match Real Cloud Incidents? Mapping 497 Public Postmortems to Fault-Injection Coverage.
 
-The dataset on Zenodo: https://doi.org/10.5281/zenodo.23973151 (corpus, codebook, pilot and blind samples, CC BY 4.0). The software on Zenodo: https://doi.org/10.5281/zenodo.23973728 (all versions; release 0.1.0 is https://doi.org/10.5281/zenodo.23973729).
+The dataset on Zenodo: https://doi.org/10.5281/zenodo.23973151 (corpus, codebook, pilot and blind samples, CC BY 4.0). It is mirrored on Hugging Face at https://huggingface.co/datasets/yogeshramaswamy608/incident2chaos-corpus, and the Zenodo DOI stays the version of record. The software on Zenodo: https://doi.org/10.5281/zenodo.23973728 (all versions; release 0.1.0 is https://doi.org/10.5281/zenodo.23973729).
 
 ## How this was made
 
