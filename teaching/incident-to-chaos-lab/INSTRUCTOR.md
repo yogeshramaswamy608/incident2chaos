@@ -68,7 +68,7 @@ Common differences. R1: T6, a latent defect, for the client software that could 
 
 **4.2.** Partly. The defense that mattered was a client that copes with an answer it does not expect, and a failing lookup tests only the fallback when resolution fails. A closer test would return answers in a changed order, which neither tool's catalog offers as a built-in fault; that is a good class discussion of where the A mark overstates a match.
 
-**5.1.** Good answers name two of these: the reports are written by the providers themselves and choose what to disclose; one author checked the proposed labels of the 50-report pilot (agreeing with 40, changing 10) and coded a sample of 45 blind, and a language model proposed the labels of the other 447 reports under the frozen codebook, with agreement on the primary fault of kappa 0.875 in the blind sample; the mapping to the tools was read from one commit of each tool's catalog, and a fault added since may change a class; five providers do not stand for every cloud.
+**5.1.** Good answers name two of these: the reports are written by the providers themselves and choose what to disclose; a language model proposed the labels of all 497 reports, one author checked the proposed labels of the 50-report pilot (agreeing with 40, changing 10) and coded a sample of 45 blind, and the labels of the other 447 reports were not revised afterwards, with agreement on the primary fault of kappa 0.87 in the blind sample; the mapping to the tools was read from one commit of each tool's catalog, and a fault added since may change a class; five providers do not stand for every cloud.
 
 ## Suggested marking, 10 points
 

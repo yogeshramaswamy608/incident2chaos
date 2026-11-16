@@ -1,0 +1,6 @@
+# Files the source archive carries beside the package, so its tests run from the archive alone.
+include CHANGELOG.md CITATION.cff
+include data/README.md data/codebook.md data/site_terms.md
+recursive-include tests *.py *.json
+include examples/*.yaml
+include tools/e2e/badge_reports/*.yaml
