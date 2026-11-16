@@ -79,13 +79,36 @@ jobs:
             python-version: "3.9"
           - os: ubuntu-latest
             python-version: "3.13"
-          - os: macos-latest
-            python-version: "3.13"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: ${{ matrix.python-version }}
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: plugin
+      - name: Run the plugin as kubectl runs it
+        run: |
+          tar -xzf kubectl-incident2chaos.tar.gz
+          python3 --version
+          ./kubectl-incident2chaos --help | head -1 | grep "usage: kubectl incident2chaos"
+          ./kubectl-incident2chaos --version | grep "incident2chaos ${TAG#v}"
+          ./kubectl-incident2chaos faults > /dev/null
+          ./kubectl-incident2chaos coverage
+          ./kubectl-incident2chaos generate --corpus-id 1 --tool litmus > /dev/null
+
+  # The same test on macOS. It runs beside the two publish jobs, and neither waits for it.
+  # On Nov 16, 2026 GitHub twice found no macOS runner and cancelled this job after 15
+  # minutes, which kept v0.1.1 off PyPI (run 43843722874). When that happens the run shows
+  # as failed, and "Re-run failed jobs" runs this job alone on the same archive.
+  test-plugin-macos:
+    name: test-plugin (macos-latest, 3.13)
+    needs: build
+    runs-on: macos-latest
+    steps:
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: plugin
