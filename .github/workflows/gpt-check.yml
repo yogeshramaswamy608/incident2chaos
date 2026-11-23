@@ -1,0 +1,39 @@
+name: gpt-label-check
+
+# Second-model label check for paper 1 (gpt_check/PLAN.md).
+# Runs only on a push to its own branch that changes gpt_check/run.json. Never on pull_request_target.
+on:
+  push:
+    branches: [gpt-label-check]
+    paths: [gpt_check/run.json]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gpt-label-check
+  cancel-in-progress: false
+
+jobs:
+  run:
+    if: github.ref == 'refs/heads/gpt-label-check'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests==2.32.3 beautifulsoup4==4.12.3 lxml==5.3.0
+      - name: Run the stage named in run.json
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python gpt_check/runner.py
+      - name: Commit the outputs to this branch
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gpt_check/out || true
+          git diff --cached --quiet || git commit -m "gpt-label-check: outputs of run ${{ github.run_id }}"
+          git push origin HEAD:gpt-label-check
