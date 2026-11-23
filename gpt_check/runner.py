@@ -206,11 +206,15 @@ def parse_reply(reply):
 
 
 def cost_of(usage, price):
-    """Dollars for one call from its usage and the prices per million tokens in run.json."""
-    cached = (usage.get("input_tokens_details") or {}).get("cached_tokens", 0)
-    fresh = usage.get("input_tokens", 0) - cached
+    """Dollars for one call from its usage and the prices per million tokens in run.json.
+    Cache-write tokens, when the usage reports them, are charged at the cache-write price."""
+    details = usage.get("input_tokens_details") or {}
+    cached = details.get("cached_tokens", 0)
+    written = sum(v for k, v in details.items() if "write" in k and isinstance(v, int))
+    fresh = usage.get("input_tokens", 0) - cached - written
     out = usage.get("output_tokens", 0)
-    return (fresh * price["input"] + cached * price.get("cached_input", price["input"]) + out * price["output"]) / 1e6
+    return (fresh * price["input"] + cached * price.get("cached_input", price["input"])
+            + written * price.get("cache_write", price["input"]) + out * price["output"]) / 1e6
 
 
 def spent_so_far():

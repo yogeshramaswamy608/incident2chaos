@@ -1,13 +1,39 @@
 {
-  "stage": "probe",
+  "stage": "pilot",
   "note": "Stages: probe (key check, no cost), pilot, full, second. Caps are totals across every stage so far, in US dollars.",
-  "models": [],
-  "prices_per_million": {},
-  "estimate_per_report_usd": {},
+  "models": [
+    "gpt-6.2-astra",
+    "gpt-6.2-sol"
+  ],
+  "prices_per_million": {
+    "gpt-6.2-astra": {
+      "input": 8.0,
+      "cached_input": 0.4,
+      "cache_write": 10.0,
+      "output": 40.0
+    },
+    "gpt-6.2-sol": {
+      "input": 2.0,
+      "cached_input": 0.1,
+      "cache_write": 2.5,
+      "output": 10.0
+    }
+  },
+  "estimate_per_report_usd": {
+    "gpt-6.2-astra": 0.25,
+    "gpt-6.2-sol": 0.08
+  },
   "reasoning_effort": "medium",
   "service_tier": "",
   "max_output_tokens": 8000,
   "pause_seconds": 2,
-  "caps_usd": {"pilot": 3.0, "full": 23.0, "second": 30.0},
-  "exclude_sources": ["Cloudflare blog post-mortem"]
+  "caps_usd": {
+    "pilot": 3.0,
+    "full": 23.0,
+    "second": 30.0
+  },
+  "exclude_sources": [
+    "Cloudflare blog post-mortem"
+  ],
+  "prices_read": "Standard tier, short context, OpenAI pricing page developers.openai.com/api/docs/pricing as indexed Mon Nov 23, 2026"
 }
