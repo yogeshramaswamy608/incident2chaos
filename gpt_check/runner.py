@@ -90,27 +90,34 @@ def _github_section(soup, row):
     if " – " not in title and anchor is None:
         return body.get_text(" ", strip=True)
     wanted = _norm(title.split(" – ", 1)[1]) if " – " in title else _norm(anchor.get_text())
-    blocks = body.find_all(["h2", "h3", "h4", "p", "li"])
+    blocks = body.find_all(["h1", "h2", "h3", "h4", "p", "li"])
 
     def level(el):
-        """Heading level: h2 2, h3 3, h4 4, a paragraph that is all bold 4.5; 0 for body text."""
-        if el.name in ("h2", "h3", "h4"):
+        """Heading level: h1 1 to h4 4, a paragraph that is only bold text 4.5; 0 for body text."""
+        if el.name in ("h1", "h2", "h3", "h4"):
             return int(el.name[1])
-        strong = el.find("strong") if el.name == "p" else None
-        return 4.5 if strong and _norm(strong.get_text()) == _norm(el.get_text()) else 0
+        if el.name != "p":
+            return 0
+        bold = "".join(b.get_text() for b in el.find_all("strong"))
+        return 4.5 if bold and _norm(bold) == _norm(el.get_text()) else 0
 
     start = None
     for i, el in enumerate(blocks):
-        if level(el) and _norm(el.get_text()).startswith(wanted[:40]):
+        if level(el) and wanted[:40] in _norm(el.get_text()):
             start = i
             break
     if start is None:
         return ""
     top = level(blocks[start])
     out = [blocks[start].get_text(" ", strip=True)]
+    body_seen = False
     for el in blocks[start + 1:]:
         if 0 < level(el) <= top:
-            break
+            if body_seen:
+                break
+            out.append(el.get_text(" ", strip=True))  # a second heading that shares this narrative
+            continue
+        body_seen = True
         out.append(el.get_text(" ", strip=True))
     return "\n".join(out)
 
