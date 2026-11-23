@@ -1,9 +1,8 @@
 {
-  "stage": "pilot",
+  "stage": "full",
   "note": "Stages: probe (key check, no cost), pilot, full, second. Caps are totals across every stage so far, in US dollars.",
   "models": [
-    "gpt-6.2-astra",
-    "gpt-6.2-sol"
+    "gpt-6.2-astra"
   ],
   "prices_per_million": {
     "gpt-6.2-astra": {
@@ -33,7 +32,8 @@
     "second": 30.0
   },
   "exclude_sources": [
-    "Cloudflare blog post-mortem"
+    "Cloudflare blog post-mortem",
+    "AWS PES"
   ],
   "prices_read": "Standard tier, short context, OpenAI pricing page developers.openai.com/api/docs/pricing as indexed Mon Nov 23, 2026"
 }
