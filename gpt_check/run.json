@@ -1,5 +1,5 @@
 {
-  "stage": "full",
+  "stage": "second",
   "note": "Stages: probe (key check, no cost), pilot, full, second. Caps are totals across every stage so far, in US dollars.",
   "models": [
     "gpt-6.2-astra"
