@@ -11,8 +11,8 @@ spec:
     codes and 20 fault classes, into Chaos Mesh or LitmusChaos experiments
     annotated with the report's link, marking each fault class as a direct
     injection, an approximation or not injectable. It ships with a coded corpus of
-    497 public post-incident reports from AWS, Microsoft Azure, Google Cloud,
-    Cloudflare and GitHub, and measures what share of a set of incidents have a
+    437 public post-incident reports from Microsoft Azure, Google Cloud and
+    GitHub, and measures what share of a set of incidents have a
     primary fault the two tools can inject directly. It only writes files and never
     contacts the cluster. The experiments it writes are applied with kubectl apply.
   caveats: |

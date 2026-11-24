@@ -5,7 +5,7 @@ This covers src/incident2chaos/data/corpus.csv, src/incident2chaos/data/blind_sa
 src/incident2chaos/data/pilot_check.csv, src/incident2chaos/data/fault_classes.json, src/incident2chaos/data/triggers.json,
 data/codebook.md and data/site_terms.md.
 
-Attribution: Yogesh Ramaswamy (2026), corpus and codebook of “Do Chaos Experiments Match Real Cloud Incidents? Mapping 497 Public Postmortems to Fault-Injection Coverage”.
+Attribution: Yogesh Ramaswamy (2026), corpus and codebook of “Which Real Cloud Failures Can Chaos Tools Inject? A Mapping Study of 437 Public Post-Incident Reports and Two Fault Catalogs”.
 
 The reports themselves belong to their publishers and are not included. The corpus holds
 only each report's link, its title and date as the publisher's index lists them,

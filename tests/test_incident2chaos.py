@@ -32,9 +32,10 @@ def test_codebook_has_20_fault_classes_and_14_trigger_codes():
 
 def test_injectability_matches_each_codebook_line():
     for code, item in fault_classes().items():
-        label = re.match(r"F\d+ .+?\. (A|P|N)", item["codebook_line"]).group(1)
-        assert injectability(code) == ("P" if code == "F3" else label), code
-    assert injectability("F3", "AWS PES") == "A"
+        label = re.match(r"F\d+ .+?\. (A|P|N)(?:\.| on | in )", item["codebook_line"]).group(1)
+        assert injectability(code) == label, code
+    # Codebook version 3 (the author's mapping check, Tue Nov 24, 2026): F3, F8 and F16 are P, F19 is A.
+    assert [injectability(c) for c in ("F3", "F8", "F16", "F19")] == ["P", "P", "P", "A"]
     assert injectability("F3", "Google Cloud incident report") == "P"
     assert injectability("F99") == "NS"
 
@@ -43,8 +44,10 @@ def test_injectability_matches_each_codebook_line():
 
 def test_corpus_rows_are_unique_and_carry_no_report_text():
     rows = corpus_rows()
-    assert len(rows) == 497
-    assert len({(r["source"], r["report_id"]) for r in rows}) == 497
+    assert len(rows) == 437
+    assert len({(r["source"], r["report_id"]) for r in rows}) == 437
+    # Dataset 2.0.0 withdrew the AWS and Cloudflare reports under those sites' terms (dataset/site_terms.md).
+    assert not {r["source"] for r in rows} & {"AWS PES", "Cloudflare blog post-mortem"}
     for row in rows:
         assert row["url"].startswith("https://")
         for column in ("evidence_trigger", "evidence_fault"):
@@ -59,20 +62,18 @@ def test_coverage_reproduces_paper_1_headline():
     result, mismatches = measure()
     assert mismatches == []
     (overall,) = result
-    assert (overall["reports"], overall["in_scope"], overall["stated"]) == (497, 491, 484)
-    assert (overall["A"], overall["P"], overall["N"], overall["not_stated"]) == (274, 208, 2, 7)
-    assert round(100 * overall["A_share"], 1) == 56.6
-    assert (round(100 * overall["A_low"], 1), round(100 * overall["A_high"], 1)) == (52.2, 61.0)
-    assert overall["any_fault_A"] == 425
+    assert (overall["reports"], overall["in_scope"], overall["stated"]) == (437, 436, 429)
+    assert (overall["A"], overall["P"], overall["N"], overall["not_stated"]) == (199, 228, 2, 7)
+    assert round(100 * overall["A_share"], 1) == 46.4
+    assert (round(100 * overall["A_low"], 1), round(100 * overall["A_high"], 1)) == (41.7, 51.1)
+    assert overall["any_fault_A"] == 371
 
 
 def test_coverage_by_source_matches_paper_table_3():
     expected = {  # source: reports, in scope, A, P, N, not stated, A share %, low %, high %
-        "AWS PES": (18, 18, 13, 5, 0, 0, 72.2, 49.1, 87.5),
-        "Microsoft Azure PIR": (81, 80, 47, 32, 1, 0, 58.8, 47.8, 68.9),
-        "Google Cloud incident report": (172, 172, 108, 63, 1, 0, 62.8, 55.4, 69.7),
-        "Cloudflare blog post-mortem": (42, 37, 21, 16, 0, 0, 56.8, 40.9, 71.3),
-        "GitHub availability report": (184, 184, 85, 92, 0, 7, 48.0, 40.8, 55.3),
+        "Microsoft Azure PIR": (81, 80, 36, 43, 1, 0, 45.0, 34.6, 55.9),
+        "Google Cloud incident report": (172, 172, 87, 84, 1, 0, 50.6, 43.2, 58.0),
+        "GitHub availability report": (184, 184, 76, 101, 0, 7, 42.9, 35.9, 50.3),
     }
     result, _ = measure(by="source")
     got = {r["group"]: (r["reports"], r["in_scope"], r["A"], r["P"], r["N"], r["not_stated"],
@@ -82,9 +83,9 @@ def test_coverage_by_source_matches_paper_table_3():
 
 
 def test_coverage_by_trigger_matches_paper_table_1():
-    expected = {"T99": (55, 80), "T2": (42, 85), "T3": (43, 84), "T1": (38, 68), "T5": (9, 37), "T8": (24, 32),
-                "T10": (23, 26), "T6": (15, 21), "T11": (1, 13), "T7": (9, 10), "T4": (3, 9), "T9": (7, 8),
-                "T12": (2, 6), "T13": (3, 5)}
+    expected = {"T99": (44, 80), "T2": (24, 72), "T3": (37, 74), "T1": (34, 58), "T5": (6, 36), "T8": (18, 24),
+                "T10": (12, 23), "T6": (9, 17), "T11": (1, 13), "T7": (9, 9), "T4": (3, 9), "T9": (1, 6),
+                "T12": (0, 5), "T13": (1, 3)}
     result, _ = measure(by="trigger")
     got = {r["group"]: (r["A"], r["stated"]) for r in result if r["group"] not in ("All", "")}
     assert got == expected
@@ -93,18 +94,18 @@ def test_coverage_by_trigger_matches_paper_table_1():
 def test_primary_fault_counts_match_paper_table_2():
     rows = [r for r in corpus_rows() if r["in_scope"] == "yes"]
     counts = Counter(r["fault_primary"] for r in rows)
-    assert counts["F20"] == 69 and counts["F14"] == 68 and counts["F16"] == 48 and counts["F99"] == 7
-    assert sum(counts.values()) == 491
+    assert counts["F14"] == 64 and counts["F20"] == 63 and counts["F16"] == 45 and counts["F99"] == 7
+    assert sum(counts.values()) == 436
 
 
 def test_wilson_interval():
-    low, high = wilson(274, 484)
+    low, high = wilson(199, 429)
     # Cross-check with the quadratic form of the score interval: (p - x)^2 = z^2 x (1 - x) / n.
-    n, p, z = 484, 274 / 484, 1.959963984540054
+    n, p, z = 429, 199 / 429, 1.959963984540054
     a, b, c = 1 + z * z / n, -(2 * p + z * z / n), p * p
     roots = sorted(((-b - (b * b - 4 * a * c) ** 0.5) / (2 * a), (-b + (b * b - 4 * a * c) ** 0.5) / (2 * a)))
     assert (round(low, 10), round(high, 10)) == (round(roots[0], 10), round(roots[1], 10))
-    assert (round(low, 4), round(high, 4)) == (0.5216, 0.6096)
+    assert (round(low, 4), round(high, 4)) == (0.4172, 0.5112)
     assert wilson(0, 0) == (0.0, 0.0)
 
 
@@ -119,27 +120,28 @@ def _kappa(pairs):
 def test_blind_sample_reproduces_the_agreement_figures():
     text = resources.files("incident2chaos.data").joinpath("blind_sample.csv").read_text(encoding="utf-8")
     rows = list(csv.DictReader(text.splitlines()))
-    assert len(rows) == 45
+    assert len(rows) == 43
     both = [r for r in rows if r["first_pass_in_scope"] == "yes"]
-    assert len(both) == 44
+    assert len(both) == 42
     by_no = {r["corpus_no"]: r for r in corpus_rows()}
     trig = [(r["first_pass_trigger"], r["author_trigger"]) for r in both]
     fault = [(r["first_pass_fault"], r["author_fault"]) for r in both]
     inj = [(injectability(a, by_no[r["corpus_no"]]["source"]), injectability(b, by_no[r["corpus_no"]]["source"]))
            for r, (a, b) in zip(both, fault)]
-    assert sum(a == b for a, b in trig) == 33 and round(_kappa(trig), 2) == 0.72
-    assert sum(a == b for a, b in fault) == 39 and round(_kappa(fault), 4) == 0.8746 and round(_kappa(fault), 2) == 0.87
-    assert sum(a == b for a, b in inj) == 42 and round(_kappa(inj), 3) == 0.913
+    assert sum(a == b for a, b in trig) == 31 and round(_kappa(trig), 2) == 0.70
+    assert sum(a == b for a, b in fault) == 37 and round(_kappa(fault), 2) == 0.87
+    assert sum(a == b for a, b in inj) == 39 and round(_kappa(inj), 2) == 0.86
 
 
 def test_packaged_data_files_are_the_files_of_the_zenodo_record():
-    # MD5 of the five data files of Zenodo dataset version 1.0.2. The three tables differ from versions 1.0.0
-    # and 1.0.1 in the links of the 81 Azure reports alone; the two code files are the files of all three versions.
+    # MD5 of the five data files of Zenodo dataset version 2.0.0. The three tables are the rows of version 1.0.2
+    # without the AWS and Cloudflare reports; codebook version 3 changes the injectability of F3, F8, F16 and F19,
+    # so 73 corpus values and 5 pilot values follow, and fault_classes.json carries the four new lines.
     expected = {
-        "corpus.csv": "0ebdcdf732a272063ae2342aa4595fa4",
-        "blind_sample.csv": "12ea1c9e2a7cdd8bc070cc9d59e779f3",
-        "pilot_check.csv": "0dde58a20d03908bfd3cc9ad607a9780",
-        "fault_classes.json": "51e5a33431ab96c4ece2aa85b784e47c",
+        "corpus.csv": "3630d0260a1cb2f3b50a036df16cbeff",
+        "blind_sample.csv": "d4a429303245965209f6615dead38271",
+        "pilot_check.csv": "2f343ef38887c4643f27855bb9a19664",
+        "fault_classes.json": "cf70c67752674bd35207b84935a7422f",
         "triggers.json": "41422043c5a3ed96e7ef1c8167fbe54c",
     }
     for name, md5 in expected.items():
@@ -155,7 +157,7 @@ def test_azure_links_hold_the_review_address_by_tracking_id():
     assert len(azure) == 81
     for row in azure:
         assert row["url"] == base + row["report_id"], row["corpus_no"]
-    for name, count in (("blind_sample.csv", 45), ("pilot_check.csv", 50)):
+    for name, count in (("blind_sample.csv", 43), ("pilot_check.csv", 34)):
         text = resources.files("incident2chaos.data").joinpath(name).read_text(encoding="utf-8")
         rows = list(csv.DictReader(text.splitlines()))
         assert len(rows) == count
@@ -166,11 +168,11 @@ def test_azure_links_hold_the_review_address_by_tracking_id():
 def test_pilot_check_reproduces_the_pilot_figures():
     text = resources.files("incident2chaos.data").joinpath("pilot_check.csv").read_text(encoding="utf-8")
     rows = list(csv.DictReader(text.splitlines()))
-    assert len(rows) == 50 and Counter(r["verdict"] for r in rows) == {"AGREE": 40, "CHANGE": 10}
+    assert len(rows) == 34 and Counter(r["verdict"] for r in rows) == {"AGREE": 25, "CHANGE": 9}
     trig = [(r["proposed_trigger"], r["final_trigger"]) for r in rows]
     fault = [(r["proposed_fault"], r["final_fault"]) for r in rows]
-    assert sum(a == b for a, b in trig) == 45 and round(_kappa(trig), 2) == 0.88
-    assert sum(a == b for a, b in fault) == 45 and round(_kappa(fault), 2) == 0.89
+    assert sum(a == b for a, b in trig) == 30 and round(_kappa(trig), 2) == 0.86
+    assert sum(a == b for a, b in fault) == 29 and round(_kappa(fault), 2) == 0.83
     by_no = {r["corpus_no"]: r for r in corpus_rows()}
     for r in rows:
         assert by_no[r["corpus_no"]]["fault_primary"] == r["final_fault"]
@@ -254,19 +256,19 @@ def test_names_are_valid_kubernetes_names():
 
 
 def test_example_report_generates_and_parses():
-    report = load_report(ROOT / "examples" / "aws-dynamodb-2025-10-19.yaml")
-    assert report.primary_fault == "F9" and report.source == "AWS PES"
+    report = load_report(ROOT / "examples" / "azure-storage-2024-11-13.yaml")
+    assert report.primary_fault == "F9" and report.source == "Microsoft Azure PIR"
     items = experiments(report, tool="chaos-mesh", target=FULL_TARGET, all_faults=True)
-    assert [i.fault for i in items] == ["F9", "F19", "F16", "F20", "F18"]
-    assert [i.injectability for i in items] == ["A", "P", "A", "P", "P"]
+    assert [i.fault for i in items] == ["F9", "F15", "F16", "F14"]
+    assert [i.injectability for i in items] == ["A", "P", "P", "A"]
     docs = [d for d in yaml.safe_load_all(render(report, items, "chaos-mesh")) if d]
-    assert [d["kind"] for d in docs] == ["DNSChaos", "IOChaos", "NetworkChaos"]
-    assert docs[0]["metadata"]["annotations"]["incident2chaos.io/report"] == "https://aws.amazon.com/message/101925/"
+    assert [d["kind"] for d in docs] == ["DNSChaos", "IOChaos", "NetworkChaos", "HTTPChaos"]
+    assert docs[0]["metadata"]["annotations"]["incident2chaos.io/report"] == "https://azure.status.microsoft/en-us/status/history/?trackingId=PSM0-BQ8"
 
 
 def test_report_from_corpus_and_out_of_scope():
-    report = report_from_corpus("1")
-    assert report.id == "101925" and report.primary_fault == "F9"
+    report = report_from_corpus("31")
+    assert report.id == "PSM0-BQ8" and report.primary_fault == "F9"
     with pytest.raises(ValueError):
         report_from_corpus("36")
     with pytest.raises(KeyError):
@@ -291,16 +293,16 @@ def test_bad_codes_are_rejected():
 def test_cli_faults_generate_and_coverage(tmp_path, capsys):
     assert cli.main(["faults", "--triggers"]) == 0
     out = capsys.readouterr().out
-    assert "F20" in out and "T99" in out and "A on AWS, P elsewhere" in out
+    assert "F20" in out and "T99" in out and "A on AWS, P elsewhere" not in out
     target = tmp_path / "exp.yaml"
-    assert cli.main(["generate", "--report", str(ROOT / "examples" / "aws-dynamodb-2025-10-19.yaml"),
+    assert cli.main(["generate", "--report", str(ROOT / "examples" / "azure-storage-2024-11-13.yaml"),
                      "--tool", "litmus", "--out", str(target)]) == 0
     docs = [d for d in yaml.safe_load_all(target.read_text()) if d]
     assert docs[0]["kind"] == "ChaosEngine" and docs[0]["spec"]["experiments"][0]["name"] == "pod-dns-error"
     capsys.readouterr()
     assert cli.main(["coverage", "--json"]) == 0
     data = json.loads(capsys.readouterr().out)
-    assert data["groups"][0]["A"] == 274 and data["stored_value_mismatches"] == []
+    assert data["groups"][0]["A"] == 199 and data["stored_value_mismatches"] == []
     assert cli.main(["generate"]) == 2
 
 

@@ -137,14 +137,11 @@ def parse_codebook(codebook_md, names, out_dir):
                              "definition": match.group(3).strip()})
     faults = []
     for line in sec3.strip().splitlines():
-        match = re.match(r"(F\d+) (.+?)\. (A|P|N|A on AWS only|A in Chaos Mesh only)[\s(.]", line.strip() + " ")
+        match = re.match(r"(F\d+) (.+?)\. (A|P|N|A on AWS only|A in Chaos Mesh only)(?:\.|[\s(]+(?:on|in|\())", line.strip() + " ")
         if not match:
             continue
         code, name, label = match.groups()
-        if code == "F3":
-            inj = {"AWS PES": "A", "default": "P"}
-        else:
-            inj = {"default": label[0]}
+        inj = {"default": label[0]}
         faults.append({"code": code, "name": names[code], "injectability": inj,
                        "codebook_line": line.strip()})
     assert [t["code"] for t in triggers] == [f"T{i}" for i in range(1, 14)] + ["T99"], triggers

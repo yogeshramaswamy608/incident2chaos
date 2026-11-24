@@ -1,5 +1,5 @@
-Codebook, version 2, Wed Nov 4, 2026, for the study “Do Chaos Experiments Match Real Cloud Incidents? Mapping 497 Public Postmortems to Fault-Injection Coverage”. Replaces version 1 of Tue Nov 3, 2026.
-Status: frozen for the full corpus. Built from the author's check of the 50-report pilot (40 AGREE, 10 CHANGE). Changed only by a disagreement found in the blind check, logged in section 7.
+Codebook, version 3, Tue Nov 24, 2026, for the study “Which Real Cloud Failures Can Chaos Tools Inject? A Mapping Study of 437 Public Post-Incident Reports and Two Fault Catalogs”. Replaces version 2 of Wed Nov 4, 2026, whose labels it keeps.
+Status: frozen for dataset 2.0.0. Version 3 changes only the injectability of four fault classes in section 3 (F3, F8, F16, F19), from the author's check of the 20 mapping lines against the two catalogs; no trigger or fault label changed. Logged in section 7.
 
 1. Unit and rules
 One row per public post-incident report from a cloud provider's own site (first-party). The report's link and its labels are kept; none of its text is redistributed.
@@ -30,12 +30,12 @@ Catalogs read Tue Nov 3, 2026 from source: Chaos Mesh commit e636338c (Nov 3, 20
 
 F1 Process or pod crash. A. Chaos Mesh PodChaos pod-kill, container-kill; Litmus pod-delete, container-kill, spring-boot-app-kill.
 F2 Node, VM or instance loss. A. Chaos Mesh AWSChaos ec2-stop and ec2-restart, GCPChaos node-stop and node-reset, AzureChaos vm-stop and vm-restart, PodChaos pod-failure; Litmus node-drain, node-restart, node-poweroff, kubelet-service-kill, docker-service-kill, ec2-stop-by-id, gcp-vm-instance-stop, azure-instance-stop, vm-poweroff.
-F3 Zone or data-center loss, only when the report says a whole zone or data center was lost; part of a facility is F2. A on AWS only (Litmus aws-az-chaos); P elsewhere (several node stops at once).
+F3 Zone or data-center loss, only when the report says a whole zone or data center was lost; part of a facility is F2. P. Closest: several node stops at once, or Litmus aws-az-chaos, which removes a zone from a load balancer while the services in that zone keep running.
 F4 Region-wide or provider control-plane loss. N.
 F5 Network latency. A. Chaos Mesh NetworkChaos delay, HTTPChaos delay, BlockChaos delay; Litmus pod-network-latency, pod-http-latency.
 F6 Packet loss, corruption or duplication. A. Chaos Mesh NetworkChaos loss, corrupt, duplicate; Litmus pod-network-loss, pod-network-corruption, pod-network-duplication.
 F7 Network partition or link loss between components. A. Chaos Mesh NetworkChaos partition; Litmus pod-network-partition, pod-http-reset-peer.
-F8 Network capacity saturation. A. Chaos Mesh NetworkChaos bandwidth; Litmus pod-network-rate-limit.
+F8 Network capacity saturation. P. Closest: Chaos Mesh NetworkChaos bandwidth, Litmus pod-network-rate-limit; a bandwidth cap lowers a link's capacity, and the link saturates only when enough traffic reaches it.
 F9 DNS resolution failure. A. Chaos Mesh DNSChaos error, random; Litmus pod-dns-error, pod-dns-spoof.
 F10 CPU exhaustion. A. Chaos Mesh StressChaos cpu; Litmus pod-cpu-hog, node-cpu-hog.
 F11 Memory exhaustion or leak. A. Chaos Mesh StressChaos memory; Litmus pod-memory-hog, node-memory-hog.
@@ -43,10 +43,10 @@ F12 Storage fault: disk full, I/O errors or latency, volume loss. A. Chaos Mesh 
 F13 Clock or time fault. A in Chaos Mesh only (TimeChaos); none in the Litmus catalog.
 F14 Error responses or exceptions from a service. A. Chaos Mesh HTTPChaos abort, replace, patch, JVMChaos exception; Litmus pod-http-status-code, pod-http-modify-body, spring-boot-exceptions.
 F15 Bad configuration state spread to running systems. P. Closest: Chaos Mesh IOChaos mistake or attrOverride on a config file, HTTPChaos replace on a config service's answer.
-F16 A dependency inside the provider becomes unavailable, as the report states. A third party's outage is the trigger T10; the provider's own service that failed with it is F16. A. Partition or abort the calls to it (F7 or F14 faults aimed at the dependency).
+F16 A dependency inside the provider becomes unavailable, as the report states. A third party's outage is the trigger T10; the provider's own service that failed with it is F16. P. Closest: partition or abort one caller's calls to it (F7 or F14 faults aimed at the dependency); the dependency still serves other callers.
 F17 Credential, certificate or authentication failure. P. Closest: Chaos Mesh TimeChaos moved past the expiry date.
 F18 Software resource limit hit: connection pool, thread pool, file handles, quota or rate limit inside a service. P. Closest: Litmus k6-loadgen load against the limit.
-F19 Data corruption or inconsistent state. P. Closest: Chaos Mesh IOChaos mistake.
+F19 Data corruption or inconsistent state. A. Chaos Mesh IOChaos mistake, which can change bytes during a file write and so corrupt the stored data directly.
 F20 Overload or retry storm: queues back up or clients retry, from demand or from a failure, whether or not the system recovered alone. P. Closest: Litmus k6-loadgen with a dependency fault (F14 or F16).
 F99 Not stated.
 
@@ -72,3 +72,4 @@ Not adopted: a new fault class for software logic defects and one for network de
 7. Change log
 Wed Nov 4, 2026: the author's blind coding of 45 reports (blind_sample.csv) agreed with the first pass on injectability 42 of 44 (kappa 0.913), primary fault 39 of 44 (kappa 0.87) and trigger 33 of 44 (kappa 0.72); no rule added; version 2 stays frozen.
 Mon Nov 16, 2026, erratum: section 3 counted 60 fault folders; the seven group folders under faults/ at that commit hold 60 folders, 7 of them icon folders, so the count is 53. Section 1 called the labels ours and said the evidence paraphrase was in our own words; a language model proposed the labels, which the author checked for the 50 pilot reports, and wrote the paraphrases of the 447 first-pass rows, so section 1 now says its labels and a paraphrase, never a quotation. The line above, as first released, printed the primary fault kappa to three decimals as 0.875; the value is 307/351 = 0.8746, now printed to two decimals as 0.87. No code or label changed, and no rule changed in what it requires; version 2 stays frozen.
+Tue Nov 24, 2026, version 3: the author checked each of the 20 mapping lines against his own reading of the Chaos Mesh and LitmusChaos catalogs at the commits in section 3 and changed four. F3 A on AWS to P: Litmus aws-az-chaos removes a zone from a load balancer, but the services in the zone keep running. F8 A to P: a bandwidth cap lowers a link's capacity, but the link saturates only when enough traffic reaches it. F16 A to P: blocking one caller's requests makes the dependency look unavailable while it still serves other callers. F19 P to A: Chaos Mesh IOChaos mistake can change bytes during a file write and so corrupt the stored data directly. The other 16 lines stand. On the 429 reports with a stated primary fault, 73 injectability values follow (F16 45, F8 12, F19 16; no AWS report remains for F3), and the share directly covered moves from 240 (55.9 percent) to 199 (46.4 percent, 95 percent interval 41.7 to 51.1). No trigger or fault label changed.

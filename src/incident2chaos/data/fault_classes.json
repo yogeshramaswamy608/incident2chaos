@@ -19,10 +19,9 @@
   "code": "F3",
   "name": "Zone or data-center loss",
   "injectability": {
-   "AWS PES": "A",
    "default": "P"
   },
-  "codebook_line": "F3 Zone or data-center loss, only when the report says a whole zone or data center was lost; part of a facility is F2. A on AWS only (Litmus aws-az-chaos); P elsewhere (several node stops at once)."
+  "codebook_line": "F3 Zone or data-center loss, only when the report says a whole zone or data center was lost; part of a facility is F2. P. Closest: several node stops at once, or Litmus aws-az-chaos, which removes a zone from a load balancer while the services in that zone keep running."
  },
  {
   "code": "F4",
@@ -60,9 +59,9 @@
   "code": "F8",
   "name": "Network capacity saturation",
   "injectability": {
-   "default": "A"
+   "default": "P"
   },
-  "codebook_line": "F8 Network capacity saturation. A. Chaos Mesh NetworkChaos bandwidth; Litmus pod-network-rate-limit."
+  "codebook_line": "F8 Network capacity saturation. P. Closest: Chaos Mesh NetworkChaos bandwidth, Litmus pod-network-rate-limit; a bandwidth cap lowers a link's capacity, and the link saturates only when enough traffic reaches it."
  },
  {
   "code": "F9",
@@ -124,9 +123,9 @@
   "code": "F16",
   "name": "Internal dependency unavailable",
   "injectability": {
-   "default": "A"
+   "default": "P"
   },
-  "codebook_line": "F16 A dependency inside the provider becomes unavailable, as the report states. A third party's outage is the trigger T10; the provider's own service that failed with it is F16. A. Partition or abort the calls to it (F7 or F14 faults aimed at the dependency)."
+  "codebook_line": "F16 A dependency inside the provider becomes unavailable, as the report states. A third party's outage is the trigger T10; the provider's own service that failed with it is F16. P. Closest: partition or abort one caller's calls to it (F7 or F14 faults aimed at the dependency); the dependency still serves other callers."
  },
  {
   "code": "F17",
@@ -148,9 +147,9 @@
   "code": "F19",
   "name": "Data corruption or inconsistent state",
   "injectability": {
-   "default": "P"
+   "default": "A"
   },
-  "codebook_line": "F19 Data corruption or inconsistent state. P. Closest: Chaos Mesh IOChaos mistake."
+  "codebook_line": "F19 Data corruption or inconsistent state. A. Chaos Mesh IOChaos mistake, which can change bytes during a file write and so corrupt the stored data directly."
  },
  {
   "code": "F20",

@@ -1,6 +1,6 @@
 """The study's codebook: trigger codes, fault classes and their injectability.
 
-The data files are parsed from codebook version 2 by tools/build_data.py.
+The data files are parsed from codebook version 3 by tools/build_data.py.
 Injectability: A = a built-in fault of Chaos Mesh or LitmusChaos injects the
 failure directly; P = only an approximation exists; N = neither tool can inject it.
 """
@@ -9,7 +9,7 @@ import json
 from functools import lru_cache
 from importlib import resources
 
-CODEBOOK_VERSION = "2"
+CODEBOOK_VERSION = "3"
 CHAOS_MESH_COMMIT = "e636338c"
 LITMUS_CHARTS_COMMIT = "b2662c23"
 
@@ -33,7 +33,7 @@ def triggers():
 
 
 def injectability(fault, source=None):
-    """Return A, P or N for a fault class; F3 depends on the provider (A on AWS only)."""
+    """Return A, P or N for a fault class; a class may name a value per source (none does in codebook version 3)."""
     if fault in ("", "F99"):
         return "NS"
     rule = fault_classes()[fault]["injectability"]
