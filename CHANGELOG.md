@@ -8,7 +8,7 @@ A data release. The tool's code is unchanged but for the codebook version it pri
 - Codebook version 3: the author checked the 20 mapping lines against the Chaos Mesh and LitmusChaos catalogs and changed four. F3, F8 and F16 are now approximation only, F19 is now direct; 73 corpus values and 5 pilot values follow. `incident2chaos faults` prints the new values, and `tools/build_data.py` now reads the value of the F16 line correctly.
 - The headline is 199 of the 429 in-scope reports that state their primary fault, 46.4 percent (Wilson 95 percent interval 41.7 to 51.1), in place of 274 of 484, 56.6 percent. The withdrawal alone gives 240 of 429, 55.9 percent. The tests rerun the new figures of every table and agreement figure.
 - The worked example is the Azure Storage incident of Nov 13, 2024 (`examples/azure-storage-2024-11-13.yaml`, corpus row 31), in place of an AWS report.
-- `dataset/` holds the files of Zenodo dataset version 2.0.0.
+- `dataset/` holds the files of Zenodo dataset version 2.0.0 (https://doi.org/10.5281/zenodo.24512007).
 - The teaching lab still installs release 0.1.2, whose corpus it uses.
 
 ## 0.1.2, Nov 16, 2026
