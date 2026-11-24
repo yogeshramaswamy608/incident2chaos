@@ -98,7 +98,7 @@ jobs:
           ./kubectl-incident2chaos --version | grep "incident2chaos ${TAG#v}"
           ./kubectl-incident2chaos faults > /dev/null
           ./kubectl-incident2chaos coverage
-          ./kubectl-incident2chaos generate --corpus-id 1 --tool litmus > /dev/null
+          ./kubectl-incident2chaos generate --corpus-id 31 --tool litmus > /dev/null
 
   # The same test on macOS. It runs beside the two publish jobs, and neither waits for it.
   # On Nov 16, 2026 GitHub twice found no macOS runner and cancelled this job after 15
@@ -123,7 +123,7 @@ jobs:
           ./kubectl-incident2chaos --version | grep "incident2chaos ${TAG#v}"
           ./kubectl-incident2chaos faults > /dev/null
           ./kubectl-incident2chaos coverage
-          ./kubectl-incident2chaos generate --corpus-id 1 --tool litmus > /dev/null
+          ./kubectl-incident2chaos generate --corpus-id 31 --tool litmus > /dev/null
 
   pypi:
     needs: [build, test-plugin]

@@ -126,7 +126,7 @@ jobs:
           kubectl incident2chaos --version | grep "incident2chaos ${version}"
           kubectl incident2chaos faults > /dev/null
           kubectl incident2chaos coverage
-          kubectl incident2chaos generate --corpus-id 1 --tool litmus > /dev/null
+          kubectl incident2chaos generate --corpus-id 31 --tool litmus > /dev/null
       - name: Uninstall the plugin
         run: |
           set -euo pipefail
