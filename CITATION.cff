@@ -7,7 +7,7 @@ authors:
     given-names: Yogesh
     affiliation: Independent Researcher
     orcid: "https://orcid.org/0009-0006-4261-5785"
-version: 0.1.2
+version: 0.2.0
 doi: 10.5281/zenodo.23973728
 identifiers:
   - type: doi
@@ -22,7 +22,7 @@ identifiers:
 license: Apache-2.0
 references:
   - type: data
-    title: "Coded corpus of 497 public cloud post-incident reports and codebook for chaos experiment coverage"
+    title: "Coded corpus of 437 public cloud post-incident reports and codebook for chaos experiment coverage"
     authors:
       - family-names: Ramaswamy
         given-names: Yogesh
@@ -40,5 +40,5 @@ abstract: >-
   A command line tool that turns a post-incident report, coded under a published
   codebook of 13 trigger codes and 20 fault classes, into Chaos Mesh or LitmusChaos
   experiments marked as direct injections, approximations or not injectable, with the
-  coded corpus of 497 public cloud post-incident reports and a coverage command that
-  reruns the measurement of the study “Do Chaos Experiments Match Real Cloud Incidents? Mapping 497 Public Postmortems to Fault-Injection Coverage”.
+  coded corpus of 437 public cloud post-incident reports and a coverage command that
+  reruns the measurement of the study “Which Real Cloud Failures Can Chaos Tools Inject? A Mapping Study of 437 Public Post-Incident Reports and Two Fault Catalogs”.

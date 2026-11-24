@@ -1,12 +1,4 @@
 corpus_no,source,url,proposed_trigger,proposed_fault,verdict,final_trigger,final_fault,final_injectability
-P1,AWS PES,https://aws.amazon.com/message/65648/,T3,F12,AGREE,T3,F12,A
-P2,AWS PES,https://aws.amazon.com/message/680587/,T13,F19,AGREE,T13,F19,P
-P3,AWS PES,https://aws.amazon.com/message/65649/,T8,F20,AGREE,T8,F20,P
-P4,AWS PES,https://aws.amazon.com/message/4372T8/,T8,F2,AGREE,T8,F2,A
-P5,AWS PES,https://aws.amazon.com/message/11201/,T3,F18,AGREE,T3,F18,P
-P6,AWS PES,https://aws.amazon.com/message/17908/,T6,F6,AGREE,T6,F6,A
-P7,AWS PES,https://aws.amazon.com/message/12721/,T3,F8,AGREE,T3,F8,A
-P8,AWS PES,https://aws.amazon.com/message/061323/,T6,F14,CHANGE,T3,F14,A
 P9,Microsoft Azure PIR,https://azure.status.microsoft/en-us/status/history/?trackingId=PLT7-RTZ,T1,F15,CHANGE,T99,F15,P
 P10,Microsoft Azure PIR,https://azure.status.microsoft/en-us/status/history/?trackingId=ZN7Y-5DG,T99,F10,AGREE,T99,F10,A
 P11,Microsoft Azure PIR,https://azure.status.microsoft/en-us/status/history/?trackingId=9TDP-N8G,T7,F6,AGREE,T7,F6,A
@@ -33,14 +25,6 @@ P31,Google Cloud incident report,https://status.cloud.google.com/incidents/AessY
 P32,Google Cloud incident report,https://status.cloud.google.com/incidents/mNDbSnPAQnJehVvXMhtU,T1,F16,CHANGE,T1,F14,A
 P33,Google Cloud incident report,https://status.cloud.google.com/incidents/LztMRFrCwWofMbzRENLW,T5,F18,AGREE,T5,F18,P
 P34,Google Cloud incident report,https://status.cloud.google.com/incidents/8cY8jdUpEGGbsSMSQk7J,T3,F6,AGREE,T3,F6,A
-P35,Cloudflare blog post-mortem,https://blog.cloudflare.com/quantifying-the-impact-of-cloudbleed/,T1,F19,AGREE,T1,F19,P
-P36,Cloudflare blog post-mortem,https://blog.cloudflare.com/incorrect-proxying-of-24-hostnames-on-january-24-2022/,T3,F15,AGREE,T3,F15,P
-P37,Cloudflare blog post-mortem,https://blog.cloudflare.com/pipefail-how-a-missing-shell-option-slowed-cloudflare-down/,T1,F16,AGREE,T1,F16,A
-P38,Cloudflare blog post-mortem,https://blog.cloudflare.com/cloudflare-incident-on-october-30-2023/,T1,F16,AGREE,T1,F16,A
-P39,Cloudflare blog post-mortem,https://blog.cloudflare.com/cloudflare-service-outage-june-12-2025/,T10,F16,AGREE,T10,F16,A
-P40,Cloudflare blog post-mortem,https://blog.cloudflare.com/cloudflare-incident-on-august-21-2025/,T5,F8,AGREE,T5,F8,A
-P41,Cloudflare blog post-mortem,https://blog.cloudflare.com/deep-dive-into-cloudflares-sept-12-dashboard-and-api-outage/,T1,F20,AGREE,T1,F20,P
-P42,Cloudflare blog post-mortem,https://blog.cloudflare.com/cname-a-record-order-dns-standards/,T1,F9,AGREE,T1,F9,A
 P43,GitHub availability report,https://github.blog/news-insights/company-news/github-availability-report-october-2022/,T3,F17,AGREE,T3,F17,P
 P44,GitHub availability report,https://github.blog/news-insights/company-news/github-availability-report-october-2022/,T1,F19,AGREE,T1,F19,P
 P45,GitHub availability report,https://github.blog/news-insights/company-news/github-availability-report-november-2024/,T3,F16,AGREE,T3,F16,A

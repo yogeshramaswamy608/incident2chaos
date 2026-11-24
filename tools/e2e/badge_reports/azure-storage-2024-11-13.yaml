@@ -1,0 +1,13 @@
+# A coded report: the labels follow codebook version 2 (data/codebook.md).
+# Corpus row 31 of the released corpus.
+id: azure-PSM0-BQ8
+title: Post Incident Review (PIR) – Azure Storage – Unreachable Blob and Data Lake storage accounts in multiple regions
+url: https://azure.status.microsoft/en-us/status/history/?trackingId=PSM0-BQ8
+source: Microsoft Azure PIR
+trigger: T3
+faults:
+- F9
+- F15
+- F16
+- F14
+primary_fault: F9

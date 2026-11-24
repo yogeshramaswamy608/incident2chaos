@@ -23,8 +23,6 @@ corpus_no,source,report_id,url,first_pass_in_scope,first_pass_trigger,first_pass
 186,Google Cloud incident report,4NXQMwQJEXPDYnL6LELy,https://status.cloud.google.com/incidents/4NXQMwQJEXPDYnL6LELy,yes,T1,F20,T99,F20
 223,Google Cloud incident report,fmEL9i2fArADKawkZAa2,https://status.cloud.google.com/incidents/fmEL9i2fArADKawkZAa2,yes,T8,F3,T8,F3
 236,Google Cloud incident report,LuGcJVjNTeC5Sb9pSJ9o,https://status.cloud.google.com/incidents/LuGcJVjNTeC5Sb9pSJ9o,yes,T1,F15,T1,F15
-251,Cloudflare blog post-mortem,connection-errors-in-asia-pacific-region-on-july-9-2023,https://blog.cloudflare.com/connection-errors-in-asia-pacific-region-on-july-9-2023/,yes,T10,F9,T10,F9
-264,Cloudflare blog post-mortem,a-post-mortem-on-this-mornings-incident,https://blog.cloudflare.com/a-post-mortem-on-this-mornings-incident/,yes,T9,F6,T9,F6
 280,GitHub availability report,github-availability-report-july-2026#2026-07-25,https://github.blog/news-insights/company-news/github-availability-report-july-2026/,yes,T2,F18,T2,F18
 297,GitHub availability report,github-availability-report-may-2026#2026-05-06T15:25Z,https://github.blog/news-insights/company-news/github-availability-report-may-2026/,yes,T11,F18,T11,F18
 338,GitHub availability report,github-availability-report-june-2025#2025-06-12T17:55Z,https://github.blog/news-insights/company-news/github-availability-report-june-2025/,yes,T10,F14,T10,F14
