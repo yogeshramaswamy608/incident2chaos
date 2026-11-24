@@ -26,7 +26,7 @@ incident2chaos generate --report azure-storage-2024-11-13.yaml --all-faults \
   --host mystorageaccount.blob.core.windows.net --out storage-experiments.yaml
 ```
 
-The file holds four Chaos Mesh experiments: a DNSChaos that fails the lookups of the storage endpoint for the `app=checkout` pods (F9, direct), an IOChaos that corrupts reads of the configuration files, to approximate a bad configuration state (F15, approximation), a NetworkChaos partition from the `app=orders-db` pods (F16, direct) and an HTTPChaos that returns error responses (F14, direct).
+The file holds four Chaos Mesh experiments: a DNSChaos that fails the lookups of the storage endpoint for the `app=checkout` pods (F9, direct), an IOChaos that corrupts reads of the configuration files, to approximate a bad configuration state (F15, approximation), a NetworkChaos partition from the `app=orders-db` pods (F16, approximation) and an HTTPChaos that returns error responses (F14, direct).
 
 The end-to-end test (workflow `end-to-end`) builds a Kubernetes cluster with kind, installs Chaos Mesh, and applies every Chaos Mesh experiment the tool writes: all 17 reached the injected state. Every LitmusChaos experiment it writes is accepted by the Kubernetes API server with the LitmusChaos resource definitions installed; running them needs the LitmusChaos operator.
 
@@ -85,7 +85,7 @@ Write a YAML file like the example:
 id: my-incident-2026-11-01
 title: Summary of the incident
 url: https://example.com/postmortem
-source: Google Cloud incident report  # optional; zone loss (F3) is directly injectable on AWS only
+source: Google Cloud incident report  # optional; the provider, kept with the report
 trigger: T2              # T1 to T13, T99 when the report does not state it
 faults: [F15, F14, F20]  # every failure the report states, primary first
 primary_fault: F15
@@ -101,7 +101,7 @@ Code only what the report states. The codes, their definitions and the coding ru
 | `src/incident2chaos/data/corpus.csv` | The coded corpus: link, title, date and labels for each of 437 reports (CC BY 4.0) |
 | `src/incident2chaos/data/blind_sample.csv` | The 43-report blind agreement sample, both codings (CC BY 4.0) |
 | `src/incident2chaos/data/pilot_check.csv` | The 34-report pilot: the proposed labels, the author's verdict and the final labels (CC BY 4.0) |
-| `data/codebook.md` | Codebook version 2: 13 trigger codes, 20 fault classes, the mapping to Chaos Mesh and LitmusChaos, the coding rules (CC BY 4.0) |
+| `data/codebook.md` | Codebook version 3: 13 trigger codes, 20 fault classes, the mapping to Chaos Mesh and LitmusChaos, the coding rules (CC BY 4.0) |
 | `data/site_terms.md` | The site terms of each provider, with the date they were read |
 | `data/README.md` | The columns of the data files |
 | `dataset/` | The files of the Zenodo dataset record, version 2.0.0, as uploaded there |

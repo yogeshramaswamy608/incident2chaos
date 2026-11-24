@@ -2,7 +2,7 @@
 
 The data of the study “Which Real Cloud Failures Can Chaos Tools Inject? A Mapping Study of 437 Public Post-Incident Reports and Two Fault Catalogs”.
 
-437 public post-incident reports published by three providers on their own sites: Microsoft Azure, Google Cloud and GitHub. The 403 reports outside the pilot were coded under codebook version 2 (`codebook.md`); the 34 pilot reports keep the labels as checked by the author. Version 2.0.0 withdrew the 60 reports of AWS and Cloudflare, for the reason in `site_terms.md` and in the section “What version 2.0.0 changes” below. License: CC BY 4.0 (`LICENSE`).
+437 public post-incident reports published by three providers on their own sites: Microsoft Azure, Google Cloud and GitHub. The 403 reports outside the pilot were coded under codebook version 2 (`codebook.md`), and codebook version 3 changes only the injectability of four fault classes; the 34 pilot reports keep the labels as checked by the author. Version 2.0.0 withdrew the 60 reports of AWS and Cloudflare, for the reason in `site_terms.md` and in the section “What version 2.0.0 changes” below. License: CC BY 4.0 (`LICENSE`).
 
 | Source | Reports | Report links on |
 |---|---|---|
@@ -43,14 +43,14 @@ The 34 pilot reports, of the 50 of versions 1.0.0 to 1.0.2 (random seed 20261103
 
 ## fault_classes.json and triggers.json
 
-The codes of sections 2 and 3 of the codebook, parsed by `tools/build_data.py`, with the injectability rule of each fault class (F3 is directly injectable on AWS only). The short name of each fault class is the one in the paper's Table 2.
+The codes of sections 2 and 3 of the codebook, parsed by `tools/build_data.py`, with the injectability rule of each fault class (in codebook version 3 every class has one value for all sources). The short name of each fault class is the one in the paper's Table 2.
 
 ## What version 2.0.0 changes
 
-Dataset version 2.0.0 (tool release 0.2.0), of Nov 2026, withdraws the 18 AWS reports and the 42 Cloudflare reports: their 60 rows of corpus.csv, their 16 rows of pilot_check.csv and their 2 rows of blind_sample.csv. Every row that remains is the row of version 1.0.2, byte for byte. No label, code, note or link of a remaining row changed. fault_classes.json, triggers.json and codebook.md are the files of version 1.0.2; codebook.md keeps the study's first title, the title of its date. LICENSE changes only the study's title.
+Dataset version 2.0.0 (tool release 0.2.0), of Nov 2026, does two things. It withdraws the 18 AWS reports and the 42 Cloudflare reports: their 60 rows of corpus.csv, their 16 rows of pilot_check.csv and their 2 rows of blind_sample.csv. And it carries codebook version 3, from the author's check of the 20 mapping lines against the two catalogs: four fault classes change their injectability, F3, F8 and F16 from direct to approximation and F19 from approximation to direct (section 7 of codebook.md gives his reason for each). So 73 values of injectability_primary in corpus.csv and 5 of final_injectability in pilot_check.csv follow the new mapping, and fault_classes.json carries the four new lines. No trigger or fault label, note or link of a remaining row changed. triggers.json is the file of version 1.0.2. LICENSE changes only the study's title.
 
 Why. The pages of both sources were fetched by script on Nov 4, 2026 and read by a language model. AWS's site terms leave data mining, robots and similar data gathering tools outside the licence they grant. Cloudflare's website terms bar automated bots that access its pages to develop or operate an AI system unless its robots.txt allows that bot by name. Versions 1.0.0 to 1.0.2 did not name either clause in this context. `site_terms.md` gives each source's clause on automated access. The three sources that remain allow the collection, as `site_terms.md` says.
 
-What moved. On the 429 in-scope reports that state their primary fault, 240 have a primary fault that Chaos Mesh or LitmusChaos can inject directly: 55.9 percent (Wilson 95 percent interval 51.2 to 60.6). Version 1.0.2 gave 274 of 484, 56.6 percent. Without the 34 pilot reports, the figure is 226 of 395, 57.2 percent (52.3 to 62.0).
+What moved. On the 429 in-scope reports that state their primary fault, 199 have a primary fault that Chaos Mesh or LitmusChaos can inject directly: 46.4 percent (Wilson 95 percent interval 41.7 to 51.1). Version 1.0.2 gave 274 of 484, 56.6 percent. The withdrawal alone gives 240 of 429, 55.9 percent; the four mapping changes move it to 199. Without the 34 pilot reports, the figure is 186 of 395, 47.1 percent (42.2 to 52.0).
 
 Versions 1.0.0 to 1.0.2 stay on Zenodo with a note that points to this version.

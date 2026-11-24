@@ -2,10 +2,11 @@
 
 ## 0.2.0, Nov 2026
 
-A data release. The tool's code is unchanged.
+A data release. The tool's code is unchanged but for the codebook version it prints.
 
 - The corpus now holds 437 reports from three sources: Microsoft Azure (81), Google Cloud (172) and GitHub (184). The 18 AWS reports and the 42 Cloudflare reports are withdrawn, with their 16 rows of `pilot_check.csv` and 2 rows of `blind_sample.csv`. Both sources' pages were fetched by script and labelled with a language model, which their site terms do not allow (`data/site_terms.md`). Every remaining row is the row of release 0.1.2, byte for byte, and keeps its `corpus_no`, so the numbers have gaps.
-- The headline is 240 of the 429 in-scope reports that state their primary fault, 55.9 percent (Wilson 95 percent interval 51.2 to 60.6), in place of 274 of 484, 56.6 percent. The tests rerun the new figures of every table and agreement figure.
+- Codebook version 3: the author checked the 20 mapping lines against the Chaos Mesh and LitmusChaos catalogs and changed four. F3, F8 and F16 are now approximation only, F19 is now direct; 73 corpus values and 5 pilot values follow. `incident2chaos faults` prints the new values, and `tools/build_data.py` now reads the value of the F16 line correctly.
+- The headline is 199 of the 429 in-scope reports that state their primary fault, 46.4 percent (Wilson 95 percent interval 41.7 to 51.1), in place of 274 of 484, 56.6 percent. The withdrawal alone gives 240 of 429, 55.9 percent. The tests rerun the new figures of every table and agreement figure.
 - The worked example is the Azure Storage incident of Nov 13, 2024 (`examples/azure-storage-2024-11-13.yaml`, corpus row 31), in place of an AWS report.
 - `dataset/` holds the files of Zenodo dataset version 2.0.0.
 - The teaching lab still installs release 0.1.2, whose corpus it uses.

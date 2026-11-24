@@ -58,9 +58,10 @@ def main(out):
     lines += ["", "## How to reproduce", "", "```bash", "pip install git+https://github.com/yogeshramaswamy608/incident2chaos@v0.2.0", "incident2chaos coverage --by source",
               "```", "",
               "The corpus holds each report's link and labels, never its text. A language model proposed the labels of "
-              "all 437 reports. The author checked the proposed labels of the 34-report pilot and changed 9. The labels "
+              "all 437 reports. The author checked the codebook's mapping of the 20 fault classes to the two catalogs and changed four "
+              "(codebook version 3). The author checked the proposed labels of the 34-report pilot and changed 9. The labels "
               "of the other 403 reports, proposed under the frozen codebook, were not revised afterwards; the author "
-              "coded a sample of 43 of them blind (injectability agreement 40 of 42, Cohen's kappa 0.91). "
+              "coded a sample of 43 of them blind (injectability agreement 39 of 42, Cohen's kappa 0.86, under codebook version 3). "
               "Data: CC BY 4.0. Code: Apache 2.0.", ""]
     open(out, "w", encoding="utf-8").write("\n".join(lines))
     print("\n".join(lines))
