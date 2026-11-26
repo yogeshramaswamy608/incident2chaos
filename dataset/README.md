@@ -4,7 +4,7 @@ The data of the study “Which Real Cloud Failures Can Chaos Tools Inject? A Map
 
 437 public post-incident reports published by three providers on their own sites: Microsoft Azure, Google Cloud and GitHub. The 403 reports outside the pilot were coded under codebook version 2 (`codebook.md`), and codebook version 3 changes only the injectability of four fault classes; the 34 pilot reports keep the labels as checked by the author. Version 2.0.0 withdrew the 60 reports of AWS and Cloudflare, for the reason in `site_terms.md` and in the section “What version 2.0.0 changes” below. License: CC BY 4.0 (LICENSE).
 
-This is version 2.0.0 of the record. It withdraws the reports of two sources and changes the injectability of four fault classes; no trigger or fault label of a report that remains changed. The last three sections list the changes of versions 2.0.0, 1.0.2 and 1.0.1.
+This is version 2.0.1 of the record. It corrects two sentences of this file on the blind sample and changes no data file. Version 2.0.0 withdrew the reports of two sources and changed the injectability of four fault classes; no trigger or fault label of a report that remains changed. The last four sections list the changes of versions 2.0.1, 2.0.0, 1.0.2 and 1.0.1.
 
 | Source | Reports | Report links on |
 |---|---|---|
@@ -37,7 +37,7 @@ Incident dates run from Jul 13, 2020 to Oct 19, 2026. `retrieved_utc` records wh
 
 ## blind_sample.csv
 
-The 43 reports, of the 45 of versions 1.0.0 to 1.0.2, that the author coded blind to the first-pass labels (random seed 2026110402, drawn from the 402 reports outside the pilot and outside an earlier sample of 45, set aside because its codes had been produced with the help of a software tool rather than by the author alone), with both codings. The 2 Cloudflare reports of the sample were withdrawn with their source. corpus.csv keeps the first-pass labels for these 43. On the 42 that the first pass put in scope: primary trigger 31 agree (Cohen's kappa 0.70), primary fault 37 (kappa 0.87), injectability of the primary fault 40 (kappa 0.91). The tests rerun these figures.
+The 43 reports, of the 45 of versions 1.0.0 to 1.0.2, that the author coded blind to the first-pass labels (random seed 2026110402, drawn from the 402 reports outside the pilot and outside an earlier sample of 45, set aside because its codes had been produced with an artificial intelligence tool rather than by the author alone), with both codings. The 2 Cloudflare reports of the sample were withdrawn with their source. corpus.csv keeps the first-pass labels for these 43. On the 42 that the first pass put in scope: primary trigger 31 agree (Cohen's kappa 0.70), primary fault 37 (kappa 0.87), injectability of the primary fault 39 (kappa 0.86). The tests rerun these figures.
 
 ## pilot_check.csv
 
@@ -47,9 +47,13 @@ The 34 pilot reports, of the 50 of versions 1.0.0 to 1.0.2 (random seed 20261103
 
 The codes of sections 2 and 3 of the codebook, parsed from the codebook by the tool's build script, with the injectability rule of each fault class (in codebook version 3 every class has one value for all sources). The short name of each fault class is the one in the paper's Table 2.
 
+## What version 2.0.1 corrects
+
+Version 2.0.1, of Nov 25, 2026, corrects two sentences of this file, both in the section on blind_sample.csv. Version 2.0.0 (https://doi.org/10.5281/zenodo.24512007) printed the blind agreement on the injectability of the primary fault as 40 of 42, Cohen's kappa 0.91, the figure under codebook version 2. Under codebook version 3, which version 2.0.0 already carries, it is 39 of 42, kappa 0.86, as the tool's tests compute it. And it said the earlier sample of 45 had been coded with the help of a software tool; the record of that sample says its codes were made by an artificial intelligence tool, and the sentence now says so. The other eight files are the files of version 2.0.0, byte for byte: no label, code, note, link or other figure changed.
+
 ## What version 2.0.0 changes
 
-This is version 2.0.0, of Nov 2026. It does two things. It withdraws the 18 AWS reports and the 42 Cloudflare reports: their 60 rows of corpus.csv, their 16 rows of pilot_check.csv and their 2 rows of blind_sample.csv. And it carries codebook version 3, from the author's check of the 20 mapping lines against the two catalogs: four fault classes change their injectability, F3, F8 and F16 from direct to approximation and F19 from approximation to direct (section 7 of codebook.md gives his reason for each). So 73 values of injectability_primary in corpus.csv and 5 of final_injectability in pilot_check.csv follow the new mapping, and fault_classes.json carries the four new lines. No trigger or fault label, note or link of a remaining row changed. triggers.json is the file of version 1.0.2. LICENSE changes only the study's title.
+Version 2.0.0, of Nov 24, 2026, does two things. It withdraws the 18 AWS reports and the 42 Cloudflare reports: their 60 rows of corpus.csv, their 16 rows of pilot_check.csv and their 2 rows of blind_sample.csv. And it carries codebook version 3, from the author's check of the 20 mapping lines against the two catalogs: four fault classes change their injectability, F3, F8 and F16 from direct to approximation and F19 from approximation to direct (section 7 of codebook.md gives his reason for each). So 73 values of injectability_primary in corpus.csv and 5 of final_injectability in pilot_check.csv follow the new mapping, and fault_classes.json carries the four new lines. No trigger or fault label, note or link of a remaining row changed. triggers.json is the file of version 1.0.2. LICENSE changes only the study's title.
 
 Why. The pages of both sources were fetched by script on Nov 4, 2026 and read by a language model. AWS's site terms leave data mining, robots and similar data gathering tools outside the licence they grant. Cloudflare's website terms bar automated bots that access its pages to develop or operate an AI system unless its robots.txt allows that bot by name. Versions 1.0.0 to 1.0.2 did not name either clause in this context. `site_terms.md` gives each source's clause on automated access. The three sources that remain allow the collection, as `site_terms.md` says.
 
