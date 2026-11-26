@@ -2,7 +2,7 @@
 
 A two-hour lab for courses in cloud computing, distributed systems and software engineering. Students work in pairs.
 
-You read three public post-incident reports, code each one under a published codebook, turn the coded failure into a Chaos Mesh or LitmusChaos experiment, and measure, over 484 real incidents whose reports state their main failure, what share have a main failure that today's chaos tools can inject directly. Part 4, which needs Docker, runs one experiment on a Kubernetes cluster on your own laptop.
+You read three public post-incident reports, code each one under a published codebook, turn the coded failure into a Chaos Mesh or LitmusChaos experiment, and measure, over 429 real incidents whose reports state their main failure, what share have a main failure that today's chaos tools can inject directly. Part 4, which needs Docker, runs one experiment on a Kubernetes cluster on your own laptop.
 
 ## What you will be able to do
 
@@ -23,7 +23,7 @@ kind create cluster --name lab
 helm repo add chaos-mesh https://charts.chaos-mesh.org
 helm repo update
 helm install chaos-mesh chaos-mesh/chaos-mesh -n chaos-mesh --create-namespace --set chaosDaemon.runtime=containerd --set chaosDaemon.socketPath=/run/containerd/containerd.sock --set dnsServer.create=true --wait --timeout 10m
-kubectl apply -f https://raw.githubusercontent.com/yogeshramaswamy608/incident2chaos/v0.1.2/tools/e2e/app.yaml
+kubectl apply -f https://raw.githubusercontent.com/yogeshramaswamy608/incident2chaos/v0.2.1/tools/e2e/app.yaml
 kubectl -n shop rollout status deploy/my-service --timeout=180s
 kubectl -n shop scale deploy/my-service --replicas=1
 kubectl -n shop rollout status deploy/my-service --timeout=180s
@@ -52,7 +52,7 @@ Write your answers in one text file, `answers.txt`, with the question numbers.
 ```bash
 python3 -m venv lab
 . lab/bin/activate
-pip install git+https://github.com/yogeshramaswamy608/incident2chaos@v0.1.2
+pip install git+https://github.com/yogeshramaswamy608/incident2chaos@v0.2.1
 incident2chaos --version
 incident2chaos faults
 ```
@@ -63,7 +63,7 @@ incident2chaos faults
 
 ## Part 1. Code three real incidents (35 minutes)
 
-Open the codebook: https://github.com/yogeshramaswamy608/incident2chaos/blob/v0.1.2/data/codebook.md
+Open the codebook: https://github.com/yogeshramaswamy608/incident2chaos/blob/v0.2.1/data/codebook.md
 
 Read sections 1, 2, 3 and 6 (about 10 minutes). Three rules matter most:
 
@@ -75,34 +75,36 @@ Now read the three reports, about 8 minutes each:
 
 | Report | Provider | Link |
 |---|---|---|
-| R1 | Cloudflare, Jan 8, 2026 | https://blog.cloudflare.com/cname-a-record-order-dns-standards/ |
-| R2 | Cloudflare, Jun 12, 2025 | https://blog.cloudflare.com/cloudflare-service-outage-june-12-2025/ |
-| R3 | Cloudflare, Sep 12, 2025 | https://blog.cloudflare.com/deep-dive-into-cloudflares-sept-12-dashboard-and-api-outage/ |
+| R1 | GitHub, Jun 28, 2022: the entry "Follow up to June 28 17:16 UTC" | https://github.blog/news-insights/company-news/github-availability-report-july-2022/ |
+| R2 | GitHub, Nov 19, 2024 | https://github.blog/news-insights/company-news/github-availability-report-november-2024/ |
+| R3 | GitHub, Dec 22, 2025: the entry "December 22 22:31 UTC" | https://github.blog/news-insights/company-news/github-availability-report-december-2025/ |
+
+Each page is a monthly report that can hold several incidents. Code only the entry the table names; the November 2024 page holds one.
 
 For each report, write a file in a folder named `coded`: `coded/r1.yaml`, `coded/r2.yaml` and `coded/r3.yaml`. Use this form, with the report's title and link and your own codes in place of TX, FX and FY:
 
 ```yaml
 id: r1
 title: The report's title
-url: https://blog.cloudflare.com/the-report-link/
-source: Cloudflare blog post-mortem
+url: https://github.blog/the-report-link/
+source: GitHub availability report
 trigger: TX
 faults: [FX, FY]
 primary_fault: FX
 ```
 
-Then compare your codes with the published coding of the study. The three reports are rows P42, P39 and P41 of its corpus. Each command prints the published trigger on its fourth line and the published primary fault on its sixth:
+Then compare your codes with the published coding of the study. The three reports are rows 420, P45 and P48 of its corpus. Each command prints the published trigger on its fourth line and the published primary fault on its sixth:
 
 <!-- part: 1 -->
 ```bash
-incident2chaos generate --corpus-id P42 | head -6
-incident2chaos generate --corpus-id P39 | head -6
-incident2chaos generate --corpus-id P41 | head -6
+incident2chaos generate --corpus-id 420 | head -6
+incident2chaos generate --corpus-id P45 | head -6
+incident2chaos generate --corpus-id P48 | head -6
 ```
 
 **Question 1.1.** For each report, write your trigger and primary fault beside the published ones. Where you differ, name the codebook rule that settles it, and say which of the two you would defend.
 
-**Question 1.2.** R2 began with an outage at a company outside Cloudflare. Why is its trigger T10 while its primary fault is F16? Use rule V7.
+**Question 1.2.** In R2 a database host came out of a regular maintenance process in a state that stopped another service working. Why is its trigger T3 and not T6? Why is its primary fault F16 and not F19? Use rules V1, V2 and V5.
 
 ## Part 2. Generate and read the experiments (25 minutes)
 
@@ -124,7 +126,7 @@ If your codes for a report differ from the published ones, your file holds a dif
 
 **Question 2.2.** Why does `r3-chaos-mesh.yaml` hold no experiment? Read `r3-litmus.yaml`: what does the approximation reproduce of the real incident, and what does it leave out?
 
-**Question 2.3.** The R2 experiment cuts the network between the service and its dependency. Is that the failure Cloudflare's customers saw? What would a passing result of this experiment tell a team, and what would it not tell them?
+**Question 2.3.** The R2 experiment cuts the network between the service and its dependency. Is that the failure GitHub's notifications service saw? What would a passing result of this experiment tell a team, and what would it not tell them?
 
 **Question 2.4.** Find the annotations that tie each experiment to its incident. Give one reason a reliability team would want them on every experiment it runs.
 
@@ -148,9 +150,9 @@ half width = z × √(p(1 − p)/n + z²/(4n²)) / (1 + z²/n)
 
 and the interval runs from center minus half width to center plus half width.
 
-**Question 3.1.** The headline counts 274 directly injectable reports out of 484 with a stated primary fault. Work out the share and its Wilson interval by hand or in a few lines of Python, and check them against the tool.
+**Question 3.1.** The headline counts 199 directly injectable reports out of 429 with a stated primary fault. Work out the share and its Wilson interval by hand or in a few lines of Python, and check them against the tool.
 
-**Question 3.2.** In the trigger table, which two triggers have the lowest direct share? Leave out the unlabeled first row: it holds the 6 reports that describe no failure of the provider's own service. Read their definitions in the codebook and give one reason for each.
+**Question 3.2.** In the trigger table, which two triggers have the lowest direct share? Leave out the unlabeled first row: it holds the one report that describes no failure of the provider's own service. Read their definitions in the codebook and give one reason for each.
 
 **Question 3.3.** Chaos tools inject faults, not triggers. Name two trigger codes that no chaos tool can start, and say how a team could test its defenses against each one instead.
 
@@ -173,24 +175,24 @@ kubectl delete -f r1-dns.yaml
 kind delete cluster --name lab
 ```
 
-If your R1 file does not have F9 as its primary fault, your `r1-dns.yaml` holds a different experiment. Generate this step from the published coding instead: `incident2chaos generate --corpus-id P42 --namespace shop --label app=my-service --host example.com --duration 120 --out r1-dns.yaml`.
+If your R1 file does not have F9 as its primary fault, your `r1-dns.yaml` holds a different experiment. Generate this step from the published coding instead: `incident2chaos generate --corpus-id 420 --namespace shop --label app=my-service --host example.com --duration 120 --out r1-dns.yaml`.
 
 **Question 4.1.** Paste the two lookup results. What did the experiment change inside the pod, and what did it leave alone?
 
-**Question 4.2.** In the real incident the resolver returned records in a new order and some clients failed to resolve names. The experiment makes every lookup of one name fail. Is that a fair test of the defense that would have mattered, and what experiment would come closer?
+**Question 4.2.** In the real incident a DNS record was replaced during a migration and the new record was never added, so the name stopped resolving to the service. The experiment makes every lookup of one name fail. Is that a fair test of the defense that would have mattered, and what would come closer?
 
 ## Part 5. Wrap up
 
-**Question 5.1.** In one paragraph: would you trust the study's figure of 56.6 percent? Name two threats to its validity, using what you saw today (who wrote the reports, how they were coded, which tool versions the mapping was read from).
+**Question 5.1.** In one paragraph: would you trust the study's figure of 46.4 percent? Name two threats to its validity, using what you saw today (who wrote the reports, how they were coded, which tool versions the mapping was read from).
 
 ## Sources
 
-The codebook, the corpus and the tool: incident2chaos release 0.1.2, https://github.com/yogeshramaswamy608/incident2chaos (code Apache 2.0, data and codebook CC BY 4.0). Dataset: https://doi.org/10.5281/zenodo.24287066. Software: https://doi.org/10.5281/zenodo.24289017.
+The codebook, the corpus and the tool: incident2chaos release 0.2.1, https://github.com/yogeshramaswamy608/incident2chaos (code Apache 2.0, data and codebook CC BY 4.0). Dataset: https://doi.org/10.5281/zenodo.23973150. Software: https://doi.org/10.5281/zenodo.23973728. Both addresses always open the newest version.
 
-The study: Ramaswamy Y (2026) Do Chaos Experiments Match Real Cloud Incidents? Mapping 497 Public Postmortems to Fault-Injection Coverage. Manuscript under review.
+The study: Ramaswamy Y (2026) Which Real Cloud Failures Can Chaos Tools Inject? A Mapping Study of 437 Public Post-Incident Reports and Two Fault Catalogs. In preparation for the Journal of Cloud Computing.
 
-How the corpus was coded: a large language model proposed the labels of all 497 reports. The author checked the proposed labels of the 50-report pilot, agreed with 40 and changed 10, and coded a sample of 45 reports blind. The labels of the other 447 reports, proposed under the frozen codebook, were not revised afterwards (the corpus file's column `coded_by` says which is which).
+How the corpus was coded: a large language model proposed the labels of all 437 reports. The author checked the proposed labels of the 34 pilot reports, agreed with 25 and changed 9, and coded a sample of 43 reports blind. The labels of the other 403 reports, proposed under the frozen codebook, were not revised afterwards (the corpus file's column `coded_by` says which is which). The author also checked the 20 lines that map each fault class to the two tools and changed four (codebook version 3).
 
 This lab is licensed CC BY 4.0. The timing, the setup notes and the answer key are in `INSTRUCTOR.md` beside this file; it sits in a public repository, so students can read it too.
 
-Written under the direction of Yogesh Ramaswamy, author of incident2chaos, by a large language model from Anthropic (Claude Opus 5.5). Parts 0 to 3 were run against release 0.1.2 and checked by the script run_lab.py; the workflow lab-check runs all five parts, Part 4 included, on a GitHub runner.
+Written under the direction of Yogesh Ramaswamy, author of incident2chaos, by a large language model from Anthropic (Claude Opus 5.5), and moved on Nov 25, 2026 to release 0.2.1 and to three GitHub reports, since the corpus no longer holds the Cloudflare reports of the first version. Parts 0 to 3 were run against the code of release 0.2.1 and checked by the script run_lab.py; the workflow lab-check runs all five parts, Part 4 included, on a GitHub runner.
