@@ -29,8 +29,8 @@ references:
     authors:
       - family-names: Ramaswamy
         given-names: Yogesh
-    doi: 10.5281/zenodo.24512007
-    version: "2.0.0"
+    doi: 10.5281/zenodo.24546515
+    version: "2.0.1"
 repository-code: "https://github.com/yogeshramaswamy608/incident2chaos"
 keywords:
   - chaos engineering
