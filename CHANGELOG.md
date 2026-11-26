@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- The teaching lab installs release 0.2.1 in place of 0.1.2, and its three readings are GitHub reports (corpus rows 420, P45 and P48) in place of the three Cloudflare reports withdrawn in release 0.2.0. Its questions, its answer key and `run_lab.py` follow the new reports and the figures of codebook version 3.
+
 ## 0.2.1, Nov 2026
 
 A documentation release. The tool's code and the five data files are unchanged; no label, code or figure changed.

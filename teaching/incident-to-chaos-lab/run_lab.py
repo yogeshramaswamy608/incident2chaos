@@ -15,28 +15,28 @@ import tempfile
 
 HERE = pathlib.Path(__file__).resolve().parent
 
-# The published coding of the three reports: rows P42, P39 and P41 of the corpus (pilot rows, checked by the author).
+# The published coding of the three reports: row 420 (first pass) and rows P45 and P48 (pilot rows, checked by the author).
 KEY = {
-    "r1": ("What came first, the CNAME or the A record?",
-           "https://blog.cloudflare.com/cname-a-record-order-dns-standards/", "T1", "F9"),
-    "r2": ("Cloudflare service outage June 12, 2025",
-           "https://blog.cloudflare.com/cloudflare-service-outage-june-12-2025/", "T10", "F16"),
-    "r3": ("A deep dive into Cloudflare's September 12, 2025 dashboard and API outage",
-           "https://blog.cloudflare.com/deep-dive-into-cloudflares-sept-12-dashboard-and-api-outage/", "T1", "F20"),
+    "r1": ("GitHub Availability Report: July 2022",
+           "https://github.blog/news-insights/company-news/github-availability-report-july-2022/", "T3", "F9"),
+    "r2": ("GitHub Availability Report: November 2024",
+           "https://github.blog/news-insights/company-news/github-availability-report-november-2024/", "T3", "F16"),
+    "r3": ("GitHub Availability Report: December 2025",
+           "https://github.blog/news-insights/company-news/github-availability-report-december-2025/", "T5", "F20"),
 }
 
 # Text each part must print, in the answer key of INSTRUCTOR.md.
 EXPECT = {
-    0: ["incident2chaos 0.1.2", "F4   N", "F20  P"],
-    1: ["# trigger: T1\n\n# F9 DNS resolution failure: injectability A (direct)",
-        "# trigger: T10\n\n# F16 Internal dependency unavailable: injectability A (direct)",
-        "# trigger: T1\n\n# F20 Overload or retry storm: injectability P (approximation only)"],
+    0: ["incident2chaos 0.2.1", "F4   N", "F20  P"],
+    1: ["# trigger: T3\n\n# F9 DNS resolution failure: injectability A (direct)",
+        "# trigger: T3\n\n# F16 Internal dependency unavailable: injectability P (approximation only)",
+        "# trigger: T5\n\n# F20 Overload or retry storm: injectability P (approximation only)"],
     2: ["wrote 1 manifest(s) to r1-chaos-mesh.yaml", "wrote 1 manifest(s) to r2-chaos-mesh.yaml",
         "wrote 0 manifest(s) to r3-chaos-mesh.yaml", "wrote 3 manifest(s) to r3-litmus.yaml"],
-    3: ["All                                497      491   274   208   2   7  56.6% (52.2-61.0)",
+    3: ["All                                437      436   199   228   2   7  46.4% (41.7-51.1)",
         "T11                                 13       13     1    12   0   0  7.7% (1.4-33.3)",
-        "T5                                  37       37     9    28   0   0  24.3% (13.4-40.1)",
-        "2 of 3 coded reports have a directly injectable primary fault (66.7%)"],
+        "T12                                  5        5     0     5   0   0  0.0% (0.0-43.4)",
+        "1 of 3 coded reports have a directly injectable primary fault (33.3%)"],
     4: ["lookup worked", "lookup failed"],
 }
 
@@ -45,7 +45,8 @@ FILES = {
     2: {"r1-chaos-mesh.yaml": ["kind: DNSChaos", "- '*'"],
         "r2-chaos-mesh.yaml": ["kind: NetworkChaos", "action: partition", "app: orders-db"],
         "r3-chaos-mesh.yaml": ["The chaos-mesh catalog has no fault for this class; try --tool litmus."],
-        "r3-litmus.yaml": ["k6-loadgen", "pod-http-status-code", "incident2chaos.io/report: https://blog.cloudflare.com/deep-dive"]},
+        "r3-litmus.yaml": ["k6-loadgen", "pod-http-status-code",
+                           "incident2chaos.io/report: https://github.blog/news-insights/company-news/github-availability-report-december-2025/"]},
 }
 
 
@@ -61,7 +62,7 @@ def write_key(work):
     (work / "coded").mkdir(exist_ok=True)
     for name, (title, url, trigger, fault) in KEY.items():
         (work / "coded" / f"{name}.yaml").write_text(
-            f"id: {name}\ntitle: \"{title}\"\nurl: {url}\nsource: Cloudflare blog post-mortem\n"
+            f"id: {name}\ntitle: \"{title}\"\nurl: {url}\nsource: GitHub availability report\n"
             f"trigger: {trigger}\nfaults: [{fault}]\nprimary_fault: {fault}\n")
 
 
