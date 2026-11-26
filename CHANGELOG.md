@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.1, Nov 2026
+
+A documentation release. The tool's code and the five data files are unchanged; no label, code or figure changed.
+
+- `dataset/README.md` and `data/README.md` printed the blind agreement on the injectability of the primary fault as 40 of 42, Cohen's kappa 0.91, the figure under codebook version 2. Under codebook version 3 it is 39 of 42, kappa 0.86, as the tests compute it. Both files now print it.
+- The same two files said the earlier sample of 45 had been coded with the help of a software tool. The record of that sample says its codes were made by an artificial intelligence tool, and the sentence now says so, as the paper does.
+- `README.md` gave the coverage as 240 of 429, 55.9 percent, the figure before codebook version 3. `incident2chaos coverage` prints 199 of 429, 46.4 percent (41.7 to 51.1), and the README now does.
+- `dataset/` holds the files of Zenodo dataset version 2.0.1 (https://doi.org/10.5281/zenodo.24546515), which carries the same README correction.
+
 ## 0.2.0, Nov 2026
 
 A data release. The tool's code is unchanged but for the codebook version it prints.

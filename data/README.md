@@ -35,7 +35,7 @@ Incident dates run from Jul 13, 2020 to Oct 19, 2026. `retrieved_utc` records wh
 
 ## blind_sample.csv
 
-The 43 reports, of the 45 of versions 1.0.0 to 1.0.2, that the author coded blind to the first-pass labels (random seed 2026110402, drawn from the 402 reports outside the pilot and outside an earlier sample of 45, set aside because its codes had been produced with the help of a software tool rather than by the author alone), with both codings. The 2 Cloudflare reports of the sample were withdrawn with their source. corpus.csv keeps the first-pass labels for these 43. On the 42 that the first pass put in scope: primary trigger 31 agree (Cohen's kappa 0.70), primary fault 37 (kappa 0.87), injectability of the primary fault 40 (kappa 0.91). The tests rerun these figures.
+The 43 reports, of the 45 of versions 1.0.0 to 1.0.2, that the author coded blind to the first-pass labels (random seed 2026110402, drawn from the 402 reports outside the pilot and outside an earlier sample of 45, set aside because its codes had been produced with an artificial intelligence tool rather than by the author alone), with both codings. The 2 Cloudflare reports of the sample were withdrawn with their source. corpus.csv keeps the first-pass labels for these 43. On the 42 that the first pass put in scope: primary trigger 31 agree (Cohen's kappa 0.70), primary fault 37 (kappa 0.87), injectability of the primary fault 39 (kappa 0.86). The tests rerun these figures.
 
 ## pilot_check.csv
 
@@ -44,6 +44,10 @@ The 34 pilot reports, of the 50 of versions 1.0.0 to 1.0.2 (random seed 20261103
 ## fault_classes.json and triggers.json
 
 The codes of sections 2 and 3 of the codebook, parsed by `tools/build_data.py`, with the injectability rule of each fault class (in codebook version 3 every class has one value for all sources). The short name of each fault class is the one in the paper's Table 2.
+
+## What version 2.0.1 corrects
+
+Dataset version 2.0.1 (tool release 0.2.1), of Nov 25, 2026, corrects two sentences of this file and of the dataset's README, both on the blind sample: the injectability agreement under codebook version 3 is 39 of 42, kappa 0.86 (version 2.0.0 printed 40, kappa 0.91, the figure under codebook version 2), and the earlier sample of 45 was set aside because its codes were made by an artificial intelligence tool (version 2.0.0 said a software tool). No data file changed.
 
 ## What version 2.0.0 changes
 

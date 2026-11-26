@@ -55,7 +55,7 @@ def main(out):
     lines += ["", "## By year of the incident", "", "| Year | Direct / stated |", "|---|---|"]
     for r in by_year:
         lines.append(f"| {r['group']} | {r['A']} / {r['stated']} |")
-    lines += ["", "## How to reproduce", "", "```bash", "pip install git+https://github.com/yogeshramaswamy608/incident2chaos@v0.2.0", "incident2chaos coverage --by source",
+    lines += ["", "## How to reproduce", "", "```bash", "pip install git+https://github.com/yogeshramaswamy608/incident2chaos@v0.2.1", "incident2chaos coverage --by source",
               "```", "",
               "The corpus holds each report's link and labels, never its text. A language model proposed the labels of "
               "all 437 reports. The author checked the codebook's mapping of the 20 fault classes to the two catalogs and changed four "

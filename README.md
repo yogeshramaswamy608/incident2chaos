@@ -4,14 +4,14 @@ Chaos experiments derived from real cloud incidents.
 
 A post-incident report, coded under a published codebook, goes in. A ready-to-run Chaos Mesh or LitmusChaos experiment for the failure it describes comes out, marked as a direct injection, an approximation, or not injectable.
 
-The tool comes with the coded corpus of the study “Which Real Cloud Failures Can Chaos Tools Inject? A Mapping Study of 437 Public Post-Incident Reports and Two Fault Catalogs”: 437 public post-incident reports from Microsoft Azure, Google Cloud and GitHub, 2020 to 2026, each coded for its trigger and its fault classes. Its `coverage` command reruns the study's measurement: of the 429 in-scope reports that state their primary fault, 240 (55.9 percent, Wilson 95 percent interval 51.2 to 60.6 percent) have a primary fault in a class for which Chaos Mesh or LitmusChaos has a built-in fault. That is coverage at the level of fault classes, an upper bound on what can be reproduced. Release 0.2.0 withdrew the 60 reports of AWS and Cloudflare under those sites' terms (`data/site_terms.md`).
+The tool comes with the coded corpus of the study “Which Real Cloud Failures Can Chaos Tools Inject? A Mapping Study of 437 Public Post-Incident Reports and Two Fault Catalogs”: 437 public post-incident reports from Microsoft Azure, Google Cloud and GitHub, 2020 to 2026, each coded for its trigger and its fault classes. Its `coverage` command reruns the study's measurement: of the 429 in-scope reports that state their primary fault, 199 (46.4 percent, Wilson 95 percent interval 41.7 to 51.1 percent) have a primary fault in a class for which Chaos Mesh or LitmusChaos has a built-in fault. That is coverage at the level of fault classes, an upper bound on what can be reproduced. Release 0.2.0 withdrew the 60 reports of AWS and Cloudflare under those sites' terms (`data/site_terms.md`) and carries codebook version 3, the author's check of the 20 mapping lines.
 
 ## Worked example, under five minutes
 
 You need Python 3.9 or later. The package is on PyPI: https://pypi.org/project/incident2chaos/
 
 ```bash
-pip install incident2chaos==0.2.0
+pip install incident2chaos==0.2.1
 incident2chaos faults
 ```
 
@@ -20,7 +20,7 @@ incident2chaos faults
 Take the Azure Storage incident of Nov 13, 2024, when Blob and Data Lake storage accounts were unreachable in several regions. Its review is coded in `examples/azure-storage-2024-11-13.yaml`: trigger T3, primary fault F9 (DNS resolution failure), then F15, F16 and F14.
 
 ```bash
-curl -sLO https://raw.githubusercontent.com/yogeshramaswamy608/incident2chaos/v0.2.0/examples/azure-storage-2024-11-13.yaml
+curl -sLO https://raw.githubusercontent.com/yogeshramaswamy608/incident2chaos/v0.2.1/examples/azure-storage-2024-11-13.yaml
 incident2chaos generate --report azure-storage-2024-11-13.yaml --all-faults \
   --namespace shop --label app=checkout --dependency-label app=orders-db \
   --host mystorageaccount.blob.core.windows.net --out storage-experiments.yaml
@@ -42,10 +42,10 @@ incident2chaos generate --corpus-id 31 --tool litmus
 
 ## As a kubectl plugin
 
-On Linux and macOS, with Python 3.9 or later on the PATH as `python3`, the tool also runs as a kubectl plugin. The GitHub release v0.2.0 carries it as the archive `kubectl-incident2chaos.tar.gz`, which holds the plugin file `kubectl-incident2chaos` (the tool and the pure Python part of PyYAML) and its license files:
+On Linux and macOS, with Python 3.9 or later on the PATH as `python3`, the tool also runs as a kubectl plugin. The GitHub release v0.2.1 carries it as the archive `kubectl-incident2chaos.tar.gz`, which holds the plugin file `kubectl-incident2chaos` (the tool and the pure Python part of PyYAML) and its license files:
 
 ```bash
-curl -fsSLO https://github.com/yogeshramaswamy608/incident2chaos/releases/download/v0.2.0/kubectl-incident2chaos.tar.gz
+curl -fsSLO https://github.com/yogeshramaswamy608/incident2chaos/releases/download/v0.2.1/kubectl-incident2chaos.tar.gz
 tar -xzf kubectl-incident2chaos.tar.gz kubectl-incident2chaos
 sudo mv kubectl-incident2chaos /usr/local/bin/
 kubectl incident2chaos faults
@@ -69,7 +69,7 @@ Each report's injectability is derived from its primary fault class and its prov
 Code your team's postmortems as YAML files like the example above, in one folder, and add this step to a GitHub Actions workflow:
 
 ```yaml
-- uses: yogeshramaswamy608/incident2chaos@v0.2.0
+- uses: yogeshramaswamy608/incident2chaos@v0.2.1
   with:
     reports: postmortems/coded
     badge: .github/badges/chaos-coverage.svg
@@ -104,7 +104,7 @@ Code only what the report states. The codes, their definitions and the coding ru
 | `data/codebook.md` | Codebook version 3: 13 trigger codes, 20 fault classes, the mapping to Chaos Mesh and LitmusChaos, the coding rules (CC BY 4.0) |
 | `data/site_terms.md` | The site terms of each provider, with the date they were read |
 | `data/README.md` | The columns of the data files |
-| `dataset/` | The files of the Zenodo dataset record, version 2.0.0, as uploaded there |
+| `dataset/` | The files of the Zenodo dataset record, version 2.0.1, as uploaded there |
 | `deploy/krew/incident2chaos.yaml` | The Krew manifest of the kubectl plugin |
 | `tools/check_links.py` | Opens every link of the corpus and lists the rows whose link does not open the report it names |
 | `tools/krew/build_plugin.py` | Builds the kubectl plugin file from the release wheel; the release workflow runs it and publishes the package to PyPI |
@@ -126,11 +126,11 @@ Cite the paper and the software. The `CITATION.cff` file gives the software cita
 
 > Ramaswamy Y (2026) Which Real Cloud Failures Can Chaos Tools Inject? A Mapping Study of 437 Public Post-Incident Reports and Two Fault Catalogs. In preparation for the Journal of Cloud Computing.
 
-The dataset on Zenodo: https://doi.org/10.5281/zenodo.23973150 (all versions; corpus, codebook, pilot and blind samples, CC BY 4.0). Version 2.0.0 (https://doi.org/10.5281/zenodo.24512007) withdraws the 18 AWS and 42 Cloudflare reports and carries codebook version 3, which changes the injectability of four fault classes; no trigger or fault label of a report that remains changed. Version 1.0.2 (https://doi.org/10.5281/zenodo.24287066) corrects the links of the 81 Microsoft Azure reports, which did not open the reviews in versions 1.0.0 and 1.0.1. Version 1.0.1 (https://doi.org/10.5281/zenodo.24274876) corrected the documentation of version 1.0.0 (https://doi.org/10.5281/zenodo.23973151), the version the paper cites. No label, code or figure differs between versions 1.0.0 to 1.0.2. It is mirrored on Hugging Face at https://huggingface.co/datasets/yogeshramaswamy608/incident2chaos-corpus, and the Zenodo record stays the version of record. The software on Zenodo: https://doi.org/10.5281/zenodo.23973728 (all versions; release 0.1.2 is https://doi.org/10.5281/zenodo.24289017, release 0.1.1 is https://doi.org/10.5281/zenodo.24276565, release 0.1.0 is https://doi.org/10.5281/zenodo.23973729).
+The dataset on Zenodo: https://doi.org/10.5281/zenodo.23973150 (all versions; corpus, codebook, pilot and blind samples, CC BY 4.0). Version 2.0.1 (https://doi.org/10.5281/zenodo.24546515) corrects two sentences of its README on the blind sample and changes no data file. Version 2.0.0 (https://doi.org/10.5281/zenodo.24512007) withdraws the 18 AWS and 42 Cloudflare reports and carries codebook version 3, which changes the injectability of four fault classes; no trigger or fault label of a report that remains changed. Version 1.0.2 (https://doi.org/10.5281/zenodo.24287066) corrects the links of the 81 Microsoft Azure reports, which did not open the reviews in versions 1.0.0 and 1.0.1. Version 1.0.1 (https://doi.org/10.5281/zenodo.24274876) corrected the documentation of version 1.0.0 (https://doi.org/10.5281/zenodo.23973151), the version the paper cites. No label, code or figure differs between versions 1.0.0 to 1.0.2. It is mirrored on Hugging Face at https://huggingface.co/datasets/yogeshramaswamy608/incident2chaos-corpus, and the Zenodo record stays the version of record. The software on Zenodo: https://doi.org/10.5281/zenodo.23973728 (all versions; release 0.2.0 is https://doi.org/10.5281/zenodo.24512569, release 0.1.2 is https://doi.org/10.5281/zenodo.24289017, release 0.1.1 is https://doi.org/10.5281/zenodo.24276565, release 0.1.0 is https://doi.org/10.5281/zenodo.23973729).
 
 ## How this was made
 
-The author designed the study and the codebook, checked every pilot label, coded the blind agreement sample, and checked every figure against the scripts that produce it. Large language models from Anthropic drafted the code, the tests and this documentation under the author's direction: Claude Opus 5.5, and Claude Fable 5.2 for the corrections of release 0.1.1, for the changes to the workflows that followed it, for the link check and the link corrections of release 0.1.2, and for the move of the Krew manifest, the teaching lab and the citations to each of those two releases. Claude Fable 5.2 ruled the withdrawal of the AWS and Cloudflare reports, and Claude Opus 5.5 carried it out for release 0.2.0. Claude Opus 5.5 proposed the labels of all 437 reports: those of the 34 pilot reports, which the author then checked, keeping 25 and changing 9, and those of the 403 reports outside the pilot, proposed under the frozen codebook and not revised afterwards. It also wrote the short notes of those 403 rows. A second model, OpenAI's gpt-6.2-astra, labelled the reports again as a check; it is a model check, not human validation. The models are not authors.
+The author designed the study and the codebook, checked every pilot label, coded the blind agreement sample, and checked every figure against the scripts that produce it. Large language models from Anthropic drafted the code, the tests and this documentation under the author's direction: Claude Opus 5.5, and Claude Fable 5.2 for the corrections of release 0.1.1, for the changes to the workflows that followed it, for the link check and the link corrections of release 0.1.2, and for the move of the Krew manifest, the teaching lab and the citations to each of those two releases. Claude Fable 5.2 ruled the withdrawal of the AWS and Cloudflare reports, and Claude Opus 5.5 carried it out for release 0.2.0 and made the corrections of release 0.2.1, which Claude Fable 5.2 ruled. Claude Opus 5.5 proposed the labels of all 437 reports: those of the 34 pilot reports, which the author then checked, keeping 25 and changing 9, and those of the 403 reports outside the pilot, proposed under the frozen codebook and not revised afterwards. It also wrote the short notes of those 403 rows. A second model, OpenAI's gpt-6.2-astra, labelled the reports again as a check; it is a model check, not human validation. The models are not authors.
 
 ## License
 

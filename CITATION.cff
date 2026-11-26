@@ -7,9 +7,12 @@ authors:
     given-names: Yogesh
     affiliation: Independent Researcher
     orcid: "https://orcid.org/0009-0006-4261-5785"
-version: 0.2.0
+version: 0.2.1
 doi: 10.5281/zenodo.23973728
 identifiers:
+  - type: doi
+    value: 10.5281/zenodo.24512569
+    description: "Release 0.2.0"
   - type: doi
     value: 10.5281/zenodo.24289017
     description: "Release 0.1.2"
@@ -26,8 +29,8 @@ references:
     authors:
       - family-names: Ramaswamy
         given-names: Yogesh
-    doi: 10.5281/zenodo.24512007
-    version: "2.0.0"
+    doi: 10.5281/zenodo.24546515
+    version: "2.0.1"
 repository-code: "https://github.com/yogeshramaswamy608/incident2chaos"
 keywords:
   - chaos engineering
